@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCM2 High-Yield Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf8f3;
+  --warm-white: #f5f2ea;
+  --paper: #fffef9;
+  --sage: #6b8f71;
+  --sage-light: #a8c5ad;
+  --sage-dark: #4a6b50;
+  --teal: #3d7a8a;
+  --teal-light: #e8f4f7;
+  --amber: #c8860a;
+  --amber-light: #fef3dc;
+  --rose: #c0616a;
+  --rose-light: #fceef0;
+  --plum: #7b5ea7;
+  --plum-light: #f0ebf9;
+  --slate: #4a5568;
+  --slate-light: #edf2f7;
+  --ink: #2d3748;
+  --ink-light: #4a5568;
+  --border: #e2d9c8;
+  --border-strong: #c9bfaa;
+  --shadow: rgba(45,55,72,0.08);
+  --shadow-md: rgba(45,55,72,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* NAV */
+#main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,243,0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--border-strong);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+#main-nav .nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--sage-dark);
+  white-space: nowrap;
+  padding: 1rem 1.5rem 1rem 0;
+  border-right: 2px solid var(--border);
+  margin-right: 0.5rem;
+  letter-spacing: -0.5px;
+}
+#main-nav a {
+  display: inline-block;
+  padding: 1rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--slate);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+#main-nav a:hover { color: var(--sage-dark); border-bottom-color: var(--sage); }
+#main-nav a.active { color: var(--sage-dark); border-bottom-color: var(--sage-dark); }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--sage-dark) 0%, var(--teal) 60%, #2d6b7a 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 60%;
+  height: 200%;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+.hero .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.hero .tag {
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* SECTIONS */
+.section {
+  display: none;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+  animation: fadeIn 0.3s ease;
+}
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* SECTION HEADER */
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-strong);
+}
+.section-header .number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--border-strong);
+  line-height: 1;
+}
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--sage-dark);
+  line-height: 1.2;
+}
+.section-header p {
+  font-size: 0.9rem;
+  color: var(--slate);
+  margin-top: 0.2rem;
+}
+
+/* CARDS */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-title .badge {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-high { background: #fde8e8; color: #c53030; border: 1px solid #feb2b2; }
+.badge-med { background: var(--amber-light); color: #7b4a00; border: 1px solid #f6c870; }
+.badge-sage { background: #e6f4e8; color: var(--sage-dark); border: 1px solid var(--sage-light); }
+
+/* TABLES */
+.hy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+.hy-table th {
+  background: var(--sage-dark);
+  color: white;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+}
+.hy-table th:first-child { border-radius: 8px 0 0 0; }
+.hy-table th:last-child { border-radius: 0 8px 0 0; }
+.hy-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.hy-table tr:hover td { background: var(--warm-white); }
+.hy-table tr:last-child td { border-bottom: none; }
+.hy-table .hl { font-weight: 700; color: var(--rose); }
+.hy-table .hl2 { font-weight: 700; color: var(--teal); }
+.hy-table .hl3 { font-weight: 700; color: var(--amber); }
+
+/* ALGORITHM BOX */
+.algo {
+  background: var(--teal-light);
+  border: 2px solid var(--teal);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.algo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.algo-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.algo-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.step-num {
+  min-width: 28px;
+  height: 28px;
+  background: var(--teal);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-content { font-size: 0.9rem; }
+.step-content strong { color: var(--teal); }
+
+/* MNEMONIC */
+.mnemonic {
+  background: var(--plum-light);
+  border-left: 4px solid var(--plum);
+  padding: 1.2rem 1.5rem;
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 1rem;
+}
+.mnemonic-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--plum);
+  margin-bottom: 0.5rem;
+}
+.mnemonic-body {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1rem;
+}
+.highlight-box.amber { background: var(--amber-light); border: 1px solid #f6c870; }
+.highlight-box.rose { background: var(--rose-light); border: 1px solid #f5a0a7; }
+.highlight-box.sage { background: #e6f4e8; border: 1px solid var(--sage-light); }
+.highlight-box.teal { background: var(--teal-light); border: 1px solid #90cad6; }
+.highlight-box.slate { background: var(--slate-light); border: 1px solid #cbd5e0; }
+.highlight-box-title {
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 0.5rem;
+}
+.highlight-box.amber .highlight-box-title { color: var(--amber); }
+.highlight-box.rose .highlight-box-title { color: var(--rose); }
+.highlight-box.sage .highlight-box-title { color: var(--sage-dark); }
+.highlight-box.teal .highlight-box-title { color: var(--teal); }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
+@media(max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+/* MINI CARD */
+.mini-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.mini-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+}
+.mini-card ul { list-style: none; }
+.mini-card ul li { font-size: 0.86rem; padding: 0.18rem 0; color: var(--ink-light); }
+.mini-card ul li::before { content: '→ '; color: var(--sage); font-weight: 700; }
+
+/* MCQ */
+.mcq-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.mcq-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem; color: var(--ink); }
+.mcq-num { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--sage-dark); margin-right: 0.5rem; }
+.mcq-options { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.mcq-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--warm-white);
+}
+.mcq-option:hover { border-color: var(--sage-light); background: #edf7ee; }
+.mcq-option.correct { background: #e6f4e8; border-color: var(--sage); color: var(--sage-dark); font-weight: 600; }
+.mcq-option.wrong { background: var(--rose-light); border-color: var(--rose); color: var(--rose); }
+.mcq-option.revealed { pointer-events: none; }
+.mcq-letter {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.mcq-option.correct .mcq-letter { background: var(--sage); color: white; }
+.mcq-option.wrong .mcq-letter { background: var(--rose); color: white; }
+.mcq-explain {
+  display: none;
+  background: var(--teal-light);
+  border-left: 3px solid var(--teal);
+  padding: 0.8rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.87rem;
+  color: var(--teal);
+  font-weight: 600;
+}
+.mcq-explain.show { display: block; }
+
+/* BUZZWORDS */
+.buzz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; }
+.buzz-item {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.buzz-term { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 600; color: var(--teal); margin-bottom: 0.3rem; }
+.buzz-def { font-size: 0.82rem; color: var(--ink-light); }
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.compare-table th {
+  padding: 0.8rem 1.1rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.compare-table th:first-child { background: var(--ink); color: white; }
+.compare-table th:nth-child(2) { background: var(--teal); color: white; }
+.compare-table th:nth-child(3) { background: var(--sage-dark); color: white; }
+.compare-table th:nth-child(4) { background: var(--plum); color: white; }
+.compare-table td { padding: 0.65rem 1.1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.compare-table tr:hover td { background: var(--warm-white); }
+
+ul.bullet-list { list-style: none; padding: 0; }
+ul.bullet-list li { font-size: 0.9rem; padding: 0.2rem 0; color: var(--ink-light); }
+ul.bullet-list li::before { content: '• '; color: var(--sage); font-weight: 700; }
+ul.bullet-list li strong { color: var(--ink); }
+
+p.note { font-size: 0.85rem; color: var(--slate); font-style: italic; margin-top: 0.5rem; }
+
+.flow-arrow { text-align: center; font-size: 1.2rem; color: var(--sage); margin: 0.3rem 0; }
+
+.subsection-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 1.5rem 0 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px dashed var(--border-strong);
+}
+
+hr.divider { border: none; border-top: 1.5px solid var(--border); margin: 1.8rem 0; }
+
+.tag-inline {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+.tag-WHO { background: #dbeafe; color: #1e40af; }
+.tag-PH { background: #fef3c7; color: #92400e; }
+.tag-MUST { background: #fde8e8; color: #9b1c1c; }
+
+</style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="nav-brand">PCM2 Reviewer</div>
+  <a href="#" onclick="showSection('s1',this)">01 · Intro Fam Med</a>
+  <a href="#" onclick="showSection('s2',this)">02 · Community Dx</a>
+  <a href="#" onclick="showSection('s3',this)">03 · PHC</a>
+  <a href="#" onclick="showSection('s4',this)">04 · Comm Organizing</a>
+  <a href="#" onclick="showSection('s5',this)">05 · CHW Training</a>
+  <a href="#" onclick="showSection('s6',this)">06 · Intl Health</a>
+  <a href="#" onclick="showSection('smcq',this)">MCQ Review</a>
+  <a href="#" onclick="showSection('sbuzz',this)">Buzzwords</a>
+</nav>
+
+<div class="hero">
+  <h1>PCM2 High-Yield Reviewer</h1>
+  <p>Complete study resource — community health, PHC, emerging infections, family assessment tools, and more.</p>
+  <div class="tags">
+    <span class="tag">AY 2025–2026</span>
+    <span class="tag">6 Topics</span>
+    <span class="tag">MCQ Practice</span>
+    <span class="tag">Algorithms</span>
+    <span class="tag">Buzzwords</span>
+  </div>
+</div>
+
+<!-- ========== SECTION 1: INTRO FAM MED ========== -->
+<div id="s1" class="section active">
+  <div class="section-header">
+    <div class="number">01</div>
+    <div>
+      <h2>Intro to Family Medicine & Family Assessment Tools</h2>
+      <p>BPS Model · PFC Matrix · CEA Method · Genogram · APGAR · SCREEM · Ecomap</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Biopsychosocial (BPS) Model <span class="badge badge-high">MUST KNOW</span></div>
+    <table class="hy-table">
+      <tr><th>Component</th><th>What it addresses</th><th>Example</th></tr>
+      <tr><td class="hl">Biological</td><td>Physical disease, pathology, lab findings</td><td>Heart disease, infection</td></tr>
+      <tr><td class="hl2">Psychological</td><td>Emotions, cognition, mental health, phobias</td><td>Fear → fatal cardiac event</td></tr>
+      <tr><td class="hl3">Social</td><td>Family, economics, culture, relationships</td><td>Inheritance motive; poverty</td></tr>
+    </table>
+    <div class="highlight-box rose">
+      <div class="highlight-box-title">🚨 Key Contrast</div>
+      <strong>Biomedical:</strong> Treats body as machine — find/fix broken part only.<br>
+      <strong>BPS:</strong> Considers all three factors as <em>interconnected</em> — treats the whole person.
+    </div>
+    <ul class="bullet-list">
+      <li>Introduced by <strong>George Engel, 1977</strong></li>
+      <li><strong>Semiotics</strong> — symptoms are interpreted signs, not just facts</li>
+      <li><strong>Constructivism</strong> — illness shaped by experience and social context</li>
+      <li><strong>Individual Reality</strong> — past beliefs/experiences shape current illness response</li>
+      <li>Modern research: hopelessness → ↑ ischemic heart disease risk; caregivers → ↑ procoagulant load</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">PFC Matrix <span class="badge badge-high">MUST KNOW</span></div>
+    <p style="font-size:0.9rem;margin-bottom:1rem;color:var(--slate)">Patient-centered, Family-focused, Community-oriented. Operationalizes BPS in primary care.</p>
+    <table class="hy-table">
+      <tr><th>Component</th><th>Focus</th><th>Tools / Methods</th><th>Key concept</th></tr>
+      <tr>
+        <td class="hl"><strong>Patient-centered</strong></td>
+        <td>Patient perception; biomedical & psychosocial data</td>
+        <td>CEA Method, SOAP note</td>
+        <td>Address health misconceptions through education; tailor-fit management</td>
+      </tr>
+      <tr>
+        <td class="hl2"><strong>Family-focused</strong></td>
+        <td>Family as unit of care; shared resources, genetics, behaviors</td>
+        <td>Genogram, Family APGAR, Lifeline, Family Map</td>
+        <td>Family = greatest ally; identify breadwinner, caregiver, decision-maker</td>
+      </tr>
+      <tr>
+        <td class="hl3"><strong>Community-oriented</strong></td>
+        <td>Links patient/family to public health & social resources</td>
+        <td>Ecomap, SCREEM/SCREEM-RES</td>
+        <td>Uses SDH building blocks; referral, collaboration, networking</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="algo">
+    <div class="algo-title">⚙ CEA Method (Patient Engagement Algorithm) <span class="badge badge-high" style="margin-left:0.5rem">Order Matters!</span></div>
+    <div class="algo-steps">
+      <div class="algo-step"><div class="step-num">1</div><div class="step-content"><strong>Catharsis</strong> — Let patient express feelings FIRST. Do not skip this. Cannot proceed to action without catharsis.</div></div>
+      <div class="algo-step"><div class="step-num">2</div><div class="step-content"><strong>Education</strong> — Correct misconceptions; explain the illness in understandable terms.</div></div>
+      <div class="algo-step"><div class="step-num">3</div><div class="step-content"><strong>Action</strong> — Co-create management plan with patient. Done last.</div></div>
+    </div>
+    <div class="highlight-box rose" style="margin-top:1rem;margin-bottom:0">
+      <div class="highlight-box-title">Exam Trap</div>
+      You CANNOT proceed to Action without completing Catharsis first. Answer = C → E → A always.
+    </div>
+  </div>
+
+  <div class="subsection-title">Family Assessment Tools — Quick Reference</div>
+  <table class="hy-table">
+    <tr><th>Tool</th><th>Type</th><th>Purpose</th><th>Key Features / Buzzwords</th></tr>
+    <tr><td class="hl"><strong>Genogram</strong></td><td>Qualitative</td><td>Map family structure + medical/psychosocial hx</td><td>Breadwinner, caregiver, decision-maker; heredofamilial diseases; multigenerational</td></tr>
+    <tr><td><strong>Family Map</strong></td><td>Qualitative</td><td>Show relationships & interaction patterns</td><td>Symbol-based; similar to genogram but focuses on dynamics</td></tr>
+    <tr><td><strong>Family Life Cycle</strong></td><td>Conceptual</td><td>Predict needs at each stage</td><td>Adaptation = hallmark of healthy family; stressors peak at transitions</td></tr>
+    <tr><td class="hl2"><strong>Family APGAR</strong></td><td>Quantitative (5-item)</td><td>Screen for family dysfunction</td><td>Scores: 7–10 adequate; 4–6 moderate; 0–3 severe; limited by respondent perception</td></tr>
+    <tr><td><strong>Family Lifeline</strong></td><td>Qualitative</td><td>Chronological life events + illness history</td><td>Peaks & troughs; useful for psychosomatic disorders; case-by-case basis</td></tr>
+    <tr><td class="hl3"><strong>SCREEM</strong></td><td>Qualitative</td><td>Family resources assessment</td><td>S-C-R-E-E-M: Social, Cultural, Religion, Economic, Educational, Medical</td></tr>
+    <tr><td><strong>SCREEM-RES</strong></td><td>Quantitative (12-item; Brief=6)</td><td>Rapid resource score</td><td>Filipino-validated; 13–18 adequate; 7–12 moderate; 0–6 severe</td></tr>
+    <tr><td class="hl"><strong>Ecomap</strong></td><td>Qualitative / Pictorial</td><td>External social environment resources & stressors</td><td>Arrows = energy flow; jagged = stressful; thickness = strength of tie</td></tr>
+  </table>
+
+  <div class="card">
+    <div class="card-title">Family APGAR Domains <span class="badge badge-med">MEMORIZE</span></div>
+    <table class="hy-table">
+      <tr><th>Letter</th><th>Domain</th><th>What is assessed</th></tr>
+      <tr><td class="hl"><strong>A</strong></td><td>Adaptation</td><td>How resources are <em>shared</em>; satisfaction with assistance received in time of need</td></tr>
+      <tr><td class="hl"><strong>P</strong></td><td>Partnership</td><td>How decisions are <em>shared</em>; mutuality in communication & problem-solving</td></tr>
+      <tr><td class="hl"><strong>G</strong></td><td>Growth</td><td>How nurturing is <em>shared</em>; freedom to change roles & attain emotional maturation</td></tr>
+      <tr><td class="hl"><strong>A</strong></td><td>Affection</td><td>How emotional experiences are <em>shared</em>; intimacy & emotional interaction</td></tr>
+      <tr><td class="hl"><strong>R</strong></td><td>Resolve</td><td>How time, space & money are <em>shared</em>; satisfaction with time commitment to family</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Filipino Family Traits <span class="badge badge-med">Situational Qs</span></div>
+    <div class="grid-2">
+      <div>
+        <ul class="bullet-list">
+          <li>Average size: <strong>5 members</strong> per household</li>
+          <li>Bilaterally extended; 3 generations</li>
+          <li><strong>Externally patriarchal</strong> — father = breadwinner (machismo)</li>
+          <li><strong>Internally matriarchal</strong> — grandmother/mother = household head & financial manager</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="bullet-list">
+          <li>Predominantly Catholic; high value on marriage before childbirth</li>
+          <li>Child-centered; authority based on seniority (filial piety)</li>
+          <li><strong>Poor health-seeking behavior</strong> — consult as last resort; focus on cure not prevention</li>
+          <li>No savings for health care</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Five Levels of Family Intervention</div>
+    <table class="hy-table">
+      <tr><th>Level</th><th>Name</th><th>Key Action</th><th>Focus</th></tr>
+      <tr><td>1</td><td>Minimal involvement</td><td>No action; medico-legal only</td><td>Individual</td></tr>
+      <tr><td>2</td><td>Information & advice</td><td>Communicate findings; answer questions</td><td>Cognition</td></tr>
+      <tr><td>3</td><td>Emotional support</td><td>Elicit feelings; support all members</td><td>Emotion</td></tr>
+      <tr><td class="hl2"><strong>4</strong></td><td><strong>Systematic assessment & intervention</strong></td><td>Family conference; systematic function assessment</td><td>Family as whole</td></tr>
+      <tr><td class="hl"><strong>5</strong></td><td><strong>Family therapy</strong></td><td>All prior levels + formal therapy</td><td>Specialist certification needed</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== SECTION 2: COMMUNITY DIAGNOSIS ========== -->
+<div id="s2" class="section">
+  <div class="section-header">
+    <div class="number">02</div>
+    <div>
+      <h2>Community Diagnosis</h2>
+      <p>Process · Data Sources · Health Indicators · Decision Matrix</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">8 Subsystems of a Community <span class="badge badge-med">MEMORIZE</span></div>
+    <div class="grid-2">
+      <table class="hy-table">
+        <tr><th>Subsystem</th><th>Key Questions</th></tr>
+        <tr><td class="hl2"><strong>Physical Environment</strong></td><td>Rural/urban? Clean? Trees?</td></tr>
+        <tr><td><strong>Education</strong></td><td>Available level? Literacy rate?</td></tr>
+        <tr><td><strong>Safety & Transportation</strong></td><td>Crime rate? Modes of transit?</td></tr>
+        <tr><td><strong>Politics & Government</strong></td><td>Tribal elder or structured govt?</td></tr>
+      </table>
+      <table class="hy-table">
+        <tr><th>Subsystem</th><th>Key Questions</th></tr>
+        <tr><td class="hl3"><strong>Health & Social Services</strong></td><td>Clinics? Social services?</td></tr>
+        <tr><td><strong>Communication</strong></td><td>Internet? Telephone? Face-to-face?</td></tr>
+        <tr><td><strong>Economics</strong></td><td>Businesses? Employment?</td></tr>
+        <tr><td><strong>Recreation</strong></td><td>Activities available? Water-based?</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="algo">
+    <div class="algo-title">⚙ Process of Community Diagnosis (Step-by-Step)</div>
+    <div class="algo-steps">
+      <div class="algo-step"><div class="step-num">1</div><div class="step-content"><strong>Decide scope/areas</strong> to be studied</div></div>
+      <div class="algo-step"><div class="step-num">2</div><div class="step-content">Obtain <strong>Population Census</strong> + statistical data AND gather <strong>concerns/views from local people</strong></div></div>
+      <div class="algo-step"><div class="step-num">3</div><div class="step-content">Retrieve data from <strong>government departments</strong> AND conduct <strong>surveys</strong> (quantitative + qualitative)</div></div>
+      <div class="algo-step"><div class="step-num">4</div><div class="step-content"><strong>Collect and analyze</strong> all data</div></div>
+      <div class="algo-step"><div class="step-num">5</div><div class="step-content">Form a community diagnosis → <strong>disseminate report</strong> via different channels</div></div>
+      <div class="algo-step"><div class="step-num">6</div><div class="step-content"><strong>Establish and prioritize</strong> areas for improvement</div></div>
+      <div class="algo-step"><div class="step-num">7</div><div class="step-content"><strong>Set work plans</strong> and indicators for evaluation</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Primary vs. Secondary Data <span class="badge badge-high">EXAM FAVORITE</span></div>
+    <table class="compare-table">
+      <tr><th>Feature</th><th>Primary Data</th><th>Secondary Data</th></tr>
+      <tr><td><strong>Definition</strong></td><td>Direct evidence about an event</td><td>Originally collected for other purposes</td></tr>
+      <tr><td><strong>Example</strong></td><td>TB cases, malnutrition cases (directly gathered)</td><td>Census repurposed to assess malnutrition</td></tr>
+      <tr><td><strong>Cost</strong></td><td class="hl">Greater cost in time & money</td><td class="hl2">Lower cost; more timely</td></tr>
+      <tr><td><strong>Quality control</strong></td><td>Greater control; standardized procedures</td><td>Less control; possible data quality issues</td></tr>
+      <tr><td><strong>Stratification</strong></td><td>Less difficulty stratifying by subgroups</td><td class="hl">More difficulty stratifying</td></tr>
+      <tr><td><strong>Analytical effort</strong></td><td>Less effort to interpret</td><td class="hl">More analytical effort required</td></tr>
+      <tr><td><strong>Temporal/spatial comparability</strong></td><td>Greater comparability</td><td class="hl">More difficulty comparing across time/place</td></tr>
+    </table>
+    <div class="highlight-box rose">
+      <div class="highlight-box-title">🚨 Classic Exam Trap</div>
+      "Primary data = more analytical effort" — <strong>FALSE!</strong> That's secondary data. Primary data = greater cost in time/money. Secondary data = more analytical effort.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Community Health Indicators — Complete Classification</div>
+    <div class="grid-2">
+      <table class="hy-table">
+        <tr><th>Indicator Type</th><th>Examples</th></tr>
+        <tr><td class="hl2"><strong>Mortality</strong></td><td>CDR, ASDR, IMR, MMR, Life Expectancy, Case Fatality Rate</td></tr>
+        <tr><td class="hl3"><strong>Morbidity</strong></td><td>Incidence/Prevalence, Notification, Attendance, Admission/Discharge, Hospital Stay Duration</td></tr>
+        <tr><td><strong>Disability</strong></td><td># Restricted Activity Days, Work/School Loss Days, Life Free of Disability</td></tr>
+        <tr><td class="hl"><strong>Nutritional</strong></td><td>Anthropometrics, Height at school entry, LBW prevalence</td></tr>
+      </table>
+      <table class="hy-table">
+        <tr><th>Indicator Type</th><th>Examples</th></tr>
+        <tr><td><strong>Healthcare Delivery</strong></td><td>Doctor:Population, Doctor:Nurse, Population:Bed, Population:Health Center ratios</td></tr>
+        <tr><td><strong>Utilization</strong></td><td>Immunization coverage, Prenatal care rate, Consults vs. sick population</td></tr>
+        <tr><td><strong>Social/Mental Health</strong></td><td>Road accidents, Suicide/Homicide rates, Alcohol/Drug abuse</td></tr>
+        <tr><td><strong>Environmental</strong></td><td>Pollution, Safe water/sanitation access, Vector control</td></tr>
+        <tr><td><strong>Socioeconomic</strong></td><td>Population growth rate, GNP/capita, Literacy, Unemployment, Family size</td></tr>
+        <tr><td><strong>Health Policy</strong></td><td>% GDP on health, % resources to PHC</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">VALID Characteristics of Indicators <span class="badge badge-med">MEMORIZE</span></div>
+    <table class="hy-table">
+      <tr><th>Characteristic</th><th>Meaning</th></tr>
+      <tr><td class="hl"><strong>Valid</strong></td><td>Actually measures what it is supposed to measure</td></tr>
+      <tr><td><strong>Reliable / Objective</strong></td><td>Same results when measured by different people in similar circumstances</td></tr>
+      <tr><td><strong>Sensitive</strong></td><td>Detects changes in the situation concerned</td></tr>
+      <tr><td><strong>Specific</strong></td><td>Reflects changes ONLY in the situation concerned</td></tr>
+      <tr><td><strong>Feasible</strong></td><td>Needed data can be obtained</td></tr>
+      <tr><td><strong>Relevant</strong></td><td>Contributes to understanding the phenomenon of interest</td></tr>
+      <tr><td><strong>Comprehensible</strong></td><td>Easy to understand and interpret</td></tr>
+    </table>
+  </div>
+
+  <div class="algo">
+    <div class="algo-title">⚙ 5 Steps to Evaluate Quality of Health Indicators</div>
+    <div class="algo-steps">
+      <div class="algo-step"><div class="step-num">1</div><div class="step-content"><strong>Integrity</strong> — Is data complete, valid, and representative of target population?</div></div>
+      <div class="algo-step"><div class="step-num">2</div><div class="step-content"><strong>Personal attributes</strong> — Is it consistent by age, sex, population at risk?</div></div>
+      <div class="algo-step"><div class="step-num">3</div><div class="step-content"><strong>Place attributes</strong> — Expected spatial patterns? Rural vs. urban distribution?</div></div>
+      <div class="algo-step"><div class="step-num">4</div><div class="step-content"><strong>Temporal attributes</strong> — Seasonal or cyclic patterns? Historical trends?</div></div>
+      <div class="algo-step"><div class="step-num">5</div><div class="step-content"><strong>Plausibility</strong> — Does it make sense compared to other data sources? (e.g., Low MMR despite poor prenatal care → questionable)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Decision Matrix — Priority Setting Algorithm <span class="badge badge-high">ALGORITHM</span></div>
+    <div class="grid-2">
+      <div>
+        <div class="highlight-box amber">
+          <div class="highlight-box-title">Criteria & Weights</div>
+          <ul class="bullet-list">
+            <li><strong>Magnitude</strong> — How many affected (30%)</li>
+            <li><strong>Feasibility/Sustainability</strong> of health program (30%)</li>
+            <li><strong>Impact</strong> — Long-term disability/death (20%)</li>
+            <li><strong>Community concern</strong> — Perception of seriousness (20%)</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="algo" style="margin-bottom:0">
+          <div class="algo-title" style="font-size:0.95rem">How to calculate:</div>
+          <div class="algo-steps">
+            <div class="algo-step"><div class="step-num">1</div><div class="step-content">Score each problem 1–4 per criterion</div></div>
+            <div class="algo-step"><div class="step-num">2</div><div class="step-content">Score × Weight = Criterion score</div></div>
+            <div class="algo-step"><div class="step-num">3</div><div class="step-content">Sum all criterion scores = Total</div></div>
+            <div class="algo-step"><div class="step-num">4</div><div class="step-content">Highest total = Priority #1</div></div>
+            <div class="algo-step"><div class="step-num">5</div><div class="step-content">Next: Problem Tree → Objective Tree</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Problem Tree: Causes → Problem → Effects. Objective Tree: Activities → General Objective → Effects of Intervention.</p>
+  </div>
+</div>
+
+<!-- ========== SECTION 3: PHC ========== -->
+<div id="s3" class="section">
+  <div class="section-header">
+    <div class="number">03</div>
+    <div>
+      <h2>Primary Health Care & Primary Care</h2>
+      <p>Alma Ata · E.L.E.M.E.N.T.S · Levels of Participation · UHC</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Alma Ata Declaration (1978) <span class="badge badge-high">FOUNDATIONAL</span></div>
+    <div class="grid-2">
+      <div>
+        <ul class="bullet-list">
+          <li>First international declaration underlining <strong>importance of PHC</strong></li>
+          <li>Declared in <strong>Almaty, Kazakhstan</strong>, September 6–12, 1978</li>
+          <li>Urgent call to protect health of all by <strong>Year 2000</strong></li>
+          <li>Goal: <strong>"Health for All"</strong></li>
+        </ul>
+        <div class="highlight-box sage" style="margin-top:0.8rem">
+          <div class="highlight-box-title">PHC Definition (Alma Ata)</div>
+          Essential health care based on <strong>practical, scientifically sound, and socially acceptable</strong> methods & technology made <strong>universally accessible</strong> at a cost the community and country can afford, in the spirit of <strong>self-reliance and self-determination</strong>.
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box teal">
+          <div class="highlight-box-title">PHC Objectives (Alma Ata)</div>
+          <ul class="bullet-list">
+            <li>Health for all</li>
+            <li>Health is a Fundamental Human Right</li>
+            <li>Equity</li>
+            <li>Appropriate Technology</li>
+            <li>Inter-sectoral Development</li>
+            <li>Community Participation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-title">🧠 Mnemonic — E.L.E.M.E.N.T.S (Elements of PHC)</div>
+    <div class="mnemonic-body">
+      <strong>E</strong>ducation · <strong>L</strong>ocal/Endemic Disease Control · <strong>E</strong>xpanded Program on Immunization<br>
+      <strong>M</strong>aternal and Child Health · <strong>E</strong>ssential Drugs · <strong>N</strong>utrition<br>
+      <strong>T</strong>reatment · <strong>S</strong>anitation
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">PHC Elements Expanded <span class="badge badge-med">DETAILS</span></div>
+    <table class="hy-table">
+      <tr><th>Element</th><th>Key Focus / Buzzword</th></tr>
+      <tr><td class="hl"><strong>Education</strong></td><td>Primary method of info dissemination; promotes HCW-family partnership</td></tr>
+      <tr><td><strong>Local/Endemic Disease Control</strong></td><td>Locally inducing morbidity — <strong>Malaria</strong> in Philippines</td></tr>
+      <tr><td><strong>Expanded Program on Immunization</strong></td><td>Prevent illness in children &lt;5 y/o; free government immunization (polio, diphtheria, tetanus)</td></tr>
+      <tr><td><strong>Maternal & Child Health</strong></td><td>Protection of mother & child; family planning; responsible childbirth</td></tr>
+      <tr><td class="hl2"><strong>Essential Drugs</strong></td><td>Basis of <strong>Generics Act of the Philippines</strong>; information on proper drug use</td></tr>
+      <tr><td><strong>Nutrition</strong></td><td>Basic need; food planning + sanitation → prevent malnutrition & food-borne disease</td></tr>
+      <tr><td class="hl3"><strong>Treatment</strong></td><td>Proper management; <strong>Tuberculosis</strong> = target disease; Philippines = <strong>4th worldwide in TB</strong></td></tr>
+      <tr><td><strong>Sanitation</strong></td><td>Safe water access; health & safety of community</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Rationale for PHC <span class="badge badge-med">PHILIPPINES CONTEXT</span></div>
+    <div class="grid-2">
+      <ul class="bullet-list">
+        <li>Too much concentration of services in <strong>urban areas</strong></li>
+        <li><strong>Brain drain</strong> — professionals leave for better pay abroad</li>
+        <li>Overdependence on <strong>imported health technologies</strong></li>
+        <li>Domination by <strong>foreign multinational pharmaceutical companies</strong></li>
+        <li>Poor health financing (→ solved by <strong>UHC Act</strong>)</li>
+      </ul>
+      <ul class="bullet-list">
+        <li><strong>Top-down</strong> decision-making in health</li>
+        <li>Priorities focused on <strong>curative</strong> care</li>
+        <li>Colonial mentality</li>
+        <li>Western-oriented medical education</li>
+        <li>Poor motivation of government health personnel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4 Levels / Models of Participation <span class="badge badge-high">MUST KNOW</span></div>
+    <table class="compare-table">
+      <tr>
+        <th>Feature</th>
+        <th>Hospital/Clinic-Based</th>
+        <th>Community-Oriented</th>
+        <th>Community-Based</th>
+      </tr>
+      <tr><td><strong>Personnel</strong></td><td>Doctors only</td><td>Health professionals</td><td>Health Team + CHW + GOs + NGOs</td></tr>
+      <tr><td><strong>Approach</strong></td><td class="hl">Authoritarian</td><td class="hl3">Paternalistic</td><td class="hl2">Democratic</td></tr>
+      <tr><td><strong>Objectives</strong></td><td>Rigid, statistics-oriented; perpetuates system</td><td>Pre-determined before consulting community</td><td>Evoked from community; transforms system</td></tr>
+      <tr><td><strong>Community outlook</strong></td><td>Merely informed / recipients</td><td>Consulted / Beneficiaries</td><td>Partners; shared decision-making</td></tr>
+      <tr><td><strong>Community Organizing</strong></td><td>None</td><td>Change attitude; enhance cooperation</td><td>End in itself — develop, lead, manage</td></tr>
+      <tr><td><strong>Outcome</strong></td><td>Health <em>to</em> the people</td><td>Health <em>for</em> the people</td><td>Health <em>with</em> the people</td></tr>
+      <tr><td><strong>Effects</strong></td><td class="hl">Oppressive</td><td class="hl3">Deceptive</td><td class="hl2">Supportive</td></tr>
+    </table>
+    <div class="highlight-box amber">
+      <div class="highlight-box-title">4th Level: Community-Managed (MOST IDEAL)</div>
+      Personnel = Community only. Approach = <strong>Liberating</strong>. Objectives expressed purely by people. Community is principal decision-maker AND manager. Outcome = Health <strong>BY</strong> the people. Effects = Supportive + Self-Determination.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Determinants of Health (Philippines Context)</div>
+    <table class="hy-table">
+      <tr><th>Determinant</th><th>% Weight</th><th>Examples</th></tr>
+      <tr><td class="hl3"><strong>Socioeconomic Factors</strong></td><td class="hl3"><strong>40%</strong></td><td>Education, job status, family/social support, income, community safety</td></tr>
+      <tr><td class="hl"><strong>Health Behaviors</strong></td><td class="hl"><strong>30%</strong></td><td>Tobacco, diet/exercise, alcohol, sexual activity</td></tr>
+      <tr><td><strong>Physical/Structural Environment</strong></td><td>10%</td><td>Built environment, geography</td></tr>
+      <tr><td class="hl2"><strong>Health Care</strong></td><td class="hl2"><strong>20%</strong></td><td>Access to care, quality of care; only 1–2% reach tertiary hospitals</td></tr>
+    </table>
+    <p class="note">50% of health determinants can be traced back to your zip code (socioeconomic + physical environment).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">PHC Principles <span class="badge badge-med">PHILIPPINES</span></div>
+    <table class="hy-table">
+      <tr><th>Principle</th><th>Key Concept</th></tr>
+      <tr><td class="hl2"><strong>Accessibility, Availability, Acceptability</strong></td><td>Services delivered where people are; origin of "barangay health workers"</td></tr>
+      <tr><td><strong>Quality, Basic, Essential Services</strong></td><td>CHWs trained to promote preventive, curative, rehabilitative care</td></tr>
+      <tr><td><strong>Community Participation</strong></td><td>Planning to monitoring; leads to creation of Health Committees</td></tr>
+      <tr><td><strong>Self-Reliance</strong></td><td>Community raises own funds; Income Generating Projects (IGP); cycle of leaders</td></tr>
+      <tr><td class="hl3"><strong>Interrelationship: Health & Development</strong></td><td>Multisectoral; addressing health → ~40% ↑ in economic activity</td></tr>
+      <tr><td><strong>Social Mobilization</strong></td><td>Multisectoral, intersectoral, interdisciplinary linkages; community + govt + NGOs</td></tr>
+      <tr><td class="hl"><strong>Decentralization</strong></td><td>Addressed by <strong>Devolution</strong> — national govt gives power/funding to LGUs; Principle of Subsidiarity</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3 Major Components of PHC (WHO Framework)</div>
+    <div class="grid-3">
+      <div class="mini-card">
+        <h4>① Integrated Health Services</h4>
+        <ul><li>Womb-to-tomb</li><li>Public health functions as central element</li><li>Primary care as core</li><li>Individual + population-based</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4>② Multisectoral Policy & Action</h4>
+        <ul><li>Address broader determinants</li><li>Socioeconomic, environmental, behavioral</li><li>Policies across sectors</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4>③ Empowered People & Communities</h4>
+        <ul><li>Co-developers of services</li><li>Self-carers and caregivers</li><li>Advocacy for financial protection</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Primary Care — Key Definitions (RA 11223) <span class="badge badge-high">LAW</span></div>
+    <table class="hy-table">
+      <tr><th>Term</th><th>Definition</th></tr>
+      <tr><td class="hl2"><strong>Primary Care</strong></td><td>First-contact, accessible, continuous, comprehensive, and coordinated patient-focused care accessible at time of need</td></tr>
+      <tr><td><strong>Primary Care Provider</strong></td><td>Health care worker with defined competencies who has received <strong>DOH certification</strong> in primary care; certification/licensure is necessary</td></tr>
+      <tr><td><strong>Health Facility</strong></td><td>Public or private; devoted to provision of services for health promotion, prevention, palliation, diagnosis, treatment, or rehabilitation</td></tr>
+      <tr><td class="hl"><strong>Individual-Based Services</strong></td><td>Accessed within/remotely from a facility; traced to ONE recipient; limited population-level effect</td></tr>
+      <tr><td class="hl3"><strong>Population-Based Services</strong></td><td>Recipients = population groups; includes health promotion, disease surveillance, vector control</td></tr>
+      <tr><td><strong>HCPN</strong></td><td>Health Care Provider Network — navigator & coordinator of all health care; responsible for referrals</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== SECTION 4: COMMUNITY ORGANIZING ========== -->
+<div id="s4" class="section">
+  <div class="section-header">
+    <div class="number">04</div>
+    <div>
+      <h2>Community Organizing</h2>
+      <p>Process · Models · Ethics · Theoretical Framework</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Core Principles of Community Organizing <span class="badge badge-high">MUST KNOW</span></div>
+    <table class="hy-table">
+      <tr><th>Principle</th><th>What it means</th></tr>
+      <tr><td class="hl2"><strong>Consciousness-raising</strong></td><td>Through experiential learning; NOT dole-outs; learning emerges from concrete actions</td></tr>
+      <tr><td><strong>Self-reliance</strong></td><td>Promote self-reliance instead of dependence</td></tr>
+      <tr><td class="hl3"><strong>Evocative methods</strong></td><td>Instead of provocative organizing methods</td></tr>
+      <tr><td><strong>Participatory & Mass-based</strong></td><td>Involves the WHOLE community; primarily directed toward & biased in favor of the <strong>poor</strong></td></tr>
+      <tr><td class="hl"><strong>Democratic leadership</strong></td><td><strong>Group-centered</strong>, NOT leader-oriented; leaders emerge through concrete action, NOT externally appointed</td></tr>
+    </table>
+    <div class="highlight-box rose">
+      <div class="highlight-box-title">🚨 Exam Trap</div>
+      CO is NOT leadership-centered. Leaders are accountable to the people at ALL times. "Leadership-centered approach with appointed leaders" = NOT a core principle.
+    </div>
+  </div>
+
+  <div class="algo">
+    <div class="algo-title">⚙ 9 Processes of Community Organizing</div>
+    <div class="algo-steps">
+      <div class="algo-step"><div class="step-num">1</div><div class="step-content"><strong>Enter the Community</strong> — Introduce self/project; inform authorities; immerse; stay visible</div></div>
+      <div class="algo-step"><div class="step-num">2</div><div class="step-content"><strong>Integration with the People</strong> — Build trust; learn culture/economy/leadership; join local activities; cultural literacy</div></div>
+      <div class="algo-step"><div class="step-num">3</div><div class="step-content"><strong>Social Investigation</strong> — Gather/analyze political & sociocultural data; surveys, interviews, FGD, workshops</div></div>
+      <div class="algo-step"><div class="step-num">4</div><div class="step-content"><strong>Problem Identification & Analysis</strong> — Identify/rank/analyze problems (like community diagnosis); investigate past efforts; consequence analysis</div></div>
+      <div class="algo-step"><div class="step-num">5</div><div class="step-content"><strong>Planning & Strategizing</strong> — Translate goals to activities; identify resources; set action plans</div></div>
+      <div class="algo-step"><div class="step-num">6</div><div class="step-content"><strong>Core Group Formation</strong> — Identify potential leaders; train in leadership; ensure sustainability</div></div>
+      <div class="algo-step"><div class="step-num">7</div><div class="step-content"><strong>Organization Development & Mobilization</strong> — Set up formal structure; facilitate collective action</div></div>
+      <div class="algo-step"><div class="step-num">8</div><div class="step-content"><strong>Evaluation & Reflection</strong> — Dialogues; workshops; what went wrong/right</div></div>
+      <div class="algo-step"><div class="step-num">9</div><div class="step-content"><strong>Turnover & Phase-out</strong> — Transfer roles when READY; leaving too long = useless; promote independence</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Community Organizing Models <span class="badge badge-high">HIGH YIELD</span></div>
+    <table class="hy-table">
+      <tr><th>Model</th><th>Who drives it</th><th>Used when</th><th>Distinguishing feature</th></tr>
+      <tr>
+        <td class="hl2"><strong>Locality Development</strong></td>
+        <td>Community members</td>
+        <td>Homogenous community; consensus exists; cooperative problem-solving</td>
+        <td>Wide community participation; consensus-driven; e.g., rural job access issues</td>
+      </tr>
+      <tr>
+        <td class="hl3"><strong>Social Planning</strong></td>
+        <td>Experts / Task Force</td>
+        <td>Routine/routine problems; data-driven; education, child development, env health</td>
+        <td>Expert-driven; uses factual information; can work in consensus OR conflict</td>
+      </tr>
+      <tr>
+        <td class="hl"><strong>Social Action</strong></td>
+        <td>Disadvantaged groups</td>
+        <td>Hostile/irreconcilable community; social justice issues; politically motivated</td>
+        <td>Disruptive events (strikes, boycotts, lawsuits); calls for law change</td>
+      </tr>
+      <tr>
+        <td><strong>Community Partnership / Coalition</strong></td>
+        <td>Combination of above</td>
+        <td>Complex community conditions; multiple sectors</td>
+        <td>Combination model; changes via programs, policies, practices</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Theoretical Framework: Path to People-Centered Community</div>
+    <div class="algo" style="background:var(--plum-light);border-color:var(--plum)">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;font-size:0.9rem">
+        <span style="background:var(--rose-light);padding:0.4rem 0.8rem;border-radius:8px;border:1px solid var(--rose)"><strong>Resource-poor Community</strong><br><small>Powerless · Passive · Dependent</small></span>
+        <span style="color:var(--plum);font-size:1.3rem">→</span>
+        <span style="background:var(--plum-light);padding:0.4rem 0.8rem;border-radius:8px;border:1px solid var(--plum)"><strong>Community Organizing</strong><br><small>Conscientization · Social Transformation</small></span>
+        <span style="color:var(--plum);font-size:1.3rem">→</span>
+        <span style="background:#e6f4e8;padding:0.4rem 0.8rem;border-radius:8px;border:1px solid var(--sage)"><strong>People's Organization</strong><br><small>Participation · Empowerment · Self-reliance</small></span>
+        <span style="color:var(--plum);font-size:1.3rem">→</span>
+        <span style="background:var(--teal-light);padding:0.4rem 0.8rem;border-radius:8px;border:1px solid var(--teal)"><strong>People-Centered Community</strong></span>
+      </div>
+    </div>
+    <p class="note">Castillo (1983): Poverty among rural poor is a consequence of being unorganized, marginalized, oppressed, and exploited.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ethics in Community Organizing <span class="badge badge-med">KEY TERMS</span></div>
+    <table class="hy-table">
+      <tr><th>Principle</th><th>Definition</th></tr>
+      <tr><td class="hl2"><strong>Confidentiality</strong></td><td>All communications and records from participants kept confidential</td></tr>
+      <tr><td><strong>Consent</strong></td><td>Informed consent for service provision, treatment, research, or program conditions</td></tr>
+      <tr><td><strong>Disclosure</strong></td><td>Transparency about purpose, data use, effects of program/study</td></tr>
+      <tr><td><strong>Competence</strong></td><td>Organizers must be competent to deliver what they promise</td></tr>
+      <tr><td class="hl3"><strong>Conflict of Interest</strong></td><td>Personal interests (financial, political, family) that could influence judgment</td></tr>
+      <tr><td><strong>Non-discrimination</strong></td><td>No discrimination based on race, color, personal belief</td></tr>
+      <tr><td><strong>Accountability</strong></td><td>Organizers accountable for adverse events</td></tr>
+      <tr><td><strong>Integrity</strong></td><td>Honesty, fairness, decency in accordance with one's principles</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Philippine History of Community Organizing</div>
+    <table class="hy-table">
+      <tr><th>Period</th><th>Key Event</th></tr>
+      <tr><td>Pre-Colonial</td><td>Mutual aid among neighbors and clans</td></tr>
+      <tr><td>Spanish Era</td><td>Alms giving and charity work</td></tr>
+      <tr><td>American Era</td><td>Organized Social Welfare began</td></tr>
+      <tr><td>Post-WWII</td><td>Government took responsibility for social welfare</td></tr>
+      <tr><td>1969</td><td><strong>PECCO</strong> (Philippine Ecumenical Council on Community Organization) — used Tondo Foreshore as training ground</td></tr>
+      <tr><td>1970–1980</td><td>Institutionalization; formation of <strong>ZOTO</strong> (Zone One Tondo Organization)</td></tr>
+      <tr><td>1990s</td><td>Sustainable development programs; addressed drugs, sexual abuse, domestic violence</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== SECTION 5: CHW TRAINING ========== -->
+<div id="s5" class="section">
+  <div class="section-header">
+    <div class="number">05</div>
+    <div>
+      <h2>Community Health Workers Training</h2>
+      <p>CHW Definition · Selection · Course Planning · Supervision</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">CHW — Key Definitions & Roles <span class="badge badge-high">MUST KNOW</span></div>
+    <div class="grid-2">
+      <div>
+        <div class="highlight-box teal">
+          <div class="highlight-box-title">APHA 3-Part Definition</div>
+          <ol style="padding-left:1rem;font-size:0.88rem">
+            <li>Trusted, knowledgeable <strong>frontline health personnel from the communities they serve</strong></li>
+            <li>Serves as <strong>liaison/link/intermediary</strong> between health/social services and the community</li>
+            <li>Bridges the gap — <strong>links health care system and social services to the people</strong></li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box sage">
+          <div class="highlight-box-title">Three Main Roles</div>
+          <ul class="bullet-list">
+            <li><strong>Service Providers</strong> — screenings, IMCI, prenatal/postnatal care, records</li>
+            <li><strong>Health Educators</strong> — culturally appropriate education in community settings</li>
+            <li><strong>Community Organizers</strong> — identify needs, build capacity, facilitate support groups</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box amber">
+      <div class="highlight-box-title">End Goal of CHW</div>
+      Provide access to quality, <strong>culturally competent health care delivery</strong> where doctors, nurses, and midwives are <strong>absent or scarce</strong>.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">CHW Selection Criteria <span class="badge badge-med">KNOW FOR MCQ</span></div>
+    <div class="grid-2">
+      <div>
+        <div class="subsection-title" style="margin-top:0">✅ Selection Criteria</div>
+        <ul class="bullet-list">
+          <li>Ideally selected by the <strong>community</strong> (improves trust & acceptance)</li>
+          <li>Well-respected; <strong>8–10 years of basic education</strong> (up to high school)</li>
+          <li>Mature, responsible, capable of sound decisions</li>
+          <li>Genuine interest — not motivated by power/money/influence</li>
+          <li>NOT forced or politically appointed</li>
+          <li>Family support is crucial for sustainability</li>
+          <li>Physically and mentally healthy</li>
+        </ul>
+      </div>
+      <div>
+        <div class="subsection-title" style="margin-top:0">❌ NOT Used as Criteria (WHO)</div>
+        <div class="highlight-box rose">
+          <div class="highlight-box-title">🚨 WHO Rec</div>
+          <strong>Age</strong> and <strong>marital status</strong> should NOT be used as criteria.
+        </div>
+        <div class="highlight-box amber" style="margin-top:0.8rem">
+          <div class="highlight-box-title">Workload Standard</div>
+          Part-time CHW: <strong>≤25 families</strong> (ideal) | Maximum: <strong>50 families</strong>
+        </div>
+      </div>
+    </div>
+    <div class="mnemonic">
+      <div class="mnemonic-title">🧠 Qualities Mnemonic — 3C's, 2V's, 1 P.T.</div>
+      <div class="mnemonic-body">
+        <strong>3C's:</strong> Compassionate · Committed · Creative<br>
+        <strong>2V's:</strong> Voluntary spirit · Visionary leadership<br>
+        <strong>1 P.T.:</strong> Patient · Team-worker
+      </div>
+    </div>
+  </div>
+
+  <div class="algo">
+    <div class="algo-title">⚙ Steps in CHW Course Planning (SAPD Framework)</div>
+    <div class="algo-steps">
+      <div class="algo-step"><div class="step-num">1</div><div class="step-content"><strong>Determine time available</strong> for teaching — guides breadth/depth of course</div></div>
+      <div class="algo-step"><div class="step-num">2</div><div class="step-content"><strong>List tasks</strong> — list all envisioned tasks; allocate into sessions</div></div>
+      <div class="algo-step"><div class="step-num">3</div><div class="step-content"><strong>Lesson Planning</strong> — 4 key questions:<br>
+        • Who am I teaching? (context) • What am I teaching? (objectives)<br>
+        • How will I teach? (learning strategies) • How will I know they understood? (assessment)</div></div>
+      <div class="algo-step"><div class="step-num">4</div><div class="step-content"><strong>Evaluate & Review</strong> — Plan (syllabus coverage), Process (implementation), Product (CHW field performance)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Skills & Teaching Methods <span class="badge badge-high">ALGORITHM</span></div>
+    <div class="grid-2">
+      <div>
+        <table class="hy-table">
+          <tr><th>Skill Type</th><th>Category</th><th>Best Teaching Method</th></tr>
+          <tr><td><strong>Knowledge (K)</strong></td><td>Enabling factor</td><td>Lecture, chalkboard, projector, handouts, films</td></tr>
+          <tr><td><strong>Attitude (A)</strong></td><td>Enabling factor</td><td>Role play, field observation, discussion</td></tr>
+          <tr><td><strong>Communication (C)</strong></td><td>Performance skill</td><td>Demonstration, role play, OSCE, field work</td></tr>
+          <tr><td><strong>Decision-making (D)</strong></td><td>Performance skill</td><td>Case studies, simulations, patient management problems, MCQ, OSCE</td></tr>
+          <tr><td><strong>Manual (M)</strong></td><td>Performance skill</td><td>Demonstration, paired practice, OSCE, field work supervised</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="highlight-box rose">
+          <div class="highlight-box-title">🚨 OSCE — Most Versatile Tool</div>
+          Tests ALL types of performance + knowledge skills — EXCEPT <strong>attitude</strong>. (Attitude assessed by field observation and role play only.)
+        </div>
+        <div class="highlight-box amber" style="margin-top:0.8rem">
+          <div class="highlight-box-title">Active Learning Principle</div>
+          <strong>Active participation + Feedback</strong> = needed to enhance learning.<br>
+          Teaching methods should be <strong>interactive</strong> to maximize learning.
+        </div>
+        <div class="highlight-box teal" style="margin-top:0.8rem">
+          <div class="highlight-box-title">Assessment DOs</div>
+          Certify student · Guide student & teacher · Motivate student & teacher · Assess learning. Must be valid and reliable.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">CHW Supervision & Support</div>
+    <table class="hy-table">
+      <tr><th>Category</th><th>Key Points</th></tr>
+      <tr><td class="hl2"><strong>Supervisor Roles</strong></td><td>Encourage; provide additional training; pastoral care; discipline; payment</td></tr>
+      <tr><td><strong>Visit Frequency</strong></td><td>At least <strong>1× per week</strong> in first year; less frequent later with regular contact via other channels</td></tr>
+      <tr><td><strong>Sources of Support</strong></td><td>Health team/supervisor · Other CHWs (peer support) · CHW's family · The community</td></tr>
+      <tr><td class="hl3"><strong>Payment (WHO rec)</strong></td><td>CHWs should be remunerated with financial package commensurate to job demands, hours, training, and roles. Non-monetary motivation ideal but payment necessary.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Philippines HHR Context <span class="badge badge-PH tag-PH" style="font-family:'Source Sans 3',sans-serif;font-size:0.7rem;font-weight:700;padding:0.15rem 0.6rem;border-radius:20px;letter-spacing:0.5px;text-transform:uppercase">Philippines</span></div>
+    <div class="highlight-box rose">
+      <div class="highlight-box-title">Key Statistics</div>
+      <strong>WHO Standard:</strong> ≥45 health workers per 10,000 population<br>
+      <strong>Reality:</strong> Fewer than 25% of cities/municipalities meet this standard<br>
+      <strong>Best distributed:</strong> Nurses (relatively); Doctors & midwives — very uneven
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 6: INTL HEALTH ========== -->
+<div id="s6" class="section">
+  <div class="section-header">
+    <div class="number">06</div>
+    <div>
+      <h2>International Health & Emerging Infections</h2>
+      <p>History · EID Categories · Triad of Causation · IHR · SDGs</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Global vs. International vs. Public Health <span class="badge badge-high">COMPARISON</span></div>
+    <table class="compare-table">
+      <tr><th>Feature</th><th>Global Health</th><th>International Health</th><th>Public Health</th></tr>
+      <tr><td><strong>Geography</strong></td><td>Transcends national borders; scope not location</td><td>Focus outside one's own country; bi-national</td><td>Specific communities or countries; national</td></tr>
+      <tr><td><strong>Population</strong></td><td>Prevention + clinical care; equity among nations</td><td>Prevention; help other nations</td><td>Prevention; national focus</td></tr>
+      <tr><td><strong>Key Priority</strong></td><td class="hl2">Equity in health for ALL worldwide; depoliticized</td><td class="hl3">Differences between countries; subspecialty</td><td class="hl">Vulnerable/underserved populations</td></tr>
+      <tr><td><strong>Disciplines</strong></td><td>Highly inter-disciplinary; beyond health sciences</td><td>Embraces a few disciplines</td><td>Multi-disciplinary; health & social sciences</td></tr>
+      <tr><td><strong>Issues addressed</strong></td><td>Tobacco, NCDs, micronutrient deficiency, migrant health, injury prevention</td><td>Policies, practices, systems; cross-border</td><td>Health as public good; systems & structures</td></tr>
+    </table>
+    <div class="highlight-box amber">
+      <div class="highlight-box-title">Key Distinction to Remember</div>
+      <strong>Global Health</strong> "depoliticized the field" — rises above ideological uses; addresses health problems of both rich AND poor countries.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">History of International Health — Key Milestones <span class="badge badge-med">TIMELINE</span></div>
+    <table class="hy-table">
+      <tr><th>Period / Event</th><th>Significance</th></tr>
+      <tr><td class="hl2"><strong>Bubonic Plague (14th C)</strong></td><td><strong>Beginning of international health</strong> — forced nation-states to deal with one another</td></tr>
+      <tr><td><strong>Quarantine established (1377)</strong></td><td>40 days; no commerce; forced diplomatic dialogue; infection control globally</td></tr>
+      <tr><td><strong>International Sanitary Conferences (1851)</strong></td><td>Reconcile commerce and public health; 1st conference: <strong>Paris, August 5, 1851</strong></td></tr>
+      <tr><td><strong>Louis Pasteur</strong></td><td>Father of Modern Microbiology; Germ Theory of Disease</td></tr>
+      <tr><td><strong>Robert Koch</strong></td><td>Father of Medical Microbiology; causative agents of TB and cholera</td></tr>
+      <tr><td><strong>Edward Jenner</strong></td><td>Vaccination method → eradication of smallpox (200 years later); NO knowledge of virology!</td></tr>
+      <tr><td class="hl3"><strong>International Red Cross (1864)</strong></td><td><strong>First international NON-governmental agency</strong>; Switzerland; humanitarian assistance to wounded combatants</td></tr>
+      <tr><td><strong>OIHP (1909)</strong></td><td>L'Office Internationale d'Hygiène Publique; first formal international public health organization; collect/disseminate information</td></tr>
+      <tr><td><strong>WHO (April 7, 1948)</strong></td><td>Most important UN agency for international health; Mission: "attainment by all peoples of the highest possible level of health"</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Categories of Emerging Infectious Diseases <span class="badge badge-high">MUST KNOW ALL 5</span></div>
+    <table class="hy-table">
+      <tr><th>Category</th><th>Definition</th><th>Examples</th></tr>
+      <tr><td class="hl"><strong>Newly Emerging</strong></td><td>Diseases recognized in humans for the FIRST TIME</td><td>HIV/AIDS (1981), SARS (2002), MERS-CoV (2012), COVID-19 (2019)</td></tr>
+      <tr><td class="hl2"><strong>Re-emerging</strong></td><td>Historically infected humans; re-appear in new locations, populations, or drug-resistant forms</td><td>Tuberculosis (deadliest re-emerging), Cholera, Whooping cough, Malaria</td></tr>
+      <tr><td class="hl3"><strong>Deliberately Emerging</strong></td><td>Diseases developed by humans with <strong>intent to harm</strong>; mass bioterrorism</td><td>Anthrax; bio-engineered microorganisms</td></tr>
+      <tr><td><strong>Accidentally Emerging</strong></td><td>Created by humans; released <strong>unintentionally</strong></td><td>Epizootic vaccinia; vaccine-derived polioviruses</td></tr>
+      <tr><td class="hl"><strong>De-emerging</strong></td><td>Eliminated, eradicated, or in process of elimination</td><td>Smallpox (eradicated)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Triad of Causation — Variables in Disease Emergence <span class="badge badge-high">ALGORITHM</span></div>
+    <div class="grid-3">
+      <div class="mini-card" style="border-top:3px solid var(--rose)">
+        <h4 style="color:var(--rose)">🦠 AGENT</h4>
+        <ul>
+          <li>Genetic instability of microorganisms</li>
+          <li>Genetic plasticity → adapt to new ecological niches</li>
+          <li>Mutations → antibiotic resistance (MRSA, drug-resistant TB)</li>
+          <li>High mutation rates: Influenza, COVID-19</li>
+          <li>Most EID are historically zoonotic</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--teal)">
+        <h4 style="color:var(--teal)">👤 HOST</h4>
+        <ul>
+          <li>Susceptibility to infection</li>
+          <li>Demographics & behavior</li>
+          <li>Human movement (key driver!)</li>
+          <li>Crowding, population growth</li>
+          <li>Risky behaviors (IV drug use, unprotected sex)</li>
+          <li>Portals of entry: skin, respiratory, GI</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--amber)">
+        <h4 style="color:var(--amber)">🌍 ENVIRONMENT</h4>
+        <ul>
+          <li>Climate change → El Niño/La Niña → ↑ vector-borne</li>
+          <li>Deforestation → Zika, Dengue</li>
+          <li>Water storage → Aedes aegypti emergence</li>
+          <li>Rubber tires → Aedes albopictus breeding</li>
+          <li>War & natural disasters</li>
+          <li>Agricultural development</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box rose">
+      <div class="highlight-box-title">High-Yield: Environment-Disease Links</div>
+      <strong>Aedes aegypti</strong> emerged ~5000 yrs ago in N. Africa from human water storage practices → yellow fever, dengue, chikungunya.<br>
+      <strong>Aedes albopictus</strong> breeds in rubber tires; same diseases.<br>
+      <strong>Cholera 1832:</strong> Spread along travel routes; slowed in winter, surged in summer → HOST (travel behavior) factor.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Major Factors in Disease Emergence & Re-emergence</div>
+    <div class="grid-3">
+      <div class="mini-card">
+        <h4>Microbial Agents</h4>
+        <ul><li>Genetic adaptation & change</li><li>Antimicrobial resistance</li><li>Polymicrobial diseases</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4>Human Host</h4>
+        <ul><li>Susceptibility to infection</li><li>Demographics & behavior</li><li>International travel & trade</li><li>Intent to harm</li><li>Inappropriate antibiotic use</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4>Human Environment</h4>
+        <ul><li>Climate change</li><li>Changing ecosystem & land use</li><li>Technology & industry</li><li>Poverty & social inequality</li><li>Lack of public health services</li><li>War & famine</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">International Health Regulations (IHR 2005) <span class="badge badge-high">MUST KNOW</span></div>
+    <div class="grid-2">
+      <div>
+        <div class="highlight-box teal">
+          <div class="highlight-box-title">What is IHR?</div>
+          Legally binding international instrument on disease <strong>prevention, surveillance, and response</strong>. Adopted by all WHO member countries. Formal declaration = <strong>PHEIC</strong>.
+        </div>
+        <div class="highlight-box sage" style="margin-top:0.8rem">
+          <div class="highlight-box-title">Goals of IHR</div>
+          <ul class="bullet-list">
+            <li>Improve notification procedures</li>
+            <li>Identify PHEICs</li>
+            <li>Facilitate global communication during emergencies</li>
+            <li>Mitigate consequences through coordinated response</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box amber">
+          <div class="highlight-box-title">4 Criteria to Determine Notifiability</div>
+          <ul class="bullet-list">
+            <li>Is the public health impact <strong>serious</strong>?</li>
+            <li>Is the event <strong>unusual or unexpected</strong>?</li>
+            <li>Is there significant risk of <strong>international spread</strong>?</li>
+            <li>Is there significant risk of international <strong>travel/trade restrictions</strong>?</li>
+          </ul>
+          <p style="font-size:0.85rem;margin-top:0.4rem">Notification must occur within <strong>24 hours</strong> of assessment.</p>
+        </div>
+      </div>
+    </div>
+    <div class="subsection-title">Past PHEICs (in order)</div>
+    <table class="hy-table">
+      <tr><th>Date</th><th>Disease</th></tr>
+      <tr><td>April 2009</td><td>H1N1 (Swine Flu)</td></tr>
+      <tr><td>May 2014</td><td>Wild Poliovirus</td></tr>
+      <tr><td>August 2014</td><td>Ebola Virus Disease — West Africa</td></tr>
+      <tr><td>February 2016</td><td>Zika Virus Disease</td></tr>
+      <tr><td>January 30, 2020</td><td>COVID-19</td></tr>
+      <tr><td>July 23, 2022</td><td>Monkey Pox (MPOX)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">DOH Four-Door Approach (Philippines EID) <span class="badge badge-high">PH CONTEXT</span></div>
+    <div class="algo" style="background:var(--amber-light);border-color:var(--amber)">
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start">
+        <div style="flex:1;min-width:200px;background:white;border:1.5px solid var(--amber);border-radius:8px;padding:0.8rem">
+          <strong style="color:var(--amber)">DOOR 1</strong><br>
+          <span style="font-size:0.88rem">Point of <strong>Origin</strong></span>
+        </div>
+        <div style="flex:1;min-width:200px;background:white;border:1.5px solid var(--teal);border-radius:8px;padding:0.8rem">
+          <strong style="color:var(--teal)">DOOR 2</strong><br>
+          <span style="font-size:0.88rem">Point of <strong>Entry</strong> (Airports & Seaports) — intercept incoming travelers</span>
+        </div>
+        <div style="flex:1;min-width:200px;background:white;border:1.5px solid var(--sage);border-radius:8px;padding:0.8rem">
+          <strong style="color:var(--sage-dark)">DOOR 3</strong><br>
+          <span style="font-size:0.88rem">Point of Care — <strong>Hospital or Community</strong>; triage, screening, lab confirmation</span>
+        </div>
+        <div style="flex:1;min-width:200px;background:white;border:1.5px solid var(--rose);border-radius:8px;padding:0.8rem">
+          <strong style="color:var(--rose)">DOOR 4</strong><br>
+          <span style="font-size:0.88rem"><strong>Epidemic Surge</strong> — Point of Increased Demand + Widespread Transmission</span>
+        </div>
+      </div>
+    </div>
+    <p class="note">Goal: Prevent and/or minimize entry of local spread of emerging infectious diseases in the Philippines.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Millennium Development Goals (MDGs) vs SDGs <span class="badge badge-med">KNOW</span></div>
+    <div class="highlight-box teal">
+      <div class="highlight-box-title">MDGs — 8 Goals (Achieved: Goals 1, 4, 7)</div>
+      1. Eradicate extreme poverty & hunger · 2. Global primary education · 3. Gender equality · 4. Reduce child mortality ✅ · 5. Promote maternal health · 6. Fight malaria, HIV, diseases · 7. Environmental sustainability ✅ · 8. Universal partnership for development
+    </div>
+    <div class="highlight-box sage" style="margin-top:0.8rem">
+      <div class="highlight-box-title">SDG #3 (Health) — Key Targets by 2030</div>
+      3.1: MMR &lt;70/100,000 live births · 3.2: Neonatal mortality ≤12/1000; U5MR ≤25/1000 · 3.3: End AIDS, TB, malaria epidemics · 3.4: Reduce premature NCD mortality by ⅓ · 3.8: Universal Health Coverage (UHC)
+    </div>
+  </div>
+</div>
+
+<!-- ========== MCQ SECTION ========== -->
+<div id="smcq" class="section">
+  <div class="section-header">
+    <div class="number">MCQ</div>
+    <div>
+      <h2>Practice Questions</h2>
+      <p>Click an option to reveal the answer and explanation</p>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">1.</span> A patient with hypertension mentions she stopped taking her medication because her husband left and she has no one to remind her. Using the BPS model, which factor is primarily driving her non-compliance?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','1')"><span class="mcq-letter">A</span> Biological — her disease is worsening</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','1')"><span class="mcq-letter">B</span> Psychological — she has no motivation</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','1')"><span class="mcq-letter">C</span> Social — loss of social support from spouse</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','1')"><span class="mcq-letter">D</span> Pharmacological — the drug is too expensive</div>
+    </div>
+    <div class="mcq-explain" id="exp1">✅ Social factors (family support, social networks) are a key BPS component. The spouse served as a social support mechanism, and its loss is the primary driver here.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">2.</span> In the CEA method, a physician immediately explains the disease mechanism to the patient after history-taking. What went wrong?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','2')"><span class="mcq-letter">A</span> The physician was too technical</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','2')"><span class="mcq-letter">B</span> The physician skipped Catharsis before Education</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','2')"><span class="mcq-letter">C</span> The physician should have made an Action plan first</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','2')"><span class="mcq-letter">D</span> Nothing; this is appropriate in time-limited consults</div>
+    </div>
+    <div class="mcq-explain" id="exp2">✅ CEA order is strict: Catharsis → Education → Action. You CANNOT proceed to Education without first allowing the patient to express their feelings (Catharsis).</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">3.</span> A medical team conducts house-to-house interviews asking about recent illnesses and vaccination status. What type of data source is this?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','3')"><span class="mcq-letter">A</span> Primary — directly gathered from community members</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','3')"><span class="mcq-letter">B</span> Secondary — it uses routine health reports</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','3')"><span class="mcq-letter">C</span> Primary — uses already published data</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','3')"><span class="mcq-letter">D</span> Secondary — based on past hospital records</div>
+    </div>
+    <div class="mcq-explain" id="exp3">✅ Primary data provides direct evidence about an event. House-to-house interviews are direct data collection from the source population.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">4.</span> Which is TRUE regarding Primary vs. Secondary data?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','4')"><span class="mcq-letter">A</span> Primary data requires more analytical effort to extract indicators</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','4')"><span class="mcq-letter">B</span> Secondary data has greater cost in time and money</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','4')"><span class="mcq-letter">C</span> Secondary data has lower cost but more difficulty stratifying indicators</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','4')"><span class="mcq-letter">D</span> Primary data is less temporally comparable</div>
+    </div>
+    <div class="mcq-explain" id="exp4">✅ Secondary data = lower cost + more timely BUT more analytical effort required + more difficulty stratifying. Primary data = greater cost in time/money BUT greater control over quality.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">5.</span> An epidemiologist notes a community's official report shows very low maternal mortality, but a separate survey reveals extremely poor prenatal care rates. Which step in quality evaluation of health indicators applies?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','5')"><span class="mcq-letter">A</span> Examine consistency with temporal attributes</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','5')"><span class="mcq-letter">B</span> Examine consistency with personal attributes</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','5')"><span class="mcq-letter">C</span> Examine plausibility in relation to other data sources</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','5')"><span class="mcq-letter">D</span> Examine consistency with place attributes</div>
+    </div>
+    <div class="mcq-explain" id="exp5">✅ When you question an indicator based on discrepancy with other data sources, that's Step 5: Examine Plausibility. Low MMR despite poor prenatal care = implausible without investigation.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">6.</span> A barangay in a far-flung area has no clinic. Community members identify a trusted local, train her in prenatal care, and she monitors pregnant women. Which level of PHC participation is this?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','6')"><span class="mcq-letter">A</span> Hospital/Clinic-Based</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','6')"><span class="mcq-letter">B</span> Community-Oriented</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','6')"><span class="mcq-letter">C</span> Community-Based</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','6')"><span class="mcq-letter">D</span> Community-Managed</div>
+    </div>
+    <div class="mcq-explain" id="exp6">✅ Community-Based: community actively plans activities together with health professionals/CHW; shared decision-making; CHW + NGO involvement. Community-Managed would require no external players at all.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">7.</span> Which community organizing principle states that leaders must be accountable to the people at all times and emerge through concrete action?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','7')"><span class="mcq-letter">A</span> Consciousness-raising</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','7')"><span class="mcq-letter">B</span> Self-reliance</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','7')"><span class="mcq-letter">C</span> Participatory and Mass-based</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','7')"><span class="mcq-letter">D</span> Democratic leadership</div>
+    </div>
+    <div class="mcq-explain" id="exp7">✅ Democratic leadership = group-centered, NOT leader-oriented. Leaders emerge through concrete action, NOT externally appointed. Leaders are accountable to the people at ALL times.</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">8.</span> A CHW candidate is described as a respected community member, married with children, 35 years old, with 10 years of basic education. According to WHO, which criterion should NOT be used in selecting her?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','8')"><span class="mcq-letter">A</span> Marital status</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','8')"><span class="mcq-letter">B</span> Community respect</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','8')"><span class="mcq-letter">C</span> Educational attainment</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','8')"><span class="mcq-letter">D</span> Physical health status</div>
+    </div>
+    <div class="mcq-explain" id="exp8">✅ WHO recommends that AGE and MARITAL STATUS should NOT be used as criteria for CHW selection.</div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">9.</span> The first international NON-governmental agency in international health was:</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','9')"><span class="mcq-letter">A</span> World Health Organization</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','9')"><span class="mcq-letter">B</span> International Red Cross</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','9')"><span class="mcq-letter">C</span> Pan American Sanitary Bureau</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','9')"><span class="mcq-letter">D</span> OIHP</div>
+    </div>
+    <div class="mcq-explain" id="exp9">✅ International Red Cross = first international NON-governmental agency. Founded 1864, Switzerland. WHO is intergovernmental; PASB was from 1902; OIHP was 1909 (formal governmental).</div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">10.</span> During the 1832 cholera pandemic, cases decreased in winter and surged in summer. The best explanation based on Triad of Causation is:</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','10')"><span class="mcq-letter">A</span> Seasonal mutation of the Vibrio cholerae bacterium (Agent)</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','10')"><span class="mcq-letter">B</span> Seasonal human travel patterns following trade routes (Host)</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','10')"><span class="mcq-letter">C</span> Temperature effects on bacterial survival (Environment)</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','10')"><span class="mcq-letter">D</span> Breakdown of public health sanitation in winter</div>
+    </div>
+    <div class="mcq-explain" id="exp10">✅ Host factor: cholera followed trade/travel routes. Travel slowed in winter → outbreak slowed. Travel increased in summer → outbreak surged. Human movement behavior = HOST variable.</div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">11.</span> An assessment tool assesses a family's connections to church, neighborhood, and local businesses using directional arrows and line weights. This BEST describes:</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','11')"><span class="mcq-letter">A</span> Genogram</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','11')"><span class="mcq-letter">B</span> SCREEM</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','11')"><span class="mcq-letter">C</span> Ecomap</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','11')"><span class="mcq-letter">D</span> Family Lifeline</div>
+    </div>
+    <div class="mcq-explain" id="exp11">✅ Ecomap = pictorial representation of family's connections to external systems. Uses arrows (energy flow), line thickness (strength), and jagged lines (stressful connections).</div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">12.</span> Which community organizing model is BEST suited for a community facing high rates of adolescent pregnancy where experts are brought in to set goals and create plans with data?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','12')"><span class="mcq-letter">A</span> Locality Development Model</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','12')"><span class="mcq-letter">B</span> Social Planning Model</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','12')"><span class="mcq-letter">C</span> Social Action Model</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','12')"><span class="mcq-letter">D</span> Community Partnership Model</div>
+    </div>
+    <div class="mcq-explain" id="exp12">✅ Social Planning Model = uses experts/task force; addresses routine social problems with factual data; useful for education, child development, environmental health, reproductive health planning.</div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">13.</span> According to DOH Four-Door Approach, which door refers to preventing importation of emerging infectious diseases through airports and seaports?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','13')"><span class="mcq-letter">A</span> Door 1</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','13')"><span class="mcq-letter">B</span> Door 2</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','13')"><span class="mcq-letter">C</span> Door 3</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','13')"><span class="mcq-letter">D</span> Door 4</div>
+    </div>
+    <div class="mcq-explain" id="exp13">✅ Door 2 = Point of Entry (airports and seaports). Door 1 = point of origin; Door 3 = hospital/community care; Door 4 = epidemic surge.</div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">14.</span> A family scores 5 on the SCREEM-RES. The CORRECT interpretation is:</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','14')"><span class="mcq-letter">A</span> Adequate family resources (13–18)</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','14')"><span class="mcq-letter">B</span> Moderately inadequate resources (7–12)</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','14')"><span class="mcq-letter">C</span> Severely inadequate resources (0–6)</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','14')"><span class="mcq-letter">D</span> Cannot be interpreted without qualitative SCREEM</div>
+    </div>
+    <div class="mcq-explain" id="exp14">✅ SCREEM-RES scoring: 13–18 = adequate; 7–12 = moderately inadequate; 0–6 = severely inadequate family resources. Score of 5 = severely inadequate.</div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="mcq-card">
+    <div class="mcq-q"><span class="mcq-num">15.</span> A trainee immunization course requires mastery of when NOT to give vaccines. What skills does this require?</div>
+    <div class="mcq-options">
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','15')"><span class="mcq-letter">A</span> Knowledge only</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','15')"><span class="mcq-letter">B</span> Manual skills only</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'correct','15')"><span class="mcq-letter">C</span> Knowledge and Decision-making</div>
+      <div class="mcq-option" onclick="selectMCQ(this,'wrong','15')"><span class="mcq-letter">D</span> All of K, A, C, M, D</div>
+    </div>
+    <div class="mcq-explain" id="exp15">✅ "When not to give" requires K (knowledge of contraindications) + D (decision-making: applying knowledge to decide). This is consistent with the sample immunization course planning table.</div>
+  </div>
+</div>
+
+<!-- ========== BUZZWORDS SECTION ========== -->
+<div id="sbuzz" class="section">
+  <div class="section-header">
+    <div class="number">BZ</div>
+    <div>
+      <h2>Buzzwords & Quick Reference</h2>
+      <p>Key terms, mnemonics, and must-memorize facts</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚨 High-Yield Buzzwords — See it, Know the Answer</div>
+    <div class="buzz-grid">
+      <div class="buzz-item"><div class="buzz-term">"FIRST international declaration for PHC"</div><div class="buzz-def">Alma Ata Declaration, 1978, Almaty Kazakhstan</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Health for All" goal</div><div class="buzz-def">Alma Ata 1978; WHO Primary Health Care</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Health = State of complete…"</div><div class="buzz-def">Physical, Mental, AND Social well-being (WHO). Lacks spiritual dimension.</div></div>
+      <div class="buzz-item"><div class="buzz-term">"First intl NON-gov agency"</div><div class="buzz-def">International Red Cross, 1864, Switzerland</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Beginning of international health"</div><div class="buzz-def">Bubonic Plague, 14th century — forced nation-states to cooperate</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Father of Modern Microbiology"</div><div class="buzz-def">Louis Pasteur — Germ Theory of Disease</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Father of Medical Microbiology"</div><div class="buzz-def">Robert Koch — TB and cholera agents</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Depoliticized the field"</div><div class="buzz-def">Transition from International Health → Global Health in the 1990s</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Most important UN agency for IH"</div><div class="buzz-def">WHO — founded April 7, 1948</div></div>
+      <div class="buzz-item"><div class="buzz-term">"BPS Model"</div><div class="buzz-def">George Engel, 1977 — Biological + Psychological + Social</div></div>
+      <div class="buzz-item"><div class="buzz-term">"CEA order"</div><div class="buzz-def">Catharsis → Education → Action (NEVER skip Catharsis!)</div></div>
+      <div class="buzz-item"><div class="buzz-term">"OSCE is most versatile"</div><div class="buzz-def">Tests all skills EXCEPT attitude (assessed by field observation/role play)</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Age & marital status"</div><div class="buzz-def">NOT used as CHW selection criteria (WHO recommendation)</div></div>
+      <div class="buzz-item"><div class="buzz-term">"≥45 health workers/10,000"</div><div class="buzz-def">WHO standard for HHR; <25% of PH cities/municipalities meet this</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Community-Managed"</div><div class="buzz-def">MOST IDEAL level of participation; Health BY the people; Liberating approach</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Health to/for/with/by the people"</div><div class="buzz-def">Hospital-based / Community-Oriented / Community-Based / Community-Managed</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Generics Act of PH"</div><div class="buzz-def">Based on Essential Drugs element of PHC (E.L.E.M.E.N.T.S)</div></div>
+      <div class="buzz-item"><div class="buzz-term">"PH ranks 4th in TB"</div><div class="buzz-def">Worldwide tuberculosis incidence; ranked up to #2 during COVID pandemic</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Deadliest re-emerging disease"</div><div class="buzz-def">Tuberculosis — classic re-emerging infectious disease</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Largest EID outbreak before COVID"</div><div class="buzz-def">Ebola in West Africa — origin: Rural Guinea, December 2013</div></div>
+      <div class="buzz-item"><div class="buzz-term">"ZOTO"</div><div class="buzz-def">Zone One Tondo Organization — 1970–1980; institutionalized CO in Philippines</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Democratic but NOT leader-centered"</div><div class="buzz-def">Core principle of Community Organizing; leaders emerge, not appointed</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Aedes aegypti origin"</div><div class="buzz-def">Human water storage practices ~5000 yrs ago in N. Africa; yellow fever, dengue, chikungunya</div></div>
+      <div class="buzz-item"><div class="buzz-term">"4th leading determinant of health"</div><div class="buzz-def">Health Care (20%); least contributing; socioeconomic factors = 40% (most)</div></div>
+      <div class="buzz-item"><div class="buzz-term">"SCREEM-RES score 0–6"</div><div class="buzz-def">Severely inadequate family resources</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Internally matriarchal"</div><div class="buzz-def">Filipino family: grandmother/mother = household head + financial manager</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Devolution"</div><div class="buzz-def">National govt gives power/funding to LGUs — PHC decentralization principle; Principle of Subsidiarity</div></div>
+      <div class="buzz-item"><div class="buzz-term">"PHEIC notification"</div><div class="buzz-def">Must occur within 24 hours of assessment by the country</div></div>
+      <div class="buzz-item"><div class="buzz-term">"GDP on health — Philippines"</div><div class="buzz-def">5.9% of GDP for health-related activities</div></div>
+      <div class="buzz-item"><div class="buzz-term">"SDG 3.8"</div><div class="buzz-def">Achieve Universal Health Coverage — UHC target</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Part-time CHW covers"</div><div class="buzz-def">Ideally ≤25 families; maximum 50 families</div></div>
+      <div class="buzz-item"><div class="buzz-term">"Process step before Problem ID"</div><div class="buzz-def">Social Investigation (Step 3) → then Problem Identification & Analysis (Step 4)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Quick Mnemonics Summary</div>
+    <div class="grid-2">
+      <div class="mnemonic">
+        <div class="mnemonic-title">E.L.E.M.E.N.T.S — PHC Elements (Alma Ata)</div>
+        <div class="mnemonic-body">Education · Local/Endemic Disease Control<br>Expanded EPI · Maternal & Child Health<br>Essential Drugs · Nutrition<br>Treatment · Sanitation</div>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-title">SCREEM — Family Resources Tool</div>
+        <div class="mnemonic-body">Social · Cultural · Religion<br>Economic · Educational · Medical</div>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-title">Family APGAR — A.P.G.A.R.</div>
+        <div class="mnemonic-body">Adaptation · Partnership · Growth<br>Affection · Resolve</div>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-title">CHW Qualities — 3C's, 2V's, 1 P.T.</div>
+        <div class="mnemonic-body">Compassionate · Committed · Creative<br>Voluntary spirit · Visionary leadership<br>Patient · Team-worker</div>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-title">PHC Participation Levels — "TO / FOR / WITH / BY"</div>
+        <div class="mnemonic-body">Hospital → Health TO the people<br>Community-Oriented → Health FOR the people<br>Community-Based → Health WITH the people<br>Community-Managed → Health BY the people ← IDEAL</div>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-title">CEA — Patient Engagement</div>
+        <div class="mnemonic-body">C atharsis (FIRST — never skip)<br>E ducation<br>A ction (LAST — co-create plan)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Must-Know Numbers & Statistics</div>
+    <table class="hy-table">
+      <tr><th>Value</th><th>What it refers to</th></tr>
+      <tr><td class="hl">≥45/10,000</td><td>WHO minimum health workers per population</td></tr>
+      <tr><td class="hl3">5.9%</td><td>Philippines GDP allocated to health-related activities</td></tr>
+      <tr><td><strong>40%</strong></td><td>Socioeconomic factors = largest determinant of health</td></tr>
+      <tr><td><strong>30%</strong></td><td>Health behaviors = second largest determinant</td></tr>
+      <tr><td><strong>20%</strong></td><td>Health care = smallest determinant (only 20%!)</td></tr>
+      <tr><td class="hl2">13–18 / 7–12 / 0–6</td><td>SCREEM-RES: Adequate / Moderately inadequate / Severely inadequate</td></tr>
+      <tr><td><strong>1–4</strong></td><td>Scoring scale used in Decision Matrix</td></tr>
+      <tr><td><strong>30% / 30% / 20% / 20%</strong></td><td>Decision Matrix weights: Magnitude / Feasibility / Impact / Community concern</td></tr>
+      <tr><td class="hl">24 hours</td><td>Time limit for countries to notify WHO of a potential PHEIC</td></tr>
+      <tr><td><strong>40 days</strong></td><td>Duration of original quarantine (1377)</td></tr>
+      <tr><td><strong>1977</strong></td><td>Year George Engel introduced BPS model</td></tr>
+      <tr><td><strong>1978</strong></td><td>Alma Ata Declaration</td></tr>
+      <tr><td><strong>1864</strong></td><td>International Red Cross founded (Switzerland)</td></tr>
+      <tr><td><strong>April 7, 1948</strong></td><td>WHO ratified/founded</td></tr>
+    </table>
+  </div>
+</div>
+
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  return false;
+}
+
+function selectMCQ(el, type, qnum) {
+  const parent = el.closest('.mcq-card');
+  const options = parent.querySelectorAll('.mcq-option');
+  if (options[0].classList.contains('revealed')) return;
+  options.forEach(o => o.classList.add('revealed'));
+  if (type === 'correct') {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('wrong');
+    // highlight correct
+    parent.querySelectorAll('.mcq-option').forEach(o => {
+      if (o.getAttribute('onclick') && o.getAttribute('onclick').includes("'correct'")) {
+        o.classList.add('correct');
+      }
+    });
+  }
+  document.getElementById('exp' + qnum).classList.add('show');
+}
+
+// Set first nav link active on load
+document.querySelector('#main-nav a').classList.add('active');
+</script>
+</body>
+</html>

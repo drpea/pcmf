@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCM 2 — High Yield Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2ee;
+    --surface: #ffffff;
+    --surface2: #faf8f5;
+    --border: #e8e2d9;
+    --text: #2c2420;
+    --text-muted: #7a6e68;
+    --accent1: #c0392b; /* red */
+    --accent2: #2471a3; /* blue */
+    --accent3: #1e8449; /* green */
+    --accent4: #d35400; /* orange */
+    --accent5: #7d3c98; /* purple */
+    --accent6: #148f77; /* teal */
+    --yellow: #f6c90e;
+    --yellow-bg: #fffde7;
+    --red-bg: #fdecea;
+    --blue-bg: #e8f4fd;
+    --green-bg: #eafaf1;
+    --purple-bg: #f5eef8;
+    --orange-bg: #fdf2e9;
+    --teal-bg: #e8f8f5;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08);
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ===== TOP NAV ===== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,242,238,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1.5px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    min-height: 52px;
+  }
+
+  .topbar-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--accent1);
+    margin-right: 12px;
+    white-space: nowrap;
+  }
+
+  .tab-btn {
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { background: var(--border); color: var(--text); }
+  .tab-btn.active { background: var(--accent1); color: white; }
+
+  /* ===== LAYOUT ===== */
+  .main { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== SECTION HEADER ===== */
+  .sec-header {
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2.5px solid var(--accent1);
+  }
+  .sec-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .sec-header p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--accent1);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== TABLES ===== */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 0; font-size: 14px; }
+  th {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--surface2); }
+  tr:hover td { background: #f0ece6; }
+
+  /* ===== HIGHLIGHT BOXES ===== */
+  .hy-box {
+    border-left: 4px solid;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .hy-box.red { border-color: var(--accent1); background: var(--red-bg); }
+  .hy-box.blue { border-color: var(--accent2); background: var(--blue-bg); }
+  .hy-box.green { border-color: var(--accent3); background: var(--green-bg); }
+  .hy-box.orange { border-color: var(--accent4); background: var(--orange-bg); }
+  .hy-box.purple { border-color: var(--accent5); background: var(--purple-bg); }
+  .hy-box.teal { border-color: var(--accent6); background: var(--teal-bg); }
+  .hy-box.yellow { border-color: #c9a800; background: var(--yellow-bg); }
+  .hy-box strong { display: block; margin-bottom: 3px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ===== GRID ===== */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  @media (max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* ===== MINI CARD ===== */
+  .mini-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .mini-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .mini-card ul { padding-left: 16px; font-size: 13.5px; }
+  .mini-card ul li { margin-bottom: 3px; }
+
+  /* ===== TAGS ===== */
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    margin: 2px 3px 2px 0;
+  }
+  .tag.red { background: #fdecea; color: var(--accent1); border: 1px solid #f5b7b1; }
+  .tag.blue { background: var(--blue-bg); color: var(--accent2); border: 1px solid #aed6f1; }
+  .tag.green { background: var(--green-bg); color: var(--accent3); border: 1px solid #a9dfbf; }
+  .tag.orange { background: var(--orange-bg); color: var(--accent4); border: 1px solid #f5cba7; }
+  .tag.purple { background: var(--purple-bg); color: var(--accent5); border: 1px solid #d2b4de; }
+
+  /* ===== STAR ===== */
+  .star { color: #c9a800; font-size: 15px; }
+
+  /* ===== MCQ ===== */
+  .mcq-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .mcq-q {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .mcq-qnum {
+    display: inline-block;
+    background: var(--accent1);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .mcq-options { list-style: none; padding: 0; }
+  .mcq-options li {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+  .mcq-options li:hover { background: var(--surface2); border-color: #c0b8af; }
+  .mcq-options li.correct { background: var(--green-bg); border-color: var(--accent3); color: var(--accent3); font-weight: 600; }
+  .mcq-options li.wrong { background: var(--red-bg); border-color: var(--accent1); color: var(--accent1); }
+  .mcq-options li.reveal-correct { background: var(--green-bg); border-color: var(--accent3); color: var(--accent3); }
+  .rationale {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--blue-bg);
+    border-radius: 8px;
+    font-size: 13.5px;
+    border-left: 3px solid var(--accent2);
+  }
+  .rationale.show { display: block; }
+  .mcq-score {
+    background: var(--surface);
+    border: 2px solid var(--accent1);
+    border-radius: 10px;
+    padding: 18px 22px;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    display: none;
+  }
+
+  /* ===== BUZZWORDS ===== */
+  .buzz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .buzz-item {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .buzz-term {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent1);
+    margin-bottom: 3px;
+  }
+  .buzz-def { font-size: 13px; color: var(--text-muted); }
+
+  /* ===== COLLAPSE ===== */
+  .collapse-btn {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+    transition: background 0.15s;
+  }
+  .collapse-btn:hover { background: #ede8e0; }
+  .collapse-content {
+    display: none;
+    padding: 12px 4px 4px;
+  }
+  .collapse-content.open { display: block; }
+
+  /* ===== ALGORITHM ===== */
+  .algo-step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .algo-num {
+    background: var(--accent1);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .algo-text { font-size: 14px; }
+
+  /* ===== COMPARE TABLE ===== */
+  .compare-header { text-align: center; font-weight: 700; }
+
+  /* ===== PROGRESS ===== */
+  .progress-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; margin: 4px 0 10px; overflow: hidden; }
+  .progress-bar { height: 100%; border-radius: 3px; background: var(--accent1); transition: width 0.5s; }
+
+  /* ===== DIVIDER ===== */
+  .divider { border: none; border-top: 1.5px solid var(--border); margin: 20px 0; }
+
+  /* responsive table */
+  .table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">PCM 2 ⚕️</span>
+  <button class="tab-btn active" onclick="showTab('health-systems')">Health Systems</button>
+  <button class="tab-btn" onclick="showTab('ph-strategy')">PH Strategy</button>
+  <button class="tab-btn" onclick="showTab('uhc')">UHC / RA 11223</button>
+  <button class="tab-btn" onclick="showTab('management')">Management</button>
+  <button class="tab-btn" onclick="showTab('financing')">Financing</button>
+  <button class="tab-btn" onclick="showTab('program-planning')">Program Planning</button>
+  <button class="tab-btn" onclick="showTab('buzzwords')">🔑 Buzzwords</button>
+  <button class="tab-btn" onclick="showTab('mcq')">📝 MCQ</button>
+</div>
+
+<div class="main">
+
+<!-- ===================================================== -->
+<!-- TAB: HEALTH SYSTEMS -->
+<!-- ===================================================== -->
+<div id="health-systems" class="section active">
+  <div class="sec-header">
+    <h2>Health Systems</h2>
+    <p>WHO Framework · 6 Building Blocks · Goals · Challenges</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">WHO Definition <span class="badge">HIGH YIELD</span></div>
+    <div class="hy-box blue">
+      <strong>📌 Definition</strong>
+      "Comprising all the organizations, institutions, and resources devoted to producing health activities." — WHO<br>
+      <strong>Essential shortcut:</strong> <em>Any activity that promotes and maintains health</em>
+    </div>
+    <div class="hy-box green">
+      <strong>3 Fundamental Objectives</strong>
+      1. Improving the health of the population they serve<br>
+      2. Responding to people's expectations<br>
+      3. Providing <strong>financial protection</strong> against the costs of ill-health
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ 6 Building Blocks (WHO Framework) <span class="badge">MOST TESTED</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Building Block</th><th>High-Yield Points</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td><strong>Service Delivery</strong></td><td>Effective, safe, quality care; timely with minimal waste; delivered at home/community/facility</td></tr>
+        <tr><td><strong>2</strong></td><td><strong>Health Workforce</strong></td><td>Workforce density = correlated with health outcomes; major issues: maldistribution (urban vs rural), retention, burnout</td></tr>
+        <tr><td><strong>3</strong></td><td><strong>Health Information Systems</strong></td><td>Standardized data collection → stable surveillance system; timely analysis and dissemination</td></tr>
+        <tr><td><strong>4</strong></td><td><strong>Medical Products, Vaccines & Technologies</strong></td><td>Affordable, quality, cost-effective; reliable procurement prevents counterfeits; equitable access</td></tr>
+        <tr><td><strong>5</strong></td><td><strong>Financing</strong></td><td>Raise adequate funds + shield from financial catastrophe; pre-payment & pooling preferred over OOP</td></tr>
+        <tr><td><strong>6</strong></td><td><strong>Leadership & Governance (Stewardship)</strong></td><td>⭐ MOST CRUCIAL block; government's role to steer ALL stakeholders; accountability + oversight</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Ultimate Goals</div>
+      <ul style="padding-left:18px; font-size:14px;">
+        <li>Improve health equity</li>
+        <li>Ensure responsiveness</li>
+        <li>Achieve financial fairness</li>
+        <li>Maximize efficient use of resources</li>
+      </ul>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Intermediate Goals</div>
+      <ul style="padding-left:18px; font-size:14px;">
+        <li>Greater access & coverage for effective interventions</li>
+        <li>Maintain provider quality and safety</li>
+      </ul>
+    </div>
+  </div>
+  <div style="height:18px"></div>
+
+  <div class="card">
+    <div class="card-title">4 Core Functions of Health Systems</div>
+    <div class="grid2">
+      <div class="hy-box orange"><strong>Stewardship (Governance)</strong> Role of government to steer all stakeholders</div>
+      <div class="hy-box blue"><strong>Financing</strong> Raising and allocating funds</div>
+      <div class="hy-box green"><strong>Creating Resources</strong> Human, material, institutional</div>
+      <div class="hy-box purple"><strong>Service Delivery</strong> Responsive healthcare to population</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Challenges That Override Rational Policymaking</div>
+    <div class="hy-box red">
+      <strong>⚠️ Forces that divert health systems from PHC values</strong>
+      1. Overemphasis on specialist and curative care (hospital-centrism)<br>
+      2. Commercialization of healthcare delivery<br>
+      3. Poorly regulated systems<br>
+      4. Fragmentation in program and institutional design
+    </div>
+    <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">Note: <strong>Strong community-based primary care programs</strong> are NOT a challenge — they <em>strengthen</em> rational policymaking.</p>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: PHILIPPINE STRATEGY -->
+<!-- ===================================================== -->
+<div id="ph-strategy" class="section">
+  <div class="sec-header">
+    <h2>Philippine Health Sector Strategy</h2>
+    <p>Past Policies · COVID-19 Impact · PDP 2023–2028 · Sulong Kalusugan</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ National Policies Timeline <span class="badge">KNOW THE DATES</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Era</th><th>Program</th><th>Key Focus</th></tr></thead>
+      <tbody>
+        <tr><td>1999–2004</td><td><strong>HSRA</strong> (Health Sector Reform Agenda)</td><td>5 pillars: Health Financing, Public Health, Public Hospitals, Local Health Systems, Health Regulation</td></tr>
+        <tr><td>2005–2010</td><td><strong>FOURmula One (F1)</strong></td><td>4 pillars: Service Delivery, Health Care Financing, <strong>Health Governance</strong>, Health Regulation → MDGs</td></tr>
+        <tr><td>2011–2016</td><td><strong>Kalusugan Pangkalahatan</strong></td><td>Aquino agenda: Financial Risk Protection (expanded PhilHealth), Access to Quality Services, MDG attainment</td></tr>
+        <tr><td>2016–2022</td><td><strong>Philippine Health Agenda</strong></td><td>Duterte agenda (AO 2016-0038): "All for Health Towards Health for All" · Healthy Philippines 2022 · Ambisyon Natin 2040 alignment</td></tr>
+        <tr><td>2023–2028</td><td><strong>PDP / Sulong Kalusugan</strong></td><td>Economic & social transformation · 4 pillars of Boost Health strategy · 8-Point Action Agenda</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="hy-box red" style="margin-top:14px;">
+      <strong>⭐ HSRA vs F1 Trick Question</strong>
+      HSRA does NOT have "Health Governance" as a pillar — that's F1. HSRA = Financing, Public Health, Public Hospitals, Local Health Systems, Regulation
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ambisyon Natin 2040 (NEDA)</div>
+    <div class="hy-box teal">Philippines = prosperous, predominantly middle-class society where <strong>no one is poor by 2040</strong>. People enjoy long, healthy lives.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">COVID-19 Impact on 6 Building Blocks <span class="badge">HIGH YIELD</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Building Block</th><th>COVID-19 Impact</th></tr></thead>
+      <tbody>
+        <tr><td>Health Care Delivery System</td><td>Reduced access to basic services; capacity limitation; coverage decline</td></tr>
+        <tr><td><strong>Health Workforce</strong></td><td>Shortage, overburdened; <strong>discrimination, depression</strong> among HCWs; mental health impact</td></tr>
+        <tr><td>Health Financing</td><td>Decreased PhilHealth utilization; indigents most affected; budget realignment</td></tr>
+        <tr><td>Medicine & Technology</td><td>Decreased access; limited PPEs</td></tr>
+        <tr><td><strong>Health Information</strong></td><td>Need to shift to <strong>telehealth / telemedicine</strong></td></tr>
+        <tr><td>Leadership / Governance</td><td>Corruption</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">PDP 2023–2028: Strategy Framework to Boost Health</div>
+    <div class="hy-box blue" style="margin-bottom:10px;">
+      <strong>Overarching Goal</strong> "Economic and Social Transformation for a Prosperous, Inclusive, and Resilient Society"
+    </div>
+    <div class="grid2">
+      <div class="mini-card">
+        <h4 style="color:var(--accent2)">4 Pillars of Boost Health</h4>
+        <ul>
+          <li>Social Determinants of Health Improved</li>
+          <li>Healthy Choices and Behavior Enabled</li>
+          <li>Access, Quality, Efficiency of Healthcare Improved</li>
+          <li>Health Systems Strengthened</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4 style="color:var(--accent3)">What Makes Filipinos Healthy?</h4>
+        <ul>
+          <li><strong>40%</strong> Socioeconomic factors</li>
+          <li><strong>30%</strong> Health behaviors</li>
+          <li><strong>10%</strong> Physical environment</li>
+          <li><strong>20%</strong> Health care services only</li>
+        </ul>
+        <p style="font-size:12.5px; margin-top:6px; color:var(--text-muted)">→ Population-based &gt; individual-based</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Sulong Kalusugan — 4 Strategic Thrusts + 8-Point Action Agenda</div>
+    <div class="grid2">
+      <div>
+        <div class="hy-box green"><strong>1. Enable to Be Healthy</strong> Citizens health literate; health-seeking behavior; supportive communities/schools/workplaces</div>
+        <div class="hy-box blue"><strong>2. Protect from Health Risks</strong> Prevent/manage outbreaks; resilient facilities; quality medicines & technologies</div>
+        <div class="hy-box orange"><strong>3. Care for Health & Wellness</strong> High-quality primary + specialist care network; "Zero-Copayment"; people-centered care</div>
+        <div class="hy-box purple"><strong>4. Strengthen Institutions & Workforce</strong> Right-sized government institutions; adequate, committed, fairly compensated HCWs</div>
+      </div>
+      <div class="table-wrap">
+      <table style="font-size:13px;">
+        <thead><tr><th>Group</th><th>#</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3">Filipino Level</td><td>1</td><td>Mainstream & strengthen primary healthcare</td></tr>
+          <tr><td>2</td><td>High-quality, safe, people-centered services</td></tr>
+          <tr><td>3</td><td>Leverage digital health & technologies</td></tr>
+          <tr><td rowspan="3">Community Level</td><td>4</td><td>Responsive and resilient health systems</td></tr>
+          <tr><td>5</td><td>Address determinants of health; improve behaviors</td></tr>
+          <tr><td>6</td><td>Enhance well-being; ensure mental health</td></tr>
+          <tr><td rowspan="2">HW & Institution Level</td><td>7</td><td>Adequate, competent, committed health workforce</td></tr>
+          <tr><td>8</td><td>Strengthen structures for outbreaks/pandemics</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: UHC -->
+<!-- ===================================================== -->
+<div id="uhc" class="section">
+  <div class="sec-header">
+    <h2>Universal Health Care (RA 11223)</h2>
+    <p>The UHC Act · Chapters · FAQs · Penal Provisions</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Core Facts <span class="badge">MUST KNOW</span></div>
+    <div class="grid2">
+      <div class="hy-box red"><strong>RA 11223 — UHC Act</strong> Signed: <strong>February 20, 2019</strong> (Duterte)<br>Goal: Equitable access to quality, affordable health care + financial protection</div>
+      <div class="hy-box blue"><strong>WHO Definition of UHC</strong> Everyone can afford medical help and have access to appropriate services at an affordable cost</div>
+      <div class="hy-box green"><strong>UHC Targets (Western Pacific)</strong>
+        1. OOP ≤ 30–40% of total health expenditure<br>
+        2. THE ≥ 4–5% of GDP<br>
+        3. &gt;90% population with prepayment coverage<br>
+        4. Safety nets for vulnerable sectors
+      </div>
+      <div class="hy-box orange"><strong>Service entitlement</strong> Preventive, promotive, curative, rehabilitative, palliative, <strong>dental, mental, emergency</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Chapter Summary <span class="badge">HIGH YIELD</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Chapter</th><th>Title</th><th>Key Points</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td>General Provisions</td><td>Definitions; objectives; whole-of-government approach</td></tr>
+        <tr><td>II</td><td>Universal Health Care</td><td><strong>Automatic PhilHealth inclusion</strong> for ALL Filipinos; register with Primary Care Provider (PCP)</td></tr>
+        <tr><td>III</td><td>NHIP / PhilHealth</td><td>Direct vs Indirect contributors; no PhilHealth ID required; benefits cannot be reduced; admin expense &lt;7.5%; Board = max 13 members</td></tr>
+        <tr><td>IV</td><td>Health Services Delivery</td><td>DOH contracts province-wide/city-wide systems (pop-based); PhilHealth contracts networks (individual-based); DRG payment scheme</td></tr>
+        <tr><td>V</td><td>Local Health Systems</td><td>DOH, DILG, PhilHealth, LGUs integrate into P/CWHS; Special Health Fund (SHF)</td></tr>
+        <tr><td>VI</td><td>Human Resources for Health</td><td>Permanent employment + competitive salaries for health professionals; scholarship + Return Service Agreement (3 years)</td></tr>
+        <tr><td>VII</td><td>Regulation</td><td>PhilHealth rating system; DOH licensing; price negotiation board (DOH, PhilHealth, DTI); generic drugs in primary care formulary always</td></tr>
+        <tr><td>VIII</td><td>Governance & Accountability</td><td>DOH = steward; Health Promotion Bureau; DepEd integrates health literacy; LGUs enact ordinances; HIA mandatory; HTA required</td></tr>
+        <tr><td>IX</td><td>Appropriations</td><td>Sin tax, PAGCOR (50%), PCSO (40%), premiums, DOH GAA, NatGov subsidy</td></tr>
+        <tr><td>X</td><td>Penal Provisions</td><td>See table below</td></tr>
+        <tr><td>XI</td><td>Miscellaneous</td><td>Joint Congressional Oversight Committee; Performance Monitoring Division under DOH; IRR within 180 days</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Penal Provisions — Quick Reference <span class="badge">EXAM FAVORITE</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Offender</th><th>Violation</th><th>Penalty</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Healthcare Provider</strong></td>
+          <td>Unethical act, fraud, abuse of authority</td>
+          <td>Fine ₱200,000/count OR suspension up to 3 months (or remaining period) OR both<br><strong>Criminal: 6 months & 1 day – 6 years imprisonment</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Member</strong></td>
+          <td>Knowingly cooperates in violation</td>
+          <td>Fine ₱50,000/count OR suspension from benefits 3–6 months</td>
+        </tr>
+        <tr>
+          <td><strong>Employer</strong> (fails to register employees)</td>
+          <td>Deliberate/negligent non-registration</td>
+          <td>₱50,000/violation per affected employee OR 6 months – 1 year imprisonment</td>
+        </tr>
+        <tr>
+          <td><strong>Employer</strong> (deducts from compensation)</td>
+          <td>Unlawful deduction</td>
+          <td>₱5,000 × total affected employees OR 6 months – 1 year imprisonment</td>
+        </tr>
+        <tr>
+          <td><strong>PhilHealth Officer/Employee</strong></td>
+          <td>Misappropriation of funds</td>
+          <td><strong>Triple amount</strong> of misappropriated funds + 3 months suspension without pay</td>
+        </tr>
+        <tr>
+          <td><strong>PhilHealth Officer/Employee</strong></td>
+          <td>Unethical act/fraud</td>
+          <td>₱200,000 OR 3 months suspension without pay<br>Criminal: 6 months & 1 day – 6 years</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">HTA vs HIA — Don't Confuse!</div>
+    <div class="grid2">
+      <div class="hy-box blue">
+        <strong>HTA — Health Technology Assessment</strong>
+        • Systematic evaluation of health interventions<br>
+        • Recommends to DOH & PhilHealth what to fund/cover<br>
+        • Criteria: safety, effectiveness, cost-effectiveness, financial impact, equity<br>
+        • HTAC = 9 voting members under DOH (later DOST)<br>
+        • Binding if positive recommendation
+      </div>
+      <div class="hy-box orange">
+        <strong>HIA — Health Impact Assessment</strong>
+        • Evaluates <em>policies, programs, and projects</em> for potential health impacts<br>
+        • Mandatory under Sec. 33<br>
+        • Different from HTA — focuses on broader sectoral effects
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Population-Based vs Individual-Based Services</div>
+    <div class="grid2">
+      <div class="hy-box green">
+        <strong>Population-Based Services</strong>
+        • Health promotion, disease surveillance, vector control<br>
+        • Recipient = population groups<br>
+        • Financed by <strong>National Government</strong>, delivered FREE<br>
+        • Contracted by DOH
+      </div>
+      <div class="hy-box purple">
+        <strong>Individual-Based Services</strong>
+        • Can be traced to one recipient; accessed in health facility<br>
+        • Financed via <strong>prepayment</strong> (PhilHealth, HMOs, private insurance)<br>
+        • Contracted by PhilHealth
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Key Governance Details — Board of Directors</div>
+    <div class="hy-box blue">
+      <strong>PhilHealth Board — Max 13 members</strong>
+      5 Executive secretaries (Health, DSWD, Budget, Finance, Labor)<br>
+      3 Expert panel members (public health, management, finance, health economics)<br>
+      5 Sectoral panel members (direct contributors, indirect contributors, employers, health care providers, elected LCEs)<br>
+      At least 1 expert + 2 sectoral = women<br>
+      <strong>CEO: Appointed by President of PH, recommended by Board; min 7 years experience</strong>
+    </div>
+    <div class="hy-box orange" style="margin-top:8px;">
+      <strong>IRR Deadline:</strong> 180 days from effectivity · <strong>Oversight:</strong> Joint Congressional Committee (5 Senate + 5 House) · <strong>New PhilHealth Board:</strong> within 30 days
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Specialist as Primary Care Provider?</div>
+    <div class="hy-box red">
+      A specialist can become a primary care provider BUT must first receive <strong>DOH certification in primary care</strong>. Not automatic. After specialist treatment, patient must be referred BACK to PCP.
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: MANAGEMENT -->
+<!-- ===================================================== -->
+<div id="management" class="section">
+  <div class="sec-header">
+    <h2>Fundamentals of Management</h2>
+    <p>Core Functions · Theories · Leadership Styles · Decision-Making · Healthcare Challenges</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Definition of Management <span class="badge">MUST QUOTE</span></div>
+    <div class="hy-box blue">
+      "The application of <strong>planning, organizing, staffing, directing, and controlling</strong> functions in the most efficient (and effective) manner possible to accomplish meaningful organizational objectives." — Ivancevich & Duening, 2007
+    </div>
+    <div class="grid2" style="margin-top:12px;">
+      <div class="hy-box green"><strong>Efficiency</strong> Completion of task at minimal cost</div>
+      <div class="hy-box orange"><strong>Effectiveness</strong> Completion of task within specific timeline</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ 5 Core Functions of Management</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Function</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Planning</strong></td><td>Setting objectives & determining actions/strategies; short, mid, long-term</td></tr>
+        <tr><td><strong>Organizing</strong></td><td>Arranging resources (workforce); assigning tasks, authority, coordination</td></tr>
+        <tr><td><strong>Directing</strong></td><td>Motivating, directing & communicating with employees; sharing vision</td></tr>
+        <tr><td><strong>Controlling</strong></td><td>Oversee operations; monitor progress & performance; corrective action</td></tr>
+        <tr><td><strong>Staffing</strong></td><td>Careful selection, placement, training, development, compensation, evaluation</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Management Theories <span class="badge">EXAM FAVORITE</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Category</th><th>Theory</th><th>Key Proponent</th><th>High-Yield Points</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3"><strong>Classical</strong><br><em>Execution + external rewards</em></td><td>Scientific Management</td><td>Frederick Taylor (1909)</td><td>Scientifically determine BEST way to do a job; train workers; allocate between managers & workers</td></tr>
+        <tr><td>Administrative Management</td><td>Henri Fayol (14 Principles)</td><td>⭐ Managers have authority & give commands; employees follow; hierarchy; fair compensation; team spirit</td></tr>
+        <tr><td>Bureaucratic Management</td><td>⭐ Max Weber</td><td>Hierarchical structure; management by rules; organization by specialty; purposely impersonal; employment by technical qualifications</td></tr>
+        <tr><td rowspan="2"><strong>Behavioral</strong><br><em>Workplace as social environment</em></td><td>Human Relations Movement</td><td>Elton Mayo</td><td>⭐ Giving attention & valuing effort &gt; physical environment; motivation addresses social needs → increases productivity</td></tr>
+        <tr><td>Motivation Theories</td><td>Maslow (1954); ⭐ Herzberg (1964)</td><td>Maslow: hierarchy of needs · Herzberg: Two-factor theory — Motivators → satisfaction; Hygiene factors → dissatisfaction (NOT same as motivation)</td></tr>
+        <tr><td rowspan="2"><strong>Contemporary</strong><br><em>Mix of classical + behavioral</em></td><td>Systems Theory</td><td>—</td><td>Organizations as systems; interdependent; collaboration required; sub-systems exist</td></tr>
+        <tr><td>Contingency Theory</td><td>—</td><td>Adapt to situations; leadership effectiveness depends on skills drawn per situation; considers org size, technology, leadership level</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Leadership vs Management</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Leadership</th><th>Management</th></tr></thead>
+      <tbody>
+        <tr><td>Guiding & influencing people toward common goal</td><td>Planning, organizing, directing, controlling activities</td></tr>
+        <tr><td>Inspires, provides guidance, motivates</td><td>Oversees all aspects of a business</td></tr>
+        <tr><td>Creates vision & strategies</td><td>Executes policies & procedures</td></tr>
+        <tr><td>Risk & change seeker; Proactive</td><td>Risk averse & stability; Reactive</td></tr>
+        <tr><td>Asks <em>what</em> and <em>why</em></td><td>Asks <em>how</em> and <em>when</em></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Leadership Styles <span class="badge">HIGH YIELD</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Style</th><th>Best for</th><th>Advantage</th><th>Disadvantage</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Autocratic</strong></td><td>⭐ New team, new company, new project; stressful situations</td><td>Quick decision-making; clear chain of command; structured</td><td>No team input; discourages creativity</td></tr>
+        <tr><td><strong>Democratic</strong></td><td>⭐ Millennials, team of experts/independent professionals</td><td>Builds trust; collaboration; higher morale & productivity</td><td>Slower decisions; not for new teams</td></tr>
+        <tr><td><strong>Laissez-Faire</strong></td><td>⭐ Team of experts (similar to democratic)</td><td>High trust; creativity; less fear of failure</td><td>Low productivity with unskilled/unmotivated</td></tr>
+        <tr><td><strong>Transformational</strong></td><td>Innovation & growth</td><td>Inspires innovation; open-minded; adaptable</td><td>May forget operations; instability</td></tr>
+        <tr><td><strong>Transactional</strong></td><td>Clearly-defined problems</td><td>Clear roles; goal-focused; increased productivity</td><td>No innovation; short-term focus</td></tr>
+        <tr><td><strong>⭐ Servant (newest)</strong></td><td>People-first organizations</td><td>Builds trust; empathy; growth of others</td><td>Slower decisions; needs cultural intelligence</td></tr>
+        <tr><td><strong>Situational</strong></td><td>Diverse teams with varied maturity</td><td>Flexible; adapts to team maturity; boosts accountability</td><td>High effort/monitoring; tricky maturity judgment</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Decision-Making Models</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Model</th><th>Key Feature</th><th>Best Used When</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Rational</strong></td><td>Set criteria; evaluate all alternatives; choose best</td><td>⭐ Lots of time & options; community diagnosis</td></tr>
+        <tr><td><strong>Bounded Rationality</strong></td><td>Select FIRST option that seems best at that moment</td><td>⭐ Immediate decision needed; NO time to deliberate</td></tr>
+        <tr><td><strong>Vroom-Yetton</strong></td><td>7 yes-or-no questions; decision tree; considers resources, team commitment, time</td><td>⭐ Good for collaboration; complex team decisions</td></tr>
+        <tr><td><strong>Intuitive</strong></td><td>Based on gut feeling/subconscious insights</td><td>Quick informal decisions</td></tr>
+        <tr><td><strong>Recognition Primed</strong></td><td>⭐ Intuition + past experience; recognize familiar patterns</td><td>Rapid decisions from experienced clinicians</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Budgeting Methods</div>
+    <div class="grid3">
+      <div class="mini-card">
+        <h4 style="color:var(--accent2)">Incremental Budget</h4>
+        <ul><li>Based on <strong>previous year's</strong> budget</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4 style="color:var(--accent3)">Zero-Based</h4>
+        <ul><li>NOT based on previous budget</li><li>Project future expenses fresh</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4 style="color:var(--accent4)">Activity-Based</h4>
+        <ul><li>Set target income first</li><li>Compute operational costs to fit</li></ul>
+      </div>
+    </div>
+    <div class="hy-box blue">
+      <strong>⭐ Zero-based budget exam tip:</strong> If a budget is based on WHO guidelines/literature (not last year's data), that's zero-based — it's reference/evidence-based projection, not incremental
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Conflict Resolution — Most Important Step</div>
+    <div class="hy-box red">
+      <strong>Most important first step: ACKNOWLEDGE THE CONFLICT</strong>
+      Sets the stage for open communication. If ignored, conflict escalates. Then: actively listen → collaborate/compromise → identify solutions → be firm in decision → apologize if needed
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Unique Challenges in PH Healthcare Management</div>
+    <div class="hy-box orange">
+      ⭐ PH: Major shortage in <strong>nursing department</strong><br>
+      ⭐ PH: Good nurses stay 1–2 years then leave (retention difficulty)<br>
+      ⭐ PH professionals tend NOT to complain (unlike western counterparts)<br>
+      ⭐ <strong>Healthcare Quality Improvement Officer</strong> = most important hospital role (ISO/JCI accreditation)
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: FINANCING -->
+<!-- ===================================================== -->
+<div id="financing" class="section">
+  <div class="sec-header">
+    <h2>Healthcare Financing</h2>
+    <p>Types of Financing · PhilHealth · Case Rates · Philippine Stats</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Types of Health Financing — Master Table <span class="badge">MOST TESTED</span></div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Type</th><th>Description</th><th>Advantages</th><th>Disadvantages</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Out-of-Pocket (OOP)</strong><br><span class="tag red">Least Efficient</span></td>
+          <td>Payment directly from patient's private funds</td>
+          <td>—</td>
+          <td>No risk pooling; equity & access problems; provider-induced demand (PID)</td>
+        </tr>
+        <tr>
+          <td><strong>Insurance</strong><br><span class="tag blue">PhilHealth = Social</span></td>
+          <td>Consumers pay premium to 3rd party; covers diagnosis/treatment expenses</td>
+          <td>Risk spreading + risk pooling</td>
+          <td>Quality not ensured; moral hazard</td>
+        </tr>
+        <tr>
+          <td><strong>Community Financing</strong><br><span class="tag green">Most Efficient</span></td>
+          <td>Risk sharing within community; pooled contributions; community-managed</td>
+          <td>⭐ Most efficient & effective (community-managed)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>Taxation</strong><br><span class="tag orange">Prone to Political Influence</span></td>
+          <td>Healthcare financed from general + earmarked taxes (Sin Tax, EVAT)</td>
+          <td>Cost-efficient risk pooling & spreading</td>
+          <td>Poor quality; susceptible to corruption; suffers when health not priority</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="hy-box yellow" style="margin-top:12px;">
+      <strong>⭐ Quick Q&A from Dr. Perez</strong>
+      Prone to political influence → <strong>Taxation</strong> | Most efficient → <strong>Community Financing</strong> | PhilHealth type → <strong>Insurance</strong> | Most predominant in PH → <strong>Government Schemes & Compulsory Contributory (44.7%)</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Philippine Health Statistics <span class="badge">NUMBERS</span></div>
+    <div class="grid2">
+      <div class="mini-card">
+        <h4>Cost of Confinement (NDHS 2022)</h4>
+        <ul>
+          <li>Public hospitals: ₱27,136</li>
+          <li>Private hospitals: ₱70,568</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4>Per Capita Health Spending</h4>
+        <ul>
+          <li>₱8,216 per Filipino (2020)</li>
+          <li>1.5M families pushed to poverty/year</li>
+          <li>₱4,000/month = catastrophic for single-income families</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4>Financing Mix (2024)</h4>
+        <ul>
+          <li>Govt/compulsory: <strong>44.7%</strong></li>
+          <li>OOP: <strong>42.7%</strong></li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4>GDP Expenditure on Health</h4>
+        <ul>
+          <li>2024: <strong>5.9% of GDP</strong></li>
+          <li>2021: 6.4% (pandemic peak)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hy-box red" style="margin-top:4px;">
+      <strong>Catastrophic Health Expenditure</strong> = Paying &gt;40% of household income AFTER basic needs. E.g., Family earns ₱10K/month, spends ₱5K on basic needs — if &gt;40% of remaining ₱5K goes to health = catastrophic
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ PhilHealth Membership Categories</div>
+    <div class="grid2">
+      <div>
+        <div class="hy-box blue">
+          <strong>Direct Contributors (pay premiums)</strong>
+          Employees • Kasambahays (employer-employee relationship) • Self-earning individuals • OFWs/Migrant workers • Lifetime members • Dual citizens • Filipinos ≥21 y/o with capacity to pay
+        </div>
+        <div class="hy-box green" style="margin-top:8px;">
+          <strong>Indirect Contributors (govt-subsidized)</strong>
+          Indigents (DSWD) • 4Ps members • Senior citizens (≥60) • PWDs • SK Officials • LGU-sponsored • Filipinos ≥21 y/o WITHOUT capacity to pay
+        </div>
+      </div>
+      <div class="hy-box orange">
+        <strong>Dependents (must be declared)</strong>
+        • Legal spouse (not active NHIP member)<br>
+        • Children &lt;21 y/o, unmarried & unemployed<br>
+        • Foster child<br>
+        • Dependent parents ≥60 y/o (not NHIP member)
+      </div>
+    </div>
+    <div class="hy-box red" style="margin-top:8px;">
+      <strong>⭐ Kasambahay Law (RA 10361):</strong> If monthly salary &lt;₱5,000 → employer shoulders FULL premium (₱400 as of 2022). If ≥₱5,000 → kasambahay pays 50% share
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Monthly Premium Rates (PhilHealth)</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Year</th><th>Premium Rate</th><th>Floor Salary</th><th>Ceiling Salary</th></tr></thead>
+      <tbody>
+        <tr><td>2019</td><td>2.75%</td><td>₱10,000</td><td>₱50,000</td></tr>
+        <tr><td>2020</td><td>3.00%</td><td>₱10,000</td><td>₱60,000</td></tr>
+        <tr><td>2021</td><td>3.50%</td><td>₱10,000</td><td>₱70,000</td></tr>
+        <tr><td>2022</td><td>4.00%</td><td>₱10,000</td><td>₱80,000</td></tr>
+        <tr><td>2023</td><td>4.50%</td><td>₱10,000</td><td>₱90,000</td></tr>
+        <tr><td style="background:#eafaf1"><strong>2024–2025</strong></td><td style="background:#eafaf1"><strong>5.00%</strong></td><td style="background:#eafaf1"><strong>₱10,000</strong></td><td style="background:#eafaf1"><strong>₱100,000</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Example: Salary ₱10,000 → premium = ₱500/month | Salary ₱100,000 → premium = ₱5,000/month (does not exceed ceiling)</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Benefits Entitlement & Coverage Rules</div>
+    <div class="hy-box blue">
+      <strong>When is it attained?</strong> At least <strong>9 months contribution within the 12-month period prior to confinement</strong>
+    </div>
+    <div class="hy-box green" style="margin-top:8px;">
+      <strong>Coverage</strong> • 45 days inpatient per calendar year (dependents share this pool) • &gt;45 days = OOP • Confinement must be ≥24 hours • Must be in accredited hospital
+    </div>
+    <div class="hy-box orange" style="margin-top:8px;">
+      <strong>Single Period of Confinement (SPC) Rule</strong> No benefit if readmitted for SAME illness within 90 days<br>
+      <strong>Exceptions:</strong> Dialysis & Radiotherapy
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Case Rates — Inpatient <span class="badge">MEMORIZE NUMBERS</span></div>
+    <div class="grid2">
+      <div class="table-wrap">
+      <table style="font-size:13px;">
+        <thead><tr><th>Condition</th><th>Rate (₱)</th></tr></thead>
+        <tbody>
+          <tr><td>Dengue I</td><td>10,000</td></tr>
+          <tr><td>Dengue II</td><td>16,000</td></tr>
+          <tr><td>Pneumonia I (Moderate)</td><td>18,000</td></tr>
+          <tr><td>Pneumonia II (Severe)</td><td>38,000</td></tr>
+          <tr><td>Essential Hypertension</td><td>9,000</td></tr>
+          <tr><td>Cerebral Infarction I</td><td>28,000</td></tr>
+          <tr><td>CVA with Hemorrhage (CVA II)</td><td>38,000</td></tr>
+          <tr><td>Typhoid Fever</td><td>14,000</td></tr>
+          <tr><td>Newborn Care Package</td><td>3,835</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="table-wrap">
+      <table style="font-size:13px;">
+        <thead><tr><th>Procedure</th><th>Rate (₱)</th></tr></thead>
+        <tbody>
+          <tr><td>Maternity/NSD Level 1</td><td>8,000</td></tr>
+          <tr><td>Maternity/NSD Levels 2–4</td><td>12,675</td></tr>
+          <tr><td><strong>Caesarean Section</strong></td><td><strong>37,050</strong></td></tr>
+          <tr><td>Appendectomy</td><td>24,000</td></tr>
+          <tr><td>Cholecystectomy</td><td>46,500</td></tr>
+          <tr><td>Mastectomy</td><td>37,800</td></tr>
+          <tr><td>Hysterectomy</td><td>30,300</td></tr>
+          <tr><td>Cataract Surgery</td><td>16,000</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">⭐ Professional fees = 30% of case rate | Case rate deducted from total bill on discharge</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Z-Benefit Packages (Catastrophic Illnesses)</div>
+    <div class="table-wrap">
+    <table style="font-size:13px;">
+      <thead><tr><th>Illness</th><th>Package (₱)</th><th>Includes</th></tr></thead>
+      <tbody>
+        <tr><td>Acute Lymphocytic Leukemia</td><td>500,000</td><td rowspan="8">Room & Board, Drugs, Lab Exams, OR fees, Professional fees</td></tr>
+        <tr><td><strong>Breast Cancer (Stage 0–4)</strong></td><td><strong>1,400,000</strong></td></tr>
+        <tr><td>ESRD (Renal Transplantation)</td><td>1,000,000</td></tr>
+        <tr><td>DKB (Diabetic Kidney Disease)</td><td>550,000</td></tr>
+        <tr><td>Ventricular Septal Defect (children)</td><td>498,000</td></tr>
+        <tr><td>Prostate Cancer</td><td>100,000</td></tr>
+        <tr><td>Cervical Cancer</td><td>175,000</td></tr>
+        <tr><td>Orthopedic Implants</td><td>100,000–260,000</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">No Balance Billing (NBB) Policy</div>
+    <div class="hy-box green">
+      <strong>Free hospitalization conditions:</strong><br>
+      • Admitted to <strong>non-private room</strong> in <strong>public or government hospitals</strong> only (private hospitals NOT eligible)<br>
+      • <strong>Eligible members:</strong> Sponsored, Indigents, Kasambahay, Senior Citizens, Lifetime Members
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Outpatient Case Rates</div>
+    <div class="grid2">
+      <div class="table-wrap">
+      <table style="font-size:13px;">
+        <thead><tr><th>Service</th><th>Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Blood transfusion</td><td>₱4,700</td></tr>
+          <tr><td>Radiotherapy</td><td>₱2,600–3,900/session</td></tr>
+          <tr><td>Chemotherapy</td><td>₱3,000–10,000/session</td></tr>
+          <tr><td>Hemodialysis</td><td>₱6,350/session; max 156 days/year</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="table-wrap">
+      <table style="font-size:13px;">
+        <thead><tr><th>SDG Package</th><th>Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Malaria</td><td>₱780</td></tr>
+          <tr><td>HIV-AIDS</td><td>₱39,000/year</td></tr>
+          <tr><td>Anti-TB (DOTS)</td><td>₱5,200</td></tr>
+          <tr><td>Voluntary Surgical Contraception</td><td>₱5,200</td></tr>
+          <tr><td>Animal Bite</td><td>₱3,900</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Primary Care Benefit (Konsulta)</div>
+    <div class="hy-box blue">
+      <strong>Entitled members:</strong> SP officials, Indigents, Sponsored, Organized groups/iGroups, Land-based OFWs + their dependents<br>
+      <strong>Availed through:</strong> Accredited RHUs, Barangay/City Health Centers, Accredited Government Hospitals
+    </div>
+    <div class="grid2" style="margin-top:10px;">
+      <div class="mini-card">
+        <h4>Primary Preventive Services</h4>
+        <ul style="font-size:13px;">
+          <li>Consultation; BP monitoring</li>
+          <li>Breastfeeding education; breast exam</li>
+          <li>Anthropometric measurements (peds)</li>
+          <li>Digital rectal exam (men ≥50)</li>
+          <li>Visual inspection w/ acetic acid (cervical CA)</li>
+          <li>Smoking cessation counseling</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4>Diagnostic Exams Covered</h4>
+        <ul style="font-size:13px;">
+          <li>CBC, Urinalysis, Fecalysis</li>
+          <li>Sputum microscopy</li>
+          <li>FBS, HbA1c, OGTT</li>
+          <li>Lipid profiling; Creatinine</li>
+          <li>Chest X-ray; ECG</li>
+          <li>Pap smear (cervical check-up)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hy-box orange" style="margin-top:10px;">
+      <strong>Drugs & Medicines Covered:</strong> Asthma (+ nebulization), AGE (no/mild dehydration), URTI, Pneumonia (minimal/low risk), UTI, Diabetes, Hypertension, Hypercholesterolemia
+    </div>
+    <div class="hy-box red" style="margin-top:8px;">
+      <strong>⭐ NOT under Konsulta:</strong> Dialysis, Hemodialysis, Chemotherapy, Radiotherapy → these are outpatient case rates or separate packages
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: PROGRAM PLANNING -->
+<!-- ===================================================== -->
+<div id="program-planning" class="section">
+  <div class="sec-header">
+    <h2>Health Program Planning</h2>
+    <p>Stages · SWOT · SMART · Disease Prevention Models</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ 8 Stages of the Planning Process <span class="badge">ALGORITHM</span></div>
+    <div class="algo-step"><div class="algo-num">1</div><div class="algo-text"><strong>Situational Analysis</strong> — Collect community health data; geographic distribution; existing programs; organizational & demographic assessment; SWOT</div></div>
+    <div class="algo-step"><div class="algo-num">2</div><div class="algo-text"><strong>Problem Identification & Prioritization</strong> — Perceived gap between IS and SHOULD BE; assess magnitude, severity, feasibility, community/government concern; gather root cause data</div></div>
+    <div class="algo-step"><div class="algo-num">3</div><div class="algo-text"><strong>Setting Objectives</strong> — SMART objectives; from general to specific; reference point for evaluation</div></div>
+    <div class="algo-step"><div class="algo-num">4</div><div class="algo-text"><strong>Strategy Formulation</strong> — List all strategies → select most feasible; consider budget, technology, community participation; Health Communication / Health Education / PSE Change</div></div>
+    <div class="algo-step"><div class="algo-num">5</div><div class="algo-text"><strong>Identify & Sequence Activities</strong> — List all activities in correct order; identify prerequisites & simultaneous activities; provide completion checklist</div></div>
+    <div class="algo-step"><div class="algo-num">6</div><div class="algo-text"><strong>Identify Resources</strong> — Staff, accommodation, power, equipment, materials, time, skill, information; estimate costs</div></div>
+    <div class="algo-step"><div class="algo-num">7</div><div class="algo-text"><strong>Prepare Action Plans & Schedules</strong> — Problem, Objective, Strategy/Activities, Resources, Organization, Control; Gantt chart</div></div>
+    <div class="algo-step"><div class="algo-num">8</div><div class="algo-text"><strong>Monitoring</strong> — Are outputs achieved on time? Resources efficiently used? Collaboration with other services?</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">SWOT Analysis</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Domain</th><th>Key Factors</th><th>Internal/External</th></tr></thead>
+      <tbody>
+        <tr><td><strong>S</strong>trengths</td><td>Advantages, Capabilities, Resources</td><td>Internal · Helpful</td></tr>
+        <tr><td><strong>W</strong>eaknesses</td><td>Disadvantages, Vulnerabilities, Limitations</td><td>Internal · Harmful</td></tr>
+        <tr><td><strong>O</strong>pportunities</td><td>Chances, Developments, Benefits</td><td>External · Helpful</td></tr>
+        <tr><td><strong>T</strong>hreats</td><td>Obstacles, Politics, Economics, Risks</td><td>External · Harmful</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="hy-box orange" style="margin-top:10px;">
+      <strong>⭐ Common Trap:</strong> "Staff shortage" = Weakness (internal disadvantage). "New government regulation" = Threat (external risk). Don't mix them up!
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ SMART Objectives</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Letter</th><th>Criterion</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>S</strong></td><td>Specific</td><td>Clear, well-defined; answers who, what, where, when, why</td></tr>
+        <tr><td><strong>M</strong></td><td>Measurable</td><td>Trackable progress; use assessment methods; has baseline & target</td></tr>
+        <tr><td><strong>A</strong></td><td>Achievable</td><td>Realistic given resources, skills, timeframe; not too easy or ambiguous</td></tr>
+        <tr><td><strong>R</strong></td><td>Relevant</td><td>Aligns with broader goals and priorities of the program</td></tr>
+        <tr><td><strong>T</strong></td><td>Time-bound</td><td>Clear deadline or timeframe; specific finish date</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="hy-box green" style="margin-top:10px;">
+      <strong>Good SMART example:</strong> "Within 6 months, increase fasting glucose screening coverage among adults 30–59 in Barangay 12 from 40% to 70% using weekend outreach clinics."
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Strategic vs Operational Planning</div>
+    <div class="grid2">
+      <div class="hy-box blue">
+        <strong>Strategic Planning</strong>
+        • Long-term (5–10 years)<br>
+        • "Bigger picture" / national level<br>
+        • Top-level managers<br>
+        • Determines WHERE the sector is going
+      </div>
+      <div class="hy-box orange">
+        <strong>Operational Planning</strong>
+        • Short-term (≤1 year); annual plans<br>
+        • Day-to-day action guide<br>
+        • Frontline managers<br>
+        • Implements the strategic plan
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Disease Prevention Theories & Models</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Model</th><th>Core Concept</th><th>Key Elements</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Ecological Model</strong></td>
+          <td>Multiple levels of influence; interaction between individual & environment</td>
+          <td>Intrapersonal → Interpersonal → Institutional → Community → Public Policy</td>
+        </tr>
+        <tr>
+          <td><strong>Health Belief Model</strong></td>
+          <td>Individual beliefs predict health behavior</td>
+          <td>Perceived Susceptibility · Perceived Severity · Perceived Benefits · Perceived Barriers · Cues to Action · Self-Efficacy</td>
+        </tr>
+        <tr>
+          <td><strong>Transtheoretical Model (Stages of Change)</strong></td>
+          <td>Readiness to change behavior</td>
+          <td>Pre-contemplation → Contemplation → Preparation → Action → Maintenance → Termination (can relapse)</td>
+        </tr>
+        <tr>
+          <td><strong>Social Cognitive Theory (SCT)</strong></td>
+          <td>Individual experience + actions of others + environment influence behavior</td>
+          <td>Self-efficacy, Behavioral capability, Expectations, Expectancies, Self-control, Observational learning, Reinforcements</td>
+        </tr>
+        <tr>
+          <td><strong>Theory of Reasoned Action / Planned Behavior</strong></td>
+          <td>Behavioral INTENTION predicts health behavior</td>
+          <td>Attitude toward behavior + Subjective norms → Behavioral intention → Action</td>
+        </tr>
+        <tr>
+          <td><strong>PRECEDE / PROCEED</strong></td>
+          <td>Comprehensive planning + evaluation framework</td>
+          <td>PRECEDE = planning (social, epidemiological, educational/ecological, policy assessment) · PROCEED = implementation + evaluation (process, short-term, intermediate, long-term)</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="hy-box blue" style="margin-top:10px;">
+      <strong>PRECEDE:</strong> Predisposing, Reinforcing, Enabling Constructs in Educational Diagnosis and Evaluation<br>
+      <strong>PROCEED:</strong> Policy, Regulatory, Organizational Constructs in Educational and Environmental Development
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Health Promotion Strategies — 3 Categories</div>
+    <div class="grid3">
+      <div class="mini-card">
+        <h4 style="color:var(--accent2)">Health Communication</h4>
+        <ul><li>Verbal & written strategies</li><li>Increase risk perception</li><li>Influence social norms</li><li>Social marketing</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4 style="color:var(--accent3)">Health Education</h4>
+        <ul><li>Individual: home visits, personal contact</li><li>Community: lectures, workshops, webinars</li><li>Population: TV, radio, social media, newspapers</li></ul>
+      </div>
+      <div class="mini-card">
+        <h4 style="color:var(--accent4)">PSE Change (Policy, Systems, Environment)</h4>
+        <ul><li>Policy: smoke-free zones, taxation</li><li>Systems: new protocols, technologies</li><li>Environmental: parks, healthy food access</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Potential Obstacles in Program Implementation</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Factor</th><th>Reasons</th></tr></thead>
+      <tbody>
+        <tr><td>People</td><td>Skill, interest, participation</td></tr>
+        <tr><td>Money</td><td>Budget availability</td></tr>
+        <tr><td>Time</td><td>Availability from respondents/volunteers</td></tr>
+        <tr><td>Environment/Climate</td><td>Geography, weather, seasonal diseases</td></tr>
+        <tr><td>Technology/Equipment</td><td>Availability, cost, operator-dependent, electricity</td></tr>
+        <tr><td>Social Factors</td><td>Culture, beliefs, tradition</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: BUZZWORDS -->
+<!-- ===================================================== -->
+<div id="buzzwords" class="section">
+  <div class="sec-header">
+    <h2>🔑 Buzzword Summary</h2>
+    <p>High-yield terms, numbers, and associations to remember</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ RA Numbers — Don't Mix Up!</div>
+    <div class="buzz-grid">
+      <div class="buzz-item"><div class="buzz-term">RA 11223</div><div class="buzz-def">UHC Act (2019) — Universal Health Care</div></div>
+      <div class="buzz-item"><div class="buzz-term">RA 7875</div><div class="buzz-def">National Health Insurance Act (1995) — Created PhilHealth/NHIP</div></div>
+      <div class="buzz-item"><div class="buzz-term">RA 10361</div><div class="buzz-def">Kasambahay Law (2013)</div></div>
+      <div class="buzz-item"><div class="buzz-term">RA 9482</div><div class="buzz-def">Anti-Rabies Act (distractor!)</div></div>
+      <div class="buzz-item"><div class="buzz-term">RA 7305</div><div class="buzz-def">Magna Carta of Public Health Workers — PhilHealth staff classified under this</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ Numbers to Memorize</div>
+    <div class="buzz-grid">
+      <div class="buzz-item"><div class="buzz-term">&gt;40% household income on health</div><div class="buzz-def">Catastrophic Health Expenditure (after basic needs)</div></div>
+      <div class="buzz-item"><div class="buzz-term">9 months / 12 months</div><div class="buzz-def">PhilHealth entitlement: 9 months contribution in 12 months prior to confinement</div></div>
+      <div class="buzz-item"><div class="buzz-term">45 days</div><div class="buzz-def">PhilHealth inpatient coverage per calendar year (shared by dependents)</div></div>
+      <div class="buzz-item"><div class="buzz-term">90 days</div><div class="buzz-def">SPC Rule: same illness readmission within 90 days → no benefit (except dialysis, radiotherapy)</div></div>
+      <div class="buzz-item"><div class="buzz-term">&lt;7.5%</div><div class="buzz-def">PhilHealth administrative cost limit (of total premiums collected)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Max 13 members</div><div class="buzz-def">PhilHealth Board of Directors (5 exec + 3 expert + 5 sectoral)</div></div>
+      <div class="buzz-item"><div class="buzz-term">7 years</div><div class="buzz-def">Min experience for PhilHealth CEO/President</div></div>
+      <div class="buzz-item"><div class="buzz-term">5.00%</div><div class="buzz-def">Current PhilHealth premium rate (2024–2025)</div></div>
+      <div class="buzz-item"><div class="buzz-term">180 days</div><div class="buzz-def">Deadline for IRR of RA 11223</div></div>
+      <div class="buzz-item"><div class="buzz-term">30 days</div><div class="buzz-def">New PhilHealth Board appointed within 30 days of effectivity</div></div>
+      <div class="buzz-item"><div class="buzz-term">44.7%</div><div class="buzz-def">Government/compulsory schemes = most used HF in PH</div></div>
+      <div class="buzz-item"><div class="buzz-term">5.9% GDP</div><div class="buzz-def">PH health expenditure 2024</div></div>
+      <div class="buzz-item"><div class="buzz-term">₱37,050</div><div class="buzz-def">Caesarean section case rate</div></div>
+      <div class="buzz-item"><div class="buzz-term">₱1.4M</div><div class="buzz-def">Z-benefit: Breast Cancer (highest Z-package)</div></div>
+      <div class="buzz-item"><div class="buzz-term">₱4,000/month</div><div class="buzz-def">Catastrophic threshold for single-income families</div></div>
+      <div class="buzz-item"><div class="buzz-term">1.5 million</div><div class="buzz-def">Families pushed to poverty due to health costs annually</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ "Who/What" Quick Associations</div>
+    <div class="buzz-grid">
+      <div class="buzz-item"><div class="buzz-term">Most efficient HF type</div><div class="buzz-def">Community Financing (community-managed)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Least efficient HF type</div><div class="buzz-def">Out-of-Pocket</div></div>
+      <div class="buzz-item"><div class="buzz-term">Prone to political influence</div><div class="buzz-def">Taxation</div></div>
+      <div class="buzz-item"><div class="buzz-term">PhilHealth HF type</div><div class="buzz-def">Insurance (Social/Government Insurance)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Most crucial building block</div><div class="buzz-def">Leadership & Governance (Stewardship)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Most important hospital role</div><div class="buzz-def">Healthcare Quality Improvement Officer (ISO/JCI)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Most important conflict resolution step</div><div class="buzz-def">Acknowledge the conflict</div></div>
+      <div class="buzz-item"><div class="buzz-term">Newest leadership style</div><div class="buzz-def">Servant Leadership</div></div>
+      <div class="buzz-item"><div class="buzz-term">Good for new teams</div><div class="buzz-def">Autocratic leadership</div></div>
+      <div class="buzz-item"><div class="buzz-term">Good for team of experts</div><div class="buzz-def">Democratic or Laissez-faire</div></div>
+      <div class="buzz-item"><div class="buzz-term">Immediate decision needed</div><div class="buzz-def">Bounded Rationality model</div></div>
+      <div class="buzz-item"><div class="buzz-term">Good for collaboration</div><div class="buzz-def">Vroom-Yetton model</div></div>
+      <div class="buzz-item"><div class="buzz-term">Stewardship definition</div><div class="buzz-def">Role of govt to steer ALL stakeholders working for health</div></div>
+      <div class="buzz-item"><div class="buzz-term">HTA vs HIA</div><div class="buzz-def">HTA = evaluates specific health interventions for funding; HIA = evaluates policies/programs for health sector impact</div></div>
+      <div class="buzz-item"><div class="buzz-term">PRECEDE vs PROCEED</div><div class="buzz-def">PRECEDE = planning; PROCEED = implementing + evaluating</div></div>
+      <div class="buzz-item"><div class="buzz-term">Max Weber</div><div class="buzz-def">Bureaucratic management: hierarchy, rules, specialty, impersonal, technical qualifications</div></div>
+      <div class="buzz-item"><div class="buzz-term">Elton Mayo</div><div class="buzz-def">Human Relations Movement: attention + valuing effort &gt; physical environment</div></div>
+      <div class="buzz-item"><div class="buzz-term">Herzberg Two-Factor</div><div class="buzz-def">Motivators → satisfaction; Hygiene factors → dissatisfaction (dissatisfied ≠ unmotivated)</div></div>
+      <div class="buzz-item"><div class="buzz-term">ORT Health Plus Scheme</div><div class="buzz-def">Example of Community Financing (La Union, 1991)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Sin Tax / EVAT</div><div class="buzz-def">Hypothecated/earmarked taxes for healthcare</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ Strategy & Policy Connections</div>
+    <div class="buzz-grid">
+      <div class="buzz-item"><div class="buzz-term">Sulong Kalusugan</div><div class="buzz-def">DOH health sector strategy 2023–2028; Vision = "Sulo ng Kalusugan"; 4 thrusts</div></div>
+      <div class="buzz-item"><div class="buzz-term">Ambisyon Natin 2040</div><div class="buzz-def">No one poor; middle-class; long healthy lives — NEDA vision</div></div>
+      <div class="buzz-item"><div class="buzz-term">Kalusugan Pangkalahatan</div><div class="buzz-def">Aquino agenda; Financial Risk Protection via expanded PhilHealth</div></div>
+      <div class="buzz-item"><div class="buzz-term">"All for Health Towards Health for All"</div><div class="buzz-def">Philippine Health Agenda 2016–2022 rallying point (AO 2016-0038)</div></div>
+      <div class="buzz-item"><div class="buzz-term">Zero-Copayment</div><div class="buzz-def">Sulong Kalusugan goal — no OOP expenses for insured services</div></div>
+      <div class="buzz-item"><div class="buzz-term">People-Centered Care</div><div class="buzz-def">Register every Filipino to a primary care provider (PCP)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- TAB: MCQ -->
+<!-- ===================================================== -->
+<div id="mcq" class="section">
+  <div class="sec-header">
+    <h2>📝 MCQ Practice</h2>
+    <p>Click an option to check your answer. All questions are high-yield.</p>
+  </div>
+
+  <div id="mcq-score-bar" style="background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:14px 20px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
+    <span style="font-weight:600; font-size:14px;">Score: <span id="score-display">0 / 0</span></span>
+    <div class="progress-bar-wrap" style="flex:1; margin:0;"><div class="progress-bar" id="score-bar" style="width:0%"></div></div>
+    <button onclick="resetMCQ()" style="border:none;background:var(--accent1);color:white;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;">Reset</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="mcq-card" data-correct="b">
+    <div class="mcq-q"><span class="mcq-qnum">1</span>Which type of health financing is considered the MOST efficient and effective because it is community-managed?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Out-of-pocket</li>
+      <li onclick="answerMCQ(this,'b')">B. Community Financing</li>
+      <li onclick="answerMCQ(this,'c')">C. Taxation</li>
+      <li onclick="answerMCQ(this,'d')">D. Private Insurance</li>
+    </ul>
+    <div class="rationale">Community financing is community-managed, involving risk-sharing (pooled contributions for discounted services, donated labor, etc.). It is more efficient than formal insurance because it directly addresses community needs. Example: ORT Health Plus Scheme, La Union, 1991.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="mcq-card" data-correct="c">
+    <div class="mcq-q"><span class="mcq-qnum">2</span>Which law created PhilHealth and instituted the National Health Insurance Program (NHIP)?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. RA 11223</li>
+      <li onclick="answerMCQ(this,'b')">B. RA 10361</li>
+      <li onclick="answerMCQ(this,'c')">C. RA 7875</li>
+      <li onclick="answerMCQ(this,'d')">D. RA 9482</li>
+    </ul>
+    <div class="rationale">RA 7875 = Philippine National Health Insurance Act of 1995 → created PhilHealth (PHIC) to administer NHIP. RA 11223 = UHC Act (2019). RA 10361 = Kasambahay Law. RA 9482 = Anti-Rabies Act.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="mcq-card" data-correct="a">
+    <div class="mcq-q"><span class="mcq-qnum">3</span>A patient is admitted for pneumonia. Upon discharge, the hospital deducts the case rate from the total bill. What is the PhilHealth case rate for Pneumonia I (Moderate)?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. ₱18,000</li>
+      <li onclick="answerMCQ(this,'b')">B. ₱9,000</li>
+      <li onclick="answerMCQ(this,'c')">C. ₱38,000</li>
+      <li onclick="answerMCQ(this,'d')">D. ₱28,000</li>
+    </ul>
+    <div class="rationale">Pneumonia I (Moderate) = ₱18,000. Pneumonia II (Severe) = ₱38,000. Essential Hypertension = ₱9,000. Cerebral Infarction I = ₱28,000.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="mcq-card" data-correct="d">
+    <div class="mcq-q"><span class="mcq-qnum">4</span>Which building block of the WHO Health Systems Framework is considered the MOST CRUCIAL as it defines how all other building blocks are harnessed together?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Health Financing</li>
+      <li onclick="answerMCQ(this,'b')">B. Service Delivery</li>
+      <li onclick="answerMCQ(this,'c')">C. Health Workforce</li>
+      <li onclick="answerMCQ(this,'d')">D. Leadership & Governance (Stewardship)</li>
+    </ul>
+    <div class="rationale">Stewardship is the most crucial building block. It defines how the rest are harnessed together and refers to the government's role in promoting health and steering ALL stakeholders working for health — public and private alike.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="mcq-card" data-correct="b">
+    <div class="mcq-q"><span class="mcq-qnum">5</span>A nurse manager is dealing with rising tension between two staff members. The MOST important initial conflict resolution step is:</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Actively listening to both sides</li>
+      <li onclick="answerMCQ(this,'b')">B. Acknowledging the conflict</li>
+      <li onclick="answerMCQ(this,'c')">C. Proposing mediation or negotiation</li>
+      <li onclick="answerMCQ(this,'d')">D. Implementing a compromise</li>
+    </ul>
+    <div class="rationale">Acknowledging the conflict is the most important FIRST step — it sets the stage for open communication. If the conflict is denied or ignored, it escalates. Active listening, negotiation, and compromise follow in later stages.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="mcq-card" data-correct="c">
+    <div class="mcq-q"><span class="mcq-qnum">6</span>Under the No Balance Billing (NBB) policy, which of the following correctly states the eligibility?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Any PhilHealth member admitted to a private room in any hospital</li>
+      <li onclick="answerMCQ(this,'b')">B. Sponsored and indigent members in private hospitals, private room</li>
+      <li onclick="answerMCQ(this,'c')">C. Sponsored, indigents, kasambahay, senior citizens, and lifetime members in a non-private room in public/government hospitals</li>
+      <li onclick="answerMCQ(this,'d')">D. Direct contributors admitted to government hospitals, any room type</li>
+    </ul>
+    <div class="rationale">NBB = FREE hospitalization. Requirements: (1) must be NON-PRIVATE room, (2) must be PUBLIC/GOVERNMENT hospital, (3) eligible members: Sponsored, Indigents, Kasambahay, Senior citizens, Lifetime members. Private hospitals are NOT eligible.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="mcq-card" data-correct="d">
+    <div class="mcq-q"><span class="mcq-qnum">7</span>A hospital administrator leads a new team and quickly sets strict rules and makes all major decisions unilaterally. This best describes which leadership style?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Transformational</li>
+      <li onclick="answerMCQ(this,'b')">B. Servant</li>
+      <li onclick="answerMCQ(this,'c')">C. Democratic</li>
+      <li onclick="answerMCQ(this,'d')">D. Autocratic</li>
+    </ul>
+    <div class="rationale">Autocratic leadership is results-focused, makes decisions with little team input, and is particularly useful when handling a new team, new company, or new project. It provides clear chain of command and quick decision-making.</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="mcq-card" data-correct="b">
+    <div class="mcq-q"><span class="mcq-qnum">8</span>Which pillar is found in FOURmula One (F1) for Health (2005–2010) but NOT in the Health Sector Reform Agenda (HSRA, 1999–2004)?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Health Financing</li>
+      <li onclick="answerMCQ(this,'b')">B. Health Governance</li>
+      <li onclick="answerMCQ(this,'c')">C. Local Health Systems</li>
+      <li onclick="answerMCQ(this,'d')">D. Health Regulation</li>
+    </ul>
+    <div class="rationale">HSRA (1999–2004) pillars: Health Financing, Public Health, Public Hospitals, Local Health Systems, Health Regulation. FOURmula One (2005–2010) pillars: Service Delivery, Health Care Financing, HEALTH GOVERNANCE, Health Regulation. "Health Governance" is unique to F1, not HSRA.</div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="mcq-card" data-correct="a">
+    <div class="mcq-q"><span class="mcq-qnum">9</span>Under RA 11223, what is the criminal liability range for a healthcare provider who commits a fraudulent act?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. 6 months and 1 day to 6 years imprisonment</li>
+      <li onclick="answerMCQ(this,'b')">B. 1 month to 3 years imprisonment</li>
+      <li onclick="answerMCQ(this,'c')">C. 6 months to 12 years imprisonment</li>
+      <li onclick="answerMCQ(this,'d')">D. 3 months to 5 years imprisonment</li>
+    </ul>
+    <div class="rationale">Healthcare providers who commit unethical acts, abuse authority, or perform fraudulent acts face: Fine ₱200,000 OR suspension up to 3 months OR both; and criminal violation: 6 months and 1 day up to 6 years imprisonment.</div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="mcq-card" data-correct="c">
+    <div class="mcq-q"><span class="mcq-qnum">10</span>A community health worker assesses a village and determines that high teenage pregnancy is a major concern. She notes the gap between the current teen pregnancy rate (25%) and the ideal rate. This process corresponds to which stage of health program planning?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Stage 1 — Situational Analysis</li>
+      <li onclick="answerMCQ(this,'b')">B. Stage 3 — Setting Objectives</li>
+      <li onclick="answerMCQ(this,'c')">C. Stage 2 — Problem Identification and Prioritization</li>
+      <li onclick="answerMCQ(this,'d')">D. Stage 4 — Strategy Formulation</li>
+    </ul>
+    <div class="rationale">Stage 2 = Problem Identification & Prioritization. A problem is defined as a perceived gap between what something IS and what it SHOULD IDEALLY BE. Gathering root cause info and assessing magnitude, severity, feasibility are all Stage 2 activities.</div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="mcq-card" data-correct="b">
+    <div class="mcq-q"><span class="mcq-qnum">11</span>A doctor is making a budget proposal from scratch using WHO guidelines as reference (not last year's data). What budgeting method is this?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Incremental Budget</li>
+      <li onclick="answerMCQ(this,'b')">B. Zero-Based Budget</li>
+      <li onclick="answerMCQ(this,'c')">C. Activity-Based Budget</li>
+      <li onclick="answerMCQ(this,'d')">D. Value Proposition</li>
+    </ul>
+    <div class="rationale">Zero-based budget is NOT based on a previous year's budget — it projects future expenses. Using WHO guidelines or research-based references (not historical data) fits zero-based budgeting, as confirmed in the review rationale.</div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="mcq-card" data-correct="c">
+    <div class="mcq-q"><span class="mcq-qnum">12</span>Which of the following is covered under the Primary Care Benefit (Konsulta)?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Dialysis sessions</li>
+      <li onclick="answerMCQ(this,'b')">B. Chemotherapy sessions</li>
+      <li onclick="answerMCQ(this,'c')">C. CBC, Pap smears, and BP monitoring</li>
+      <li onclick="answerMCQ(this,'d')">D. Hemodialysis for non-OFWs</li>
+    </ul>
+    <div class="rationale">Konsulta covers: consultation, BP monitoring, clinical breast exam, CBC, urinalysis, fecalysis, FBS, HbA1c, lipid profiling, chest X-ray, ECG, Pap smear, and drugs for common conditions. Dialysis, hemodialysis, chemotherapy, and radiotherapy are NOT Konsulta — they are outpatient case rates.</div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="mcq-card" data-correct="d">
+    <div class="mcq-q"><span class="mcq-qnum">13</span>A PhilHealth member was admitted for pneumonia and discharged. She was re-admitted 60 days later for the SAME diagnosis. Based on the Single Period of Confinement (SPC) rule, what happens to her PhilHealth benefits?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. She gets full benefits since she was discharged in between</li>
+      <li onclick="answerMCQ(this,'b')">B. She gets 50% of the benefit</li>
+      <li onclick="answerMCQ(this,'c')">C. Benefits depend on the attending physician's recommendation</li>
+      <li onclick="answerMCQ(this,'d')">D. No benefit allowance — readmission for same illness within 90 days</li>
+    </ul>
+    <div class="rationale">SPC Rule: No benefit allowance if admitted or readmitted for the SAME illness within 90 days of the original admission. Exceptions are dialysis and radiotherapy (continuous treatment that requires repeated admissions).</div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="mcq-card" data-correct="b">
+    <div class="mcq-q"><span class="mcq-qnum">14</span>The DOH's Sulong Kalusugan envisions a healthy Philippines where behaviors become an easier choice. Which strategic thrust aims at ensuring citizens are health literate with good health-seeking behavior?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Protect from Health Risks</li>
+      <li onclick="answerMCQ(this,'b')">B. Enable to Be Healthy</li>
+      <li onclick="answerMCQ(this,'c')">C. Strengthen Institutions & Workforce</li>
+      <li onclick="answerMCQ(this,'d')">D. Care for Health & Wellness</li>
+    </ul>
+    <div class="rationale">"Enable to Be Healthy" = Citizens are health literate and have good health-seeking behavior; communities, workplaces, and schools are supportive settings. "Care for Health & Wellness" = covers the actual service delivery (zero-copayment, people-centered care).</div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="mcq-card" data-correct="a">
+    <div class="mcq-q"><span class="mcq-qnum">15</span>Under RA 11223, population-based health services are financed by:</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. National Government — delivered for free</li>
+      <li onclick="answerMCQ(this,'b')">B. PhilHealth — covered under benefit packages</li>
+      <li onclick="answerMCQ(this,'c')">C. LGUs from the Special Health Fund</li>
+      <li onclick="answerMCQ(this,'d')">D. Private HMOs and insurance companies</li>
+    </ul>
+    <div class="rationale">Population-based services (health promotion, disease surveillance, vector control) = financed by the NATIONAL GOVERNMENT and delivered FREE. Individual-based services (traceable to one recipient) = financed via prepayment (PhilHealth, HMOs, private insurance) — contracted by PhilHealth.</div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="mcq-card" data-correct="c">
+    <div class="mcq-q"><span class="mcq-qnum">16</span>Health Technology Assessment (HTA) is different from Health Impact Assessment (HIA) in that HTA:</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Evaluates policies and programs for their health sector impact</li>
+      <li onclick="answerMCQ(this,'b')">B. Is implemented annually by PSA</li>
+      <li onclick="answerMCQ(this,'c')">C. Systematically evaluates specific health interventions (drugs, vaccines, procedures) to recommend coverage to DOH & PhilHealth</li>
+      <li onclick="answerMCQ(this,'d')">D. Focuses only on communicable diseases</li>
+    </ul>
+    <div class="rationale">HTA = systematic evaluation of SPECIFIC health interventions (drugs, vaccines, devices, procedures) → recommends to DOH & PhilHealth what to fund/cover. HIA = evaluates POLICIES, PROGRAMS, and PROJECTS that may have broad health sector impact. Different scope!</div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="mcq-card" data-correct="d">
+    <div class="mcq-q"><span class="mcq-qnum">17</span>A health center needs to budget for the next year. The team sets a target income first, then calculates operational costs to fit within that income. This is best described as:</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Incremental Budget</li>
+      <li onclick="answerMCQ(this,'b')">B. Zero-Based Budget</li>
+      <li onclick="answerMCQ(this,'c')">C. Value Proposition</li>
+      <li onclick="answerMCQ(this,'d')">D. Activity-Based Budget</li>
+    </ul>
+    <div class="rationale">Activity-based budget: Income is determined by setting the target income FIRST, then computing operational costs to fit. The budget is based on possible expenses for the activity/program and identifies how to have potential income.</div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="mcq-card" data-correct="b">
+    <div class="mcq-q"><span class="mcq-qnum">18</span>In the Transtheoretical Model (Stages of Change), a patient who says "I know I should quit smoking, and I'm thinking about quitting in the next 6 months" is in which stage?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Pre-contemplation</li>
+      <li onclick="answerMCQ(this,'b')">B. Contemplation</li>
+      <li onclick="answerMCQ(this,'c')">C. Preparation</li>
+      <li onclick="answerMCQ(this,'d')">D. Action</li>
+    </ul>
+    <div class="rationale">Contemplation = patient is THINKING about change within the next 6 months but has not yet committed. Pre-contemplation = not yet thinking about change. Preparation = planning to act within next 30 days. Action = actively making changes.</div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="mcq-card" data-correct="a">
+    <div class="mcq-q"><span class="mcq-qnum">19</span>Frederick Herzberg's Two-Factor Theory states that motivators and hygiene factors have separate effects. Which of the following is a MOTIVATOR (not a hygiene factor)?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Recognition and advancement</li>
+      <li onclick="answerMCQ(this,'b')">B. Salary and job security</li>
+      <li onclick="answerMCQ(this,'c')">C. Workplace conditions</li>
+      <li onclick="answerMCQ(this,'d')">D. Bureaucracy and workplace relationships</li>
+    </ul>
+    <div class="rationale">Herzberg's Motivators (lead to SATISFACTION): work responsibility, self-fulfillment, advancement, recognition. Hygiene factors (prevent dissatisfaction but do NOT motivate): bureaucracy, relationships, conditions, salary, job security. Job dissatisfaction ≠ non-motivation!</div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="mcq-card" data-correct="c">
+    <div class="mcq-q"><span class="mcq-qnum">20</span>A city ordinance mandates that all food establishments post calorie counts and offer at least one healthy meal option. This is best classified as which type of health promotion strategy?</div>
+    <ul class="mcq-options">
+      <li onclick="answerMCQ(this,'a')">A. Health Communication</li>
+      <li onclick="answerMCQ(this,'b')">B. Health Education</li>
+      <li onclick="answerMCQ(this,'c')">C. Policy, Systems, Environmental (PSE) Change</li>
+      <li onclick="answerMCQ(this,'d')">D. Individual-level health counseling</li>
+    </ul>
+    <div class="rationale">PSE Change = designed to promote healthy behaviors by making healthy choices readily available and accessible; includes ordinances (policy), systems changes, and environmental modifications. A city ordinance = policy change under PSE.</div>
+  </div>
+
+  <div class="mcq-score" id="final-score-display">
+    🎉 Quiz complete! You scored <span id="final-score-text"></span>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<script>
+  // === TABS ===
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // === COLLAPSE ===
+  document.querySelectorAll('.collapse-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling;
+      const isOpen = content.classList.contains('open');
+      content.classList.toggle('open', !isOpen);
+      btn.querySelector('.arrow').textContent = isOpen ? '▼' : '▲';
+    });
+  });
+
+  // === MCQ ===
+  let answered = 0;
+  let correct = 0;
+  const totalQ = document.querySelectorAll('.mcq-card').length;
+
+  function answerMCQ(li, chosen) {
+    const card = li.closest('.mcq-card');
+    if (card.dataset.answered) return;
+    card.dataset.answered = 'true';
+    answered++;
+
+    const correctAns = card.dataset.correct;
+    const opts = card.querySelectorAll('.mcq-options li');
+    const rationale = card.querySelector('.rationale');
+
+    opts.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+    if (chosen === correctAns) {
+      li.classList.add('correct');
+      correct++;
+    } else {
+      li.classList.add('wrong');
+      opts.forEach(opt => {
+        if (opt.textContent.toLowerCase().startsWith(correctAns + '.')) {
+          opt.classList.add('reveal-correct');
+        }
+      });
+    }
+
+    rationale.classList.add('show');
+    updateScore();
+  }
+
+  function updateScore() {
+    const pct = answered > 0 ? Math.round((correct/answered)*100) : 0;
+    document.getElementById('score-display').textContent = correct + ' / ' + answered;
+    document.getElementById('score-bar').style.width = pct + '%';
+    document.getElementById('score-bar').style.background = pct >= 70 ? 'var(--accent3)' : pct >= 50 ? 'var(--accent4)' : 'var(--accent1)';
+
+    if (answered === totalQ) {
+      const el = document.getElementById('final-score-display');
+      document.getElementById('final-score-text').textContent = correct + ' out of ' + totalQ + ' (' + Math.round((correct/totalQ)*100) + '%)';
+      el.style.display = 'block';
+    }
+  }
+
+  function resetMCQ() {
+    answered = 0; correct = 0;
+    document.querySelectorAll('.mcq-card').forEach(card => {
+      delete card.dataset.answered;
+      card.querySelectorAll('.mcq-options li').forEach(li => {
+        li.classList.remove('correct','wrong','reveal-correct');
+        li.style.pointerEvents = '';
+      });
+      card.querySelector('.rationale').classList.remove('show');
+    });
+    document.getElementById('final-score-display').style.display = 'none';
+    updateScore();
+  }
+</script>
+</body>
+</html>

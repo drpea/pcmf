@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCM 2 — High-Yield Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0eb;
+    --surface: #fffdf9;
+    --surface2: #f0ebe3;
+    --border: #d9d0c4;
+    --text: #2a2218;
+    --text2: #6b5e4e;
+    --accent: #c05b2a;
+    --accent2: #3a6b8a;
+    --accent3: #5a8a3a;
+    --accent4: #8a3a6b;
+    --accent5: #8a7a3a;
+    --yellow: #fff8e1;
+    --yellow-border: #f0c040;
+    --red: #fdecea;
+    --red-border: #e57373;
+    --green: #e8f5e9;
+    --green-border: #66bb6a;
+    --blue: #e3f0f8;
+    --blue-border: #5b9ec9;
+    --purple: #f3e8f8;
+    --purple-border: #a975c9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    padding: 0 2rem;
+    display: flex; gap: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--text2); padding: 14px 16px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .nav-btn:hover, .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #2a2218 0%, #4a3828 60%, #6b4c2a 100%);
+    color: white; padding: 3rem 2rem 2rem;
+    text-align: center;
+  }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+  .hero p { color: #d4c4b0; margin-top: 0.5rem; font-size: 14px; }
+  .hero-tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+  .hero-tag { background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #f0e0c8; }
+
+  /* LAYOUT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700;
+    color: var(--text); margin-bottom: 0.25rem;
+  }
+  .section-subtitle { color: var(--text2); font-size: 13px; margin-bottom: 2rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .card-title {
+    font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700;
+    color: var(--accent); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;
+  }
+  .card-title .num {
+    background: var(--accent); color: white; border-radius: 50%;
+    width: 24px; height: 24px; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 0.5rem 0; }
+  th {
+    background: var(--accent); color: white;
+    padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.03em;
+  }
+  td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--surface2); }
+  .th2 { background: var(--accent2); }
+  .th3 { background: var(--accent3); }
+  .th4 { background: var(--accent4); }
+  .th5 { background: var(--accent5); }
+
+  /* HIGHLIGHT BOXES */
+  .hl { border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.6rem 0; font-size: 14px; }
+  .hl-y { background: var(--yellow); border-left: 4px solid var(--yellow-border); }
+  .hl-r { background: var(--red); border-left: 4px solid var(--red-border); }
+  .hl-g { background: var(--green); border-left: 4px solid var(--green-border); }
+  .hl-b { background: var(--blue); border-left: 4px solid var(--blue-border); }
+  .hl-p { background: var(--purple); border-left: 4px solid var(--purple-border); }
+
+  /* BADGES */
+  .badge {
+    display: inline-block; border-radius: 4px; padding: 1px 8px; font-size: 11px;
+    font-weight: 600; margin-right: 4px; font-family: 'DM Mono', monospace;
+  }
+  .badge-r { background: #fdecea; color: #c62828; border: 1px solid #ef9a9a; }
+  .badge-g { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .badge-b { background: #e3f0f8; color: #1565c0; border: 1px solid #90caf9; }
+  .badge-o { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+
+  /* ALGO / STEPS */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex; gap: 1rem; margin-bottom: 0.8rem; align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--accent2); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; font-family: 'DM Mono', monospace;
+  }
+  .step-num::before { content: counter(step); }
+  .step-body { flex: 1; padding-top: 3px; }
+  .step-body strong { color: var(--accent2); }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  @media (max-width: 680px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* MINI CARD */
+  .mini-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.2rem;
+  }
+  .mini-card h4 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--accent2); margin-bottom: 0.4rem; }
+
+  /* MCQ */
+  .mcq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1rem; overflow: hidden; }
+  .mcq-q { padding: 1rem 1.2rem; font-weight: 500; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .mcq-q:hover { background: var(--surface2); }
+  .mcq-choices { padding: 0 1.2rem; display: none; }
+  .mcq-choice { padding: 6px 10px; margin: 4px 0; border-radius: 6px; font-size: 13.5px; border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; }
+  .mcq-choice:hover { background: var(--surface2); }
+  .mcq-choice.correct { background: var(--green); border-color: var(--green-border); font-weight: 600; }
+  .mcq-choice.wrong { background: var(--red); border-color: var(--red-border); }
+  .mcq-explanation { background: var(--blue); border-top: 1px solid var(--blue-border); padding: 0.8rem 1.2rem; font-size: 13px; display: none; }
+  .mcq-explanation strong { color: var(--accent2); }
+  .toggle-icon { font-size: 18px; flex-shrink: 0; transition: transform 0.2s; }
+  .mcq-item.open .toggle-icon { transform: rotate(180deg); }
+  .mcq-item.open .mcq-choices { display: block; padding-bottom: 0.6rem; }
+
+  /* BUZZWORD */
+  .bw-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0; }
+  .bw {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 6px; padding: 5px 12px; font-size: 13px;
+    display: flex; flex-direction: column; gap: 1px;
+    cursor: default;
+  }
+  .bw:hover { border-color: var(--accent); }
+  .bw .term { font-weight: 600; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+  .bw .def { font-size: 12px; color: var(--text2); }
+
+  /* FLOWCHART */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 1rem 0; }
+  .flow-box {
+    background: var(--blue); border: 2px solid var(--blue-border);
+    border-radius: 8px; padding: 8px 20px; text-align: center;
+    font-size: 13px; font-weight: 500; max-width: 420px; width: 100%;
+  }
+  .flow-box.yl { background: var(--yellow); border-color: var(--yellow-border); }
+  .flow-box.gn { background: var(--green); border-color: var(--green-border); }
+  .flow-box.rd { background: var(--red); border-color: var(--red-border); }
+  .flow-arrow { font-size: 20px; color: var(--text2); line-height: 1; margin: 2px 0; }
+
+  /* PILL TAGS */
+  .pill { display: inline-block; background: var(--accent); color: white; border-radius: 20px; padding: 2px 12px; font-size: 12px; font-weight: 600; margin: 2px; }
+  .pill2 { background: var(--accent2); }
+  .pill3 { background: var(--accent3); }
+  .pill4 { background: var(--accent4); }
+
+  ul { padding-left: 1.4rem; }
+  ul li { margin-bottom: 3px; }
+  strong { font-weight: 600; }
+  code { font-family: 'DM Mono', monospace; background: var(--surface2); padding: 1px 5px; border-radius: 3px; font-size: 12.5px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+
+  .tag-hy { background: #fff0f0; color: #c62828; border: 1px solid #ef9a9a; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 700; font-family: 'DM Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>PCM 2 — High-Yield Reviewer</h1>
+  <p>Comprehensive review of all six topics · Click, read, ace the exam</p>
+  <div class="hero-tags">
+    <span class="hero-tag">4.01 Research Management</span>
+    <span class="hero-tag">4.02 Causality</span>
+    <span class="hero-tag">4.03 Research Writing</span>
+    <span class="hero-tag">4.04 Data Presentation</span>
+    <span class="hero-tag">4.05 Paper Reporting</span>
+    <span class="hero-tag">4.06 Epidemic Investigation</span>
+  </div>
+</div>
+
+<nav id="mainNav">
+  <button class="nav-btn active" onclick="showSection('s1')">📋 Research Mgmt</button>
+  <button class="nav-btn" onclick="showSection('s2')">🔗 Causality</button>
+  <button class="nav-btn" onclick="showSection('s3')">✍️ Research Writing</button>
+  <button class="nav-btn" onclick="showSection('s4')">📊 Data Presentation</button>
+  <button class="nav-btn" onclick="showSection('s5')">🎤 Paper Reporting</button>
+  <button class="nav-btn" onclick="showSection('s6')">🦠 Epidemic Investigation</button>
+  <button class="nav-btn" onclick="showSection('s7')">❓ MCQ Review</button>
+  <button class="nav-btn" onclick="showSection('s8')">🔑 Buzzwords</button>
+</nav>
+
+<!-- ==================== SECTION 1: RESEARCH MANAGEMENT ==================== -->
+<div class="section active" id="s1">
+<div class="container">
+  <div class="section-title">Research Management</div>
+  <div class="section-subtitle">How to plan, organize, implement, and evaluate a research project</div>
+
+  <div class="card">
+    <div class="card-title">Definition & Scope</div>
+    <p>Applying management principles to research units, projects, and programs — from <strong>conception</strong> to <strong>publication</strong>.</p>
+    <div class="hl hl-y" style="margin-top:0.8rem;">
+      <strong>Covers:</strong> concept → protocol → budget → funding → team → data collection → reports → publication/presentation
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4 Principles of Management by Objectives</div>
+    <table>
+      <tr><th>Principle</th><th>Key Idea</th></tr>
+      <tr><td><strong>Effectiveness</strong></td><td>Degree to which objectives are achieved; requires clear objectives</td></tr>
+      <tr><td><strong>Efficiency</strong></td><td>Getting things done through people; convergence of work activities</td></tr>
+      <tr><td><strong>Economy</strong></td><td>Best use of available resources at reasonable cost</td></tr>
+      <tr><td><strong>Decision-Making</strong></td><td>Shortest decision path; <em>Management by Exception</em> = filter only essential info, prioritize decisions</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5 Principles of Organizing</div>
+    <table>
+      <tr><th>Principle</th><th>Definition</th></tr>
+      <tr><td><strong>Departmentalization</strong></td><td>Group interrelated jobs into units. <em>Functional</em> = by office function; <em>Process</em> = by technical work steps (pre-test → interview → audit → analysis → writing)</td></tr>
+      <tr><td><strong>Division of Work</strong></td><td>Assign tasks to those with training or natural aptitude</td></tr>
+      <tr><td><strong>Delegation of Authority</strong></td><td>Necessary for growth; gives managerial depth; develops subordinates</td></tr>
+      <tr><td><strong>Span & Control</strong></td><td>Limit number of direct reports per supervisor to what can be effectively directed</td></tr>
+      <tr><td><strong>Unity of Command</strong></td><td>Each person reports to <strong>only ONE supervisor</strong> (chain of command)</td></tr>
+    </table>
+    <div class="hl hl-b" style="margin-top:0.8rem;">
+      <strong>Functional vs Process Departmentalization:</strong> Functional = grouped by office type (e.g., medical, nursing, hospitality). Process = grouped by workflow steps (spinning → weaving → dyeing → packing).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3 Main Functions of Management</div>
+    <div class="grid3">
+      <div class="mini-card">
+        <h4>📌 Planning</h4>
+        <p style="font-size:13px;">Answer questions <em>before</em> they arise. "Planning the actual implementation" — different from the protocol itself.</p>
+      </div>
+      <div class="mini-card">
+        <h4>⚙️ Implementation</h4>
+        <p style="font-size:13px;">On-the-ground execution. Uses work schedules, job descriptions, org charts, training manuals.</p>
+      </div>
+      <div class="mini-card">
+        <h4>📈 Evaluation</h4>
+        <p style="font-size:13px;">Ongoing throughout study. Must be: <strong>Timely, Simple, Minimal, Flexible</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4 Steps of Planning (Algorithm)</div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Look at the situation</strong> — understand community, prioritize problems, study available resources (equipment, drugs, time, people)</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Set objectives</strong> — prepare operational, time-bound targets for each activity</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Review obstacles & limitations</strong> — People / Equipment / Information / Time / Budget (limitations); Geographic / Climatic / Technical / Social (obstacles) → REMOVE, MODIFY, or NEITHER</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Schedule activities</strong> — targets, timelines, detailed schedule + budget</div></div>
+    </div>
+    <div class="hl hl-g">
+      <strong>For each phase, check 3 areas:</strong> Objectives · Activities · Resources<br>
+      <strong>4 Phases of Study:</strong> Mobilization/Preparation → Data Collection → Data Analysis → Presentation & Report
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Obstacle Decision Framework</div>
+    <table>
+      <tr><th>Scenario</th><th>Action</th><th>Example</th></tr>
+      <tr><td>Workers unskilled at task</td><td class="badge-g" style="background:#e8f5e9;color:#2e7d32;padding:4px 8px;border-radius:4px;font-weight:600;">REMOVE</td><td>Train more workers</td></tr>
+      <tr><td>Subjects unavailable weekdays</td><td class="badge-b" style="background:#e3f0f8;color:#1565c0;padding:4px 8px;border-radius:4px;font-weight:600;">MODIFY</td><td>Conduct on weekends</td></tr>
+      <tr><td>Funder won't buy computer</td><td class="badge-b" style="background:#e3f0f8;color:#1565c0;padding:4px 8px;border-radius:4px;font-weight:600;">MODIFY</td><td>Rent instead</td></tr>
+      <tr><td>Pandemic prevents F2F</td><td style="background:#fff3e0;color:#e65100;padding:4px 8px;border-radius:4px;font-weight:600;">NEITHER</td><td>Online survey</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Types of Supervision</div>
+    <table>
+      <tr><th>Type</th><th>Motto</th><th>Best For</th></tr>
+      <tr><td><strong>Anarchic</strong></td><td>"Do what you like"</td><td>Highly experienced, self-directed teams (rare)</td></tr>
+      <tr><td><strong>Autocratic</strong></td><td>"Do what I say"</td><td>Complex tasks, strict policies, unskilled/unreliable people</td></tr>
+      <tr><td><strong>Democratic</strong></td><td>"Let's agree on what to do"</td><td>Creative tasks, competent & experienced staff</td></tr>
+    </table>
+    <div class="hl hl-y" style="margin-top:0.8rem;">A leader should be <strong>flexible</strong> — adapt supervision style to task and team conditions.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Leader vs. Boss — Key Distinctions</div>
+    <div class="grid2">
+      <div>
+        <p style="color:var(--accent3);font-weight:700;margin-bottom:0.4rem;">✅ Leader</p>
+        <ul style="font-size:13.5px;">
+          <li>Motivates · Leads · Says "We"</li>
+          <li>Develops people · Gives credit</li>
+          <li>Equal relationships · Constructive criticism</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--accent);font-weight:700;margin-bottom:0.4rem;">❌ Boss</p>
+        <ul style="font-size:13.5px;">
+          <li>Threatens · Rules · Says "I"</li>
+          <li>Uses people · Takes credit</li>
+          <li>Manifests favoritism · Humiliates</li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <p style="font-size:13.5px;"><strong>Leader functions:</strong> Set & share objectives · Delegate authority & responsibility · Motivate team members</p>
+    <p style="font-size:13.5px;margin-top:0.4rem;"><strong>Motivators:</strong> Achievement · Recognition · Responsibility · Advancement · Self-improvement · The work itself</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Data Quality Control Measures</div>
+    <ul>
+      <li>Generate computerized list of key data items <strong>regularly</strong></li>
+      <li>Compare computer data with <strong>original documents</strong></li>
+      <li>Examine <strong>routine reports</strong></li>
+      <li>Use cleanup data to assess collection system & personnel</li>
+      <li>Observe actual operations; <strong>invite outside experts</strong> ("new eyes") for impartial evaluation</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 2: CAUSALITY ==================== -->
+<div class="section" id="s2">
+<div class="container">
+  <div class="section-title">Causality</div>
+  <div class="section-subtitle">Correlation ≠ Causality — Understanding the relationship between variables</div>
+
+  <div class="card">
+    <div class="card-title">Correlation vs. Causality <span class="tag-hy">HY</span></div>
+    <div class="grid2">
+      <div class="hl hl-b">
+        <strong>Correlation</strong><br>
+        Mutual relationship (upward or downward) between two variables. Ranges from <code>-1</code> to <code>+1</code>. Does <strong>NOT</strong> mean one causes the other.
+      </div>
+      <div class="hl hl-g">
+        <strong>Causality</strong><br>
+        Relationship with a <em>valid real-world explanation</em>. Turns correlation's possibility into actuality. Adds mechanism and context.
+      </div>
+    </div>
+    <div class="hl hl-y" style="margin-top:0.5rem;">
+      <strong>Classic Example:</strong> Ice cream sales ↑ and sunburns ↑ are correlated — but ice cream doesn't cause sunburns. <em>Hot weather</em> causes both. Hot weather → ice cream sales; Hot weather → sunburns.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Strength of Correlation Table <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Range</th><th>Interpretation</th></tr>
+      <tr><td><code>0.80 – 1.00</code></td><td>Very Strong Positive</td></tr>
+      <tr><td><code>0.60 – 0.79</code></td><td>Fairly Strong Positive</td></tr>
+      <tr><td><code>0.40 – 0.59</code></td><td>Moderate Positive</td></tr>
+      <tr><td><code>0.20 – 0.39</code></td><td>Weak Positive</td></tr>
+      <tr><td><code>0.00 – 0.19</code></td><td>Very Weak Positive</td></tr>
+      <tr><td><code>-0.01 – -0.19</code></td><td>Very Weak Negative</td></tr>
+      <tr><td><code>-0.20 – -0.39</code></td><td>Weak Negative</td></tr>
+      <tr><td><code>-0.40 – -0.59</code></td><td>Moderate Negative</td></tr>
+      <tr><td><code>-0.60 – -0.79</code></td><td>Fairly Strong Negative</td></tr>
+      <tr><td><code>-0.80 – -1.00</code></td><td>Very Strong Negative</td></tr>
+    </table>
+    <div class="hl hl-b" style="margin-top:0.6rem;"><strong>Cutoff for "strong":</strong> ≥ 0.60 (positive) or ≤ −0.60 (negative)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ladder of Causality <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Level</th><th>Activity</th><th>Key Question</th><th>Example</th></tr>
+      <tr><td><strong>Association</strong> (lowest)</td><td>Observing, correlating</td><td>How do trends in X influence trends in Y?</td><td>Which symptoms & diseases occur together?</td></tr>
+      <tr><td><strong>Interventional</strong> (middle)</td><td>Intervening, experimenting</td><td>How does Y change if we force a change in X?</td><td>Reducing smoking → ↓ lung cancer risk</td></tr>
+      <tr><td><strong>Counterfactual</strong> (highest)</td><td>Imagining, retroactive causal inference</td><td>Was it X that made the difference in Y?</td><td>If person never smoked → never developed lung cancer</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5 Criteria for Medical Causality</div>
+    <div class="hl hl-y">
+      <strong>Mnemonic: STDR P</strong> — <em>Strong association · Temporality · Dose-response · Repeatability · Plausible mechanism</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Bradford-Hill Criteria <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Criterion</th><th>Description</th><th>Smoking & Lung Cancer Example</th></tr>
+      <tr>
+        <td><strong>Plausibility</strong></td>
+        <td>Reasonable biological pathway linking exposure to outcome (mechanism needed)</td>
+        <td>20-year lag time; smoking → carcinogens → cellular mutation → cancer</td>
+      </tr>
+      <tr>
+        <td><strong>Consistency</strong></td>
+        <td>Same results in different times, places, and populations ⭐</td>
+        <td>Smokers have higher lung cancer rates in Western AND Asian populations</td>
+      </tr>
+      <tr>
+        <td><strong>Temporality</strong> ⭐ CRUCIAL</td>
+        <td>Exposure MUST precede outcome — cause before effect</td>
+        <td>Individuals started smoking BEFORE they developed lung cancer</td>
+      </tr>
+      <tr>
+        <td><strong>Strength</strong></td>
+        <td>Magnitude of association — high RR or OR supports causality</td>
+        <td>Smokers have MUCH higher RR of lung cancer vs non-smokers</td>
+      </tr>
+      <tr>
+        <td><strong>Specificity</strong></td>
+        <td>"One-to-one" relationship; causal factor specific to outcome; high attributable risk. Lack of specificity does NOT rule out causality.</td>
+        <td>Specific chemicals in cigarettes cause specific cancers</td>
+      </tr>
+      <tr>
+        <td><strong>Change in Risk Factor</strong></td>
+        <td>Removing/reducing exposure → decrease in outcome incidence</td>
+        <td>Stopping smoking → significantly lower lung cancer risk</td>
+      </tr>
+    </table>
+    <div class="hl hl-r" style="margin-top:0.6rem;">
+      <strong>Lack of specificity does NOT rule out causality</strong> (many exposures → multiple outcomes)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Clinical Trials & Confounders</div>
+    <div class="grid2">
+      <div>
+        <p><span class="badge badge-g">GOLD STANDARD</span> <strong>RCTs</strong> — establish cause & effect in medicine</p>
+        <p style="margin-top:0.5rem;font-size:13.5px;color:var(--text2);">Problems with RCTs: Unethical (placebo group), Expensive</p>
+        <p style="margin-top:0.4rem;font-size:13.5px;">Observational studies (cohort, case-control, case series) = proxy for RCTs</p>
+      </div>
+      <div class="hl hl-r">
+        <strong>Confounder</strong> = variable that influences BOTH the cause and effect<br><br>
+        E.g.: Age confounds exercise–heart disease relationship. Older → exercise less AND higher CVD risk → incorrect conclusion if age is ignored.
+      </div>
+    </div>
+    <hr>
+    <p style="font-size:13.5px;"><strong>Hierarchy of Evidence (highest → lowest):</strong> Systematic Reviews → RCTs → Cohort Studies → Case-Control → Case Series/Reports → Expert Opinion</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Challenges in Establishing Causality — C·R·C</div>
+    <div class="grid3">
+      <div class="hl hl-r"><strong>Confounding</strong><br><small>Third variable distorts apparent relationship</small></div>
+      <div class="hl hl-y"><strong>Reverse Causality</strong><br><small>Unclear if X→Y or Y→X</small></div>
+      <div class="hl hl-p"><strong>Confirmation Bias</strong><br><small>Looking for info that supports existing beliefs</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Statistical Techniques for Causal Inference</div>
+    <table>
+      <tr><th>Technique</th><th>Purpose</th></tr>
+      <tr><td><strong>Regression Analysis</strong></td><td>Model relationship between dependent & independent variables; must account for confounders</td></tr>
+      <tr><td><strong>Propensity Score Matching</strong></td><td>Creates comparable control group in observational studies; reduces confounding bias</td></tr>
+      <tr><td><strong>Machine Learning Approaches</strong></td><td>Estimates heterogeneous treatment effects (how effects vary across individuals)</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 3: RESEARCH WRITING ==================== -->
+<div class="section" id="s3">
+<div class="container">
+  <div class="section-title">Research Writing</div>
+  <div class="section-subtitle">IMRAD format for original research papers</div>
+
+  <div class="card">
+    <div class="card-title">Types of Publications <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Type</th><th>Word Limit</th><th>Key Feature</th></tr>
+      <tr><td><strong>Review Articles</strong></td><td>≤10,000 words</td><td>Literature from past 5 years; ≤6 tables/illustrations</td></tr>
+      <tr><td><strong>Perspective / Commentary / Opinion</strong></td><td>≤2,000 words</td><td>Concise; cutting-edge topics; expert viewpoints</td></tr>
+      <tr><td><strong>Rapid Communications</strong></td><td>≤3,000 words</td><td>Preliminary but urgent/time-sensitive (e.g., pandemic)</td></tr>
+      <tr><td><span class="badge badge-g">MOST RELEVANT</span> <strong>Original Research Papers</strong></td><td>≤7,500 words*</td><td>Full-length, previously unpublished; IMRAD format; ≤6 tables/illustrations; word limit is a GUIDE</td></tr>
+    </table>
+    <div class="hl hl-b" style="margin-top:0.6rem;">Original research papers are <strong>NOT as lengthy as proposals</strong> — proposals convince why; papers report what was found.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">IMRAD Format Structure</div>
+    <div class="flow">
+      <div class="flow-box yl"><strong>TITLE</strong> — write LAST; most important part; first contact</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box yl"><strong>ABSTRACT</strong> — IMRAC (no Discussion); &lt;150 words unstructured / &lt;250 structured; 3–10 keywords</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box"><strong>INTRODUCTION</strong> — 3 paragraphs; write after Methods/Results/Discussion</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box"><strong>METHODS</strong> — past tense; allow replication; check reporting guidelines</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box"><strong>RESULTS</strong> — past tense; data only (no interpretation); same order as Methods</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box"><strong>DISCUSSION</strong> — explain meaning; relate to literature; state limitations</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box gn"><strong>CONCLUSION</strong> — strong, clear; ideally 1 paragraph; within study scope</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box gn"><strong>REFERENCES</strong> + <strong>ACKNOWLEDGEMENTS</strong></div>
+    </div>
+    <div class="hl hl-y" style="margin-top:0.6rem;">
+      <strong>Total pages: 12–20.</strong> Writing order need NOT follow IMRAD — many start with Methods/Results.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Section-by-Section Rules <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Section</th><th>Key Rules</th><th>Common Pitfalls</th></tr>
+      <tr>
+        <td><strong>Title</strong></td>
+        <td>Brief, specific, jargon-free; write LAST; must stand alone; aids indexing</td>
+        <td>Using unexplained abbreviations; writing too early</td>
+      </tr>
+      <tr>
+        <td><strong>Abstract</strong></td>
+        <td>IMRAC (no Discussion); self-contained; no references; no figures/tables; past tense & passive voice; spell out abbreviations</td>
+        <td>Including references; adding a Discussion section</td>
+      </tr>
+      <tr>
+        <td><strong>Introduction</strong></td>
+        <td>3 paragraphs: ① Background/context → ② Importance/what's known → ③ Rationale/hypothesis/objective</td>
+        <td>Presenting results in intro; being too long</td>
+      </tr>
+      <tr>
+        <td><strong>Methods</strong></td>
+        <td>Past tense (change from protocol's future tense); allow replication; include study design, sample, data collection, analysis, ethics</td>
+        <td>Copy-pasting from protocol without changing tense</td>
+      </tr>
+      <tr>
+        <td><strong>Results</strong></td>
+        <td>Past tense; data ONLY — no interpretation; all Methods variables appear in same order; both positive AND negative findings</td>
+        <td>Adding interpretation ("this suggests..."); omitting negative results</td>
+      </tr>
+      <tr>
+        <td><strong>Discussion</strong></td>
+        <td>Explain meaning of results; relate to similar studies; state limitations; make suggestions for future research</td>
+        <td>Overreaching conclusions; ignoring limitations; repeating results verbatim</td>
+      </tr>
+      <tr>
+        <td><strong>Conclusion</strong></td>
+        <td>1 paragraph; strong & clear; limited by study scope; negative findings = important too</td>
+        <td>Unqualified statements; topics not studied; economic claims without economic data</td>
+      </tr>
+      <tr>
+        <td><strong>References</strong></td>
+        <td>Use "References" (not Bibliography); 20–35 refs; consistent citation style</td>
+        <td>Bibliography terminology; inconsistent formatting</td>
+      </tr>
+      <tr>
+        <td><strong>Acknowledgements</strong></td>
+        <td>For contributors who DON'T qualify as authors; technical/financial support; general departmental support</td>
+        <td>Including advisers (they are co-authors, not acknowledgements)</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tables vs. Figures in Results</div>
+    <div class="grid2">
+      <div class="hl hl-b">
+        <strong>Use TABLE when:</strong><br>
+        Exact values are important (mean ± SD, range, comparison of specific numbers). Label goes <strong>ABOVE</strong> the table.
+      </div>
+      <div class="hl hl-g">
+        <strong>Use GRAPH/FIGURE when:</strong><br>
+        Trends and relationships matter more than exact values. Label goes <strong>BELOW</strong> the figure.
+      </div>
+    </div>
+    <div class="hl hl-y" style="margin-top:0.5rem;">Don't use tables/figures if data can be stated in ONE sentence. Always cite in text BEFORE they appear. Number correctly.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Reporting Guidelines (by Study Type)</div>
+    <table>
+      <tr><th>Guideline</th><th>Study Type</th></tr>
+      <tr><td><strong>CONSORT</strong></td><td>Randomized Controlled Trials</td></tr>
+      <tr><td><strong>STARD</strong></td><td>Diagnostic studies</td></tr>
+      <tr><td><strong>STROBE</strong></td><td>Observational studies (cohort, case-control, cross-sectional)</td></tr>
+      <tr><td><strong>PRISMA</strong></td><td>Systematic reviews and meta-analyses</td></tr>
+    </table>
+    <p style="font-size:13px;margin-top:0.5rem;color:var(--text2);">All found on the <strong>Equator Network</strong> website.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Key Writing Rules</div>
+    <ul>
+      <li>Spell out numbers <strong>below ten</strong>; never start sentence with numeral</li>
+      <li>Always cite sources for non-original statements; punctuation comes BEFORE superscript</li>
+      <li>Assign one proofreader per group for consistent voice</li>
+      <li><strong>No surprises</strong> — concepts appearing mid-paper must be introduced earlier</li>
+      <li>Table titles: ABOVE; Figure labels: BELOW</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 4: DATA PRESENTATION ==================== -->
+<div class="section" id="s4">
+<div class="container">
+  <div class="section-title">Data Presentation</div>
+  <div class="section-subtitle">Types of data, tables, graphs, and diagrams</div>
+
+  <div class="card">
+    <div class="card-title">Types of Data <span class="tag-hy">HY</span></div>
+    <div class="grid2">
+      <div>
+        <p style="font-weight:700;color:var(--accent2);margin-bottom:0.4rem;">Quantitative Data</p>
+        <table>
+          <tr><th class="th2">Type</th><th class="th2">Features</th><th class="th2">Examples</th></tr>
+          <tr><td><strong>Continuous</strong></td><td>Infinitely divisible; may fluctuate</td><td>Temperature, BMI, blood glucose</td></tr>
+          <tr><td><strong>Discrete</strong></td><td>Fixed; whole numbers only</td><td>Number of patients, TikTok likes</td></tr>
+        </table>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--accent4);margin-bottom:0.4rem;">Qualitative Data</p>
+        <table>
+          <tr><th class="th4">Scale</th><th class="th4">Key Feature</th><th class="th4">Examples</th></tr>
+          <tr><td><strong>Nominal</strong></td><td>No order; categories only</td><td>Blood type, gender, ethnicity</td></tr>
+          <tr><td><strong>Ordinal</strong></td><td>Rank/order; interval unknown</td><td>Likert scale, year level, pain scale</td></tr>
+          <tr><td><strong>Interval</strong></td><td>Equal spacing; NO absolute zero</td><td>Temperature (°C/°F), pH, SAT scores</td></tr>
+          <tr><td><strong>Ratio</strong></td><td>Equal spacing + absolute ZERO → ratios meaningful</td><td>Height, weight, BP, blood chemistry (mmol/L)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="hl hl-y" style="margin-top:0.6rem;">
+      <strong>Ratio scale</strong> = "ultimate nirvana." Most biomedical variables. Only temperature ratio scale = Kelvin (0K = absolute zero). Temperature in °C/°F = Interval.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Methods of Presenting Data</div>
+    <table>
+      <tr><th>Method</th><th>Best For</th><th>Key Notes</th></tr>
+      <tr><td><strong>Text</strong></td><td>1–2 numbers; narrative descriptions</td><td>Must enumerate, emphasize, and highlight key features</td></tr>
+      <tr><td><strong>Table</strong></td><td>Exact values; multiple variables</td><td>Cannot show trends; can mix units; slower to interpret</td></tr>
+      <tr><td><strong>Graph/Diagram</strong></td><td>Patterns, trends, relationships</td><td>Faster to read; can handle large datasets</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">10 Principles for Designing Tables <span class="tag-hy">HY</span></div>
+    <ol style="font-size:13.5px;padding-left:1.4rem;">
+      <li>Tables should be <strong>numbered</strong> (Table 1, Table 2…); <em>Table 1 = Baseline Characteristics</em></li>
+      <li>Title: brief, self-explanatory, placed <strong>ON TOP</strong></li>
+      <li>Headnote: clarification below title (in parentheses)</li>
+      <li>Headings: clear, concise, capitalized; no generic labels</li>
+      <li>Data: ordered by size, chronology, alphabet, or geography</li>
+      <li>Comparisons: place close to each other</li>
+      <li>No table too large (don't reduce font to force-fit)</li>
+      <li>Vertical arrangement preferred over horizontal</li>
+      <li>Footnotes at bottom: explanatory notes, sources, abbreviations, units, pattern of analysis</li>
+      <li>Simple and self-explanatory; include normal ranges when using values</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Types of Tables</div>
+    <table>
+      <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+      <tr><td><strong>Simple</strong></td><td>One classification in rows and/or columns; final data presentation</td><td>Height frequency table</td></tr>
+      <tr><td><strong>Master</strong></td><td>Several classifications in rows AND columns; large datasets</td><td>Periodic Table</td></tr>
+      <tr><td><strong>Special – Frequency Distribution</strong></td><td>Quantitative data split into class intervals with frequencies</td><td>Age groups vs. count</td></tr>
+      <tr><td><strong>Special – Four-fold (2×2)</strong></td><td>Most common in observational studies; computes OR and RR</td><td>Case-control exposure table</td></tr>
+      <tr><td><strong>Special – Correlation</strong></td><td>Two-way frequency distribution; shows correlation between variables</td><td>Exposure vs. outcome cross-table</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Frequency Table Construction Rules</div>
+    <ul style="font-size:13.5px;">
+      <li><strong>Class interval size:</strong> Not too large or small; uniform across table</li>
+      <li><strong>Number of classes:</strong> Ideally <strong>8–15 rows</strong> (too many → empty cells; too few → loss of detail)</li>
+      <li><strong>Headings:</strong> Proper and clear</li>
+      <li><strong>Documentation:</strong> Source and pattern of analysis in footnote</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Types of Graphs vs. Diagrams <span class="tag-hy">HY</span></div>
+    <div class="grid2">
+      <div>
+        <p style="font-weight:700;color:var(--accent2);margin-bottom:0.5rem;">GRAPHS</p>
+        <table style="font-size:13px;">
+          <tr><th class="th2">Graph</th><th class="th2">Use When…</th></tr>
+          <tr><td><strong>Pie Chart ⭐</strong></td><td>Nominal data; small # of categories (≤2 distributions); proportions of a whole</td></tr>
+          <tr><td><strong>Simple Bar</strong></td><td>Categorical data; one variable; vertical or horizontal</td></tr>
+          <tr><td><strong>Multiple Bar</strong></td><td>Related sets of data; grouped bars; each bar differently colored</td></tr>
+          <tr><td><strong>Component/Subdivided Bar</strong></td><td>Stacked bar; shows parts of a whole; >2 distributions (preferred over pie)</td></tr>
+          <tr><td><strong>Likert Scale Chart</strong></td><td>Survey responses; categorical + numerical columns</td></tr>
+          <tr><td><strong>Histogram</strong></td><td>Frequency distribution of <em>continuous</em> quantitative data only; adjacent rectangles; no gaps</td></tr>
+        </table>
+        <div class="hl hl-y" style="margin-top:0.5rem;font-size:12.5px;">
+          ⭐ When >2 distributions: <strong>proportional/subdivided bar</strong> is more effective than pie chart
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--accent4);margin-bottom:0.5rem;">DIAGRAMS</p>
+        <table style="font-size:13px;">
+          <tr><th class="th4">Diagram</th><th class="th4">Use When…</th></tr>
+          <tr><td><strong>Frequency Curve</strong></td><td>Smooth hand-drawn histogram; compare sets; cumulative frequency (Ogives)</td></tr>
+          <tr><td><strong>Scatter Diagram</strong></td><td>Relationship between 2 variables; dots clustering → linear relationship</td></tr>
+          <tr><td><strong>Line Diagram</strong></td><td>Changes over TIME; arithmetic scale = absolute change; logarithmic = relative change</td></tr>
+          <tr><td><strong>Pictogram</strong></td><td>Non-technical audience; uses small pictures/symbols</td></tr>
+          <tr><td><strong>Statistical Map</strong></td><td>Geographic/administrative data; shading intensity = magnitude</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5 Principles for Diagram Construction</div>
+    <ol style="font-size:13.5px;padding-left:1.4rem;">
+      <li>Completely self-explanatory (title, source, scale, legend)</li>
+      <li><span class="badge badge-r">KEY</span> Title placed <strong>BELOW</strong> the graph/diagram</li>
+      <li>Frequency on <strong>vertical</strong> axis; classification on <strong>horizontal</strong></li>
+      <li>Frequency scale starts at <strong>zero</strong> (if not possible, show a break)</li>
+      <li>Equal increments on arithmetic scale = equal numerical units</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Dummy Tables</div>
+    <ul style="font-size:13.5px;">
+      <li>Help outline how trial results will be reported</li>
+      <li>Created <strong>BEFORE</strong> data collection tools are finalized; appended to protocol</li>
+      <li>Enables advance planning; keeps team aligned with objectives</li>
+      <li>Interim and final analysis should adhere to dummy table structure</li>
+      <li>Should follow <strong>CONSORT</strong> statement structure: flow diagram + baseline table + outcomes table + adverse events table</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 5: PAPER REPORTING ==================== -->
+<div class="section" id="s5">
+<div class="container">
+  <div class="section-title">Research Paper Reporting</div>
+  <div class="section-subtitle">Oral presentations, poster presentations, and online conferences</div>
+
+  <div class="card">
+    <div class="card-title">What a Research Talk IS and IS NOT</div>
+    <div class="grid2">
+      <div class="hl hl-g">
+        <strong>IS:</strong><br>
+        ✅ Give the audience an intuitive feel for your idea<br>
+        ✅ Make them eager to read your paper
+      </div>
+      <div class="hl hl-r">
+        <strong>IS NOT:</strong><br>
+        ❌ To impress with brainpower<br>
+        ❌ To tell them ALL you know<br>
+        ❌ To present all technical details
+      </div>
+    </div>
+    <div class="hl hl-y" style="margin-top:0.5rem;">
+      Your presentation should be <strong>NARROW and DEEP</strong> — focused on the KEY IDEA, not wide and shallow.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Initial Planning Checklist</div>
+    <ul style="font-size:13.5px;">
+      <li><strong>Type of talk:</strong> Summary only vs. full discussion? Theme of seminar?</li>
+      <li><strong>Time allotted:</strong> Do NOT go over the time limit (impolite to organizer and next presenter)</li>
+      <li><strong>Expectations for content:</strong> What does the audience want to know?</li>
+      <li><strong>Composition of audience:</strong> Experts (skip basic methods) vs. general (explain more)</li>
+    </ul>
+    <hr>
+    <p style="font-size:13.5px;"><strong>Content split:</strong> <code>20% Motivation</code> + <code>80% Key Idea</code></p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Presentation Preparation Steps</div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-body">Start preparing <strong>early</strong></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body">Identify important issues to discuss more deeply</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body">Outline your talk</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body">List important points and prioritize (most → least important)</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body">Rehearse <strong>10 times</strong> — edit and shorten each time</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Slide Design — BSCC Rules <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Principle</th><th>Specific Rules</th></tr>
+      <tr>
+        <td><strong>Make it BIG</strong></td>
+        <td>Readable from 6 ft away from screen (no minimum font size — use 6 ft rule)</td>
+      </tr>
+      <tr>
+        <td><strong>Keep it Simple</strong></td>
+        <td>≤6 lines of text per slide · ≤7 words per line · Avoid text-only slides in a row · Use graphs/images in between · GRAPH > TABLE ⭐</td>
+      </tr>
+      <tr>
+        <td><strong>Make it Clear</strong></td>
+        <td>Sans serif fonts (Helvetica, Arial, Calibri) · No italics · Font >24 pt (minimum 18) · No ALL CAPS sentences · Contrasting colors (avoid red-on-blue, yellow-on-white)</td>
+      </tr>
+      <tr>
+        <td><strong>Be Consistent</strong></td>
+        <td>Same color + visual concept throughout · No highly creative designs (formal presentation) · Audience should get the point within 5 seconds</td>
+      </tr>
+    </table>
+    <div class="hl hl-r" style="margin-top:0.6rem;">
+      <strong>DO NOT read your slides!</strong> "Otherwise, just give them the PowerPoint." — reading slides disengages the audience.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Presentation Day Tips</div>
+    <div class="grid2">
+      <div>
+        <p style="font-weight:600;margin-bottom:0.4rem;">Before presenting:</p>
+        <ul style="font-size:13.5px;">
+          <li>Check room, equipment, software compatibility ⭐</li>
+          <li>Send talk by email as backup</li>
+          <li>Rate: <strong>100 words/min</strong>; 1–3 min/slide; 30 sec minimum per slide</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight:600;margin-bottom:0.4rem;">While presenting:</p>
+        <ul style="font-size:13.5px;">
+          <li>Keep eye contact; identify nodders</li>
+          <li>Stand to the SIDE of screen; no pacing</li>
+          <li>Laser pointer: flash on/off, not back-and-forth</li>
+          <li>Be ENTHUSIASTIC</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q&A Tips ⭐</div>
+    <div class="hl hl-y"><strong>Questions = golden opportunity to connect!</strong></div>
+    <ul style="font-size:13.5px;margin-top:0.6rem;">
+      <li>Always repeat each question; show appreciation</li>
+      <li>If question clarifies ambiguity → answer immediately; if covered later → inform them</li>
+      <li>Ask: "Did I answer your question sufficiently?"</li>
+      <li>Avoid prolonged discussions with one person → "Maybe we can discuss this later"</li>
+      <li>If you can't answer: say so (don't apologize), offer to research, suggest resources, ask audience</li>
+      <li>Have <strong>backup slides</strong> ready for anticipated questions</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Poster Presentation Essentials <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Element</th><th>Key Rules</th></tr>
+      <tr><td><strong>Text amount</strong></td><td>300–800 words; phrases & bullets (NOT full sentences); judicious use</td></tr>
+      <tr><td><strong>Layout</strong></td><td>Left to right, top to bottom; Introduction (left) → Conclusion (bottom right)</td></tr>
+      <tr><td><strong>Distribution</strong></td><td>20% text · 40% graphics · 40% empty space</td></tr>
+      <tr><td><strong>Colors</strong></td><td>Muted/gray background; intense colors for emphasis only; 2–3 related colors max; no bright backgrounds</td></tr>
+      <tr><td><strong>Font – Titles/Labels</strong></td><td>Sans serif (clarity); Title 85pt · Authors 56pt · Sub-headings 36pt</td></tr>
+      <tr><td><strong>Font – Poster text</strong></td><td>Serif (e.g., Times New Roman); Body text 24pt · Captions 18pt (minimum)</td></tr>
+      <tr><td><strong>Illustrations</strong></td><td>Visible from 6ft; 2–3 colors for emphasis; 0.5" borders; understood in 5–30 sec</td></tr>
+      <tr><td><strong>Title Banner</strong></td><td>Visible from 15–20ft (≥5m); letters ~1.5–2 inches tall; font 96pt</td></tr>
+      <tr><td><strong>Sections</strong></td><td>Introduction w/ Objectives · Methods · Results · Conclusion · Acknowledgement</td></tr>
+      <tr><td><strong>Contact info</strong></td><td>Last item in poster; mail + phone + email</td></tr>
+    </table>
+    <div class="hl hl-r" style="margin-top:0.5rem;"><strong>THE POSTER IS THE ABSTRACT</strong> — do not put an abstract IN the poster!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Title Banner Content</div>
+    <table>
+      <tr><th>Content</th><th>Formatting</th></tr>
+      <tr><td>Title</td><td>Boldface + ALL CAPS; no abbreviations</td></tr>
+      <tr><td>Author's Name</td><td>Boldface + mixed case; middle initials/titles may be removed</td></tr>
+      <tr><td>Institutional Affiliations</td><td>Plain text; no boldface; mixed case</td></tr>
+      <tr><td>Poster Number</td><td>Given by organizers</td></tr>
+    </table>
+    <p style="font-size:13px;margin-top:0.5rem;color:var(--text2);">No need to include: middle initials, titles, city/state names</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Mini Poster Handouts</div>
+    <ul style="font-size:13.5px;">
+      <li>Last item to be prepared</li>
+      <li>Full poster printed on paper → give to viewers for later reading</li>
+      <li>Acts as "calling card" — include contact information clearly</li>
+      <li>Representatives stay near poster; prepare a <strong>3–5 minute verbal explanation</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Online Conference Checklist</div>
+    <div class="grid3">
+      <div class="mini-card">
+        <h4>Upon Confirmation</h4>
+        <ul style="font-size:12.5px;">
+          <li>Live or pre-recorded?</li>
+          <li>Slide format & number</li>
+          <li>Time limit</li>
+          <li>Practice, practice, practice</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4>After Preparing</h4>
+        <ul style="font-size:12.5px;">
+          <li>Back up files (PDF version)</li>
+          <li>Clean background; face visible</li>
+          <li>Good lighting source</li>
+          <li>Familiarize portal; sign in early</li>
+          <li>Practice with someone</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h4>Conference Day</h4>
+        <ul style="font-size:12.5px;">
+          <li>Check internet, battery, A/V</li>
+          <li>Water, pen, paper nearby</li>
+          <li>Business casual attire</li>
+          <li>10 min before → be on time</li>
+          <li>BE CONFIDENT</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 6: EPIDEMIC INVESTIGATION ==================== -->
+<div class="section" id="s6">
+<div class="container">
+  <div class="section-title">Epidemic Investigation</div>
+  <div class="section-subtitle">From outbreak detection to surveillance — everything about epidemics</div>
+
+  <div class="card">
+    <div class="card-title">Key Definitions <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Term</th><th>Definition</th><th>Key Distinction</th></tr>
+      <tr><td><strong>Endemic</strong></td><td>Habitual presence or usual prevalence of a disease in a geographic area</td><td>30 dengue cases/month for years = endemic (not epidemic)</td></tr>
+      <tr><td><strong>Epidemic</strong></td><td>Occurrence of disease clearly in <em>excess of normal expectancy</em></td><td>More than baseline = epidemic</td></tr>
+      <tr><td><strong>Outbreak</strong></td><td>Epidemic limited to a relatively restricted geographic or focal area</td><td>Localized epidemic</td></tr>
+      <tr><td><strong>Pandemic</strong></td><td>Worldwide epidemic</td><td>COVID-19 = pandemic (global)</td></tr>
+      <tr><td><strong>Hyperendemic</strong></td><td>Persistent HIGH levels of disease — NOT an epidemic unless exceeds its own high baseline</td><td>High but stable ≠ epidemic</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Phases of an Epidemic (WHO 2018)</div>
+    <table>
+      <tr><th>#</th><th>Phase</th><th>Description</th></tr>
+      <tr><td>1</td><td><strong>Introduction/Emergence</strong></td><td>Disease emerges in a community</td></tr>
+      <tr><td>2</td><td><strong>Localized Transmission</strong></td><td>Sporadic infections or localized transmission</td></tr>
+      <tr><td>3</td><td><strong>Amplification</strong></td><td>Human-to-human transmission → sustained outbreak (COVID-19 example)</td></tr>
+      <tr><td>4</td><td><strong>Reduced Transmission</strong></td><td>Due to population immunity or effective interventions</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Why Do Epidemics Occur?</div>
+    <div class="grid2">
+      <div>
+        <p style="font-weight:600;color:var(--accent2);margin-bottom:0.4rem;">1. New Disease</p>
+        <ul style="font-size:13.5px;">
+          <li>Introduction of a new disease (e.g., polio brought by settlers)</li>
+          <li>Recognition of existing disease by another name (e.g., dengue ← hemorrhagic fever)</li>
+          <li>Zoonotic transmission (e.g., COVID-19)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight:600;color:var(--accent4);margin-bottom:0.4rem;">2. Flare-up of Old Disease (changes in E-A-H)</p>
+        <ul style="font-size:13.5px;">
+          <li><strong>Environment:</strong> calamities → leptospirosis, diarrhea</li>
+          <li><strong>Agent:</strong> ↑ virulence, new strain, mutation (e.g., COVID variants)</li>
+          <li><strong>Host:</strong> ↓ immunity, ↓ vaccination (e.g., Dengvaxia → measles 2019)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Epidemic Patterns & Curves <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Pattern</th><th>Description</th><th>Curve Shape</th><th>Example</th></tr>
+      <tr>
+        <td><strong>Point Source</strong></td>
+        <td>All exposed to SAME source during a BRIEF period; cases occur within ONE incubation period</td>
+        <td>Steep upslope, gradual downslope (sharp peak)</td>
+        <td>Food poisoning after a party</td>
+      </tr>
+      <tr>
+        <td><strong>Continuous Source</strong></td>
+        <td>Same source over MORE than a brief period</td>
+        <td>Flatter and wider peak</td>
+        <td>Cholera from contaminated well (Broad St. pump, John Snow)</td>
+      </tr>
+      <tr>
+        <td><strong>Propagated/Progressive</strong></td>
+        <td>Person-to-person spread; cases over SEVERAL incubation periods</td>
+        <td>Multiple peaks consistent with incubation period</td>
+        <td>Measles, malaria (vectors), HIV (vehicles)</td>
+      </tr>
+      <tr>
+        <td><strong>Mixed</strong></td>
+        <td>Features of BOTH common-source AND propagated</td>
+        <td>Combined characteristics</td>
+        <td>Initial contamination → subsequent person-to-person spread</td>
+      </tr>
+    </table>
+    <div class="hl hl-b" style="margin-top:0.6rem;">
+      <strong>Uses of epidemic curves:</strong>
+      <ol style="padding-left:1.2rem;font-size:13.5px;">
+        <li>Identify type of exposure from shape</li>
+        <li>Estimate incubation period (interval between exposure and peak)</li>
+        <li>Suggest possible etiologic agents (if time of exposure known)</li>
+        <li>Determine time of exposure (if agent/incubation period known)</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Control & Preventive Measures <span class="tag-hy">HY</span></div>
+    <table>
+      <tr><th>Strategy</th><th>Methods</th><th>Examples</th></tr>
+      <tr><td><strong>1. Eradication/Elimination at Source</strong></td><td>Isolation, disinfection, sterilization, antivirals/antibacterials</td><td>Removing contaminated food source; treating infected person</td></tr>
+      <tr><td><strong>2. Interrupt/Close Transmission Routes</strong></td><td>Masks, physical distancing, handwashing, shoes; avoid direct AND indirect contact</td><td>COVID lockdowns, social distancing</td></tr>
+      <tr><td><strong>3. Exhaustion/Protection of Susceptibles</strong></td><td>Vaccination, prophylactic drugs; improve nutrition, exercise</td><td>Measles vaccination campaign</td></tr>
+    </table>
+    <div class="hl hl-y" style="margin-top:0.5rem;">
+      Remove source of contamination → <strong>Eradication</strong> | Treat infected person → <strong>Eradication</strong> | Physical distancing → <strong>Interrupt transmission</strong> | Vaccination → <strong>Protect susceptibles</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Herd Immunity Threshold</div>
+    <p style="font-size:13.5px;"><strong>R₀ (Basic Reproduction Number)</strong> = average number of secondary infections from one case in a fully susceptible population. Higher R₀ → higher vaccination threshold needed.</p>
+    <table style="margin-top:0.6rem;">
+      <tr><th>Disease</th><th>R₀</th><th>Threshold %</th></tr>
+      <tr><td>Mumps</td><td>4–7</td><td>75–86%</td></tr>
+      <tr><td>Polio</td><td>5–7</td><td>80–86%</td></tr>
+      <tr><td>Diphtheria</td><td>6–7</td><td>85%</td></tr>
+      <tr><td>Rubella</td><td>6–7</td><td>83–85%</td></tr>
+      <tr><td>Pertussis</td><td>12–17</td><td>92–94%</td></tr>
+      <tr><td><strong>Measles</strong></td><td><strong>12–18</strong></td><td><strong>83–94%</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3 Roles of an Epidemic Investigator</div>
+    <div class="grid3">
+      <div class="hl hl-r"><strong>🔍 Detective</strong><br>Search and identify the cause and source</div>
+      <div class="hl hl-y"><strong>🚒 Fire Fighter</strong><br>Prevent the spread of disease</div>
+      <div class="hl hl-g"><strong>📢 Public Health Educator</strong><br>Inform public; allay fears; prevent fake news</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">6 Reasons for Epidemic Investigation</div>
+    <ol style="font-size:13.5px;padding-left:1.4rem;">
+      <li>Stop the current outbreak from spreading</li>
+      <li>Provide scientific explanation (describe new diseases; learn about known ones)</li>
+      <li>Evaluate existing preventive measures</li>
+      <li>React to and calm public/political concerns (prevent speculation, panic, fake news)</li>
+      <li>Prevent future similar outbreaks</li>
+      <li>Train epidemiologists</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">History: John Snow & Field Epidemiology</div>
+    <ul style="font-size:13.5px;">
+      <li>London, 1854 — severe cholera epidemic in Soho</li>
+      <li>John Snow (anesthesiologist) = <strong>Father of Field Epidemiology</strong></li>
+      <li>Method: rigorous data gathering → <strong>spot map</strong> to plot cases → located water pumps</li>
+      <li>Found cases clustered around <strong>Broad Street pump</strong> → pump handle removed → cholera declined</li>
+      <li>These methods are used in epidemic investigations today</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">10 Steps of Epidemic Investigation <span class="tag-hy">HY</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Identify investigation team and resources</strong> — read about disease; list equipment; invite experts</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Establish existence of outbreak</strong> — are cases above baseline? Check census/surveillance/registries; rule out increased awareness or diagnostic changes</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Verify diagnosis</strong> — check manifestations + diagnostic tests; perform lab tests if needed</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Establish case definition & search for cases</strong> — case definition includes: Person (type of illness) + Place (suspected exposure) + Time (based on incubation period). Use passive (hospitals) AND active (contact tracing) surveillance</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Find cases systematically + descriptive epidemiologic study</strong> — epidemic curve (time) + spot map (place) → clusters/patterns</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Develop hypothesis</strong> — "Exposure X is associated with Y." Includes source of exposure + means of transmission. Generated from: risk factors, spot map, epidemic curve</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Evaluate hypothesis</strong> — analytic studies: Cohort → RR; Case-control → OR. Study environment, sanitary conditions, get samples</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Implement control and preventive measures</strong></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Communicate findings</strong> — oral AND written reports to local health authorities</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-body"><strong>Maintain surveillance</strong> — check for new cases. Outbreak declared OVER: <strong>2 incubation periods with no new cases</strong></div></div>
+    </div>
+    <div class="hl hl-y" style="margin-top:0.6rem;">
+      Steps can be done simultaneously or in different order based on circumstances!
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5 Stages of Response Interventions (Matches Epidemic Phases)</div>
+    <table>
+      <tr><th>Stage</th><th>Intervention</th><th>Corresponds to Phase</th></tr>
+      <tr><td>1</td><td><strong>Anticipation</strong> — preparedness plans, forecasting</td><td>Pre-epidemic</td></tr>
+      <tr><td>2</td><td><strong>Early Detection</strong> — healthcare setting recognizes & reports</td><td>Introduction/Emergence</td></tr>
+      <tr><td>3</td><td><strong>Containment</strong> — at early stages of transmission</td><td>Localized transmission</td></tr>
+      <tr><td>4</td><td><strong>Control & Mitigation</strong> — reduce incidence, morbidity, mortality, economic disruption</td><td>Amplification</td></tr>
+      <tr><td>5</td><td><strong>Elimination/Eradication</strong> — continued surveillance to prevent re-emergence</td><td>Reduced transmission</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">SGD Case Algorithm: Botulism Outbreak (Buenos Aires, 1998)</div>
+    <div class="flow">
+      <div class="flow-box yl">2 cases of botulism reported (Jan 13) → same bus company, same route</div>
+      <div class="flow-arrow">↓ Step 1-3: Verify dx, notify stakeholders</div>
+      <div class="flow-box">Press release → 7 more cases identified. All males, morning shift, ate at terminal home</div>
+      <div class="flow-arrow">↓ Step 4-5: Case definition + Descriptive epi</div>
+      <div class="flow-box">Epidemic curve = Point Source (single exposure). Earliest onset Jan 5 → exposure Jan 3-4 (18-36h incubation)</div>
+      <div class="flow-arrow">↓ Step 6: Hypothesis</div>
+      <div class="flow-box yl">H: Morning shift drivers → ate/drank at terminal home Jan 3-7 → botulism</div>
+      <div class="flow-arrow">↓ Step 7: Retrospective Cohort Study → compute RR</div>
+      <div class="flow-box">Matambre: RR = 8.1* (p=0.0002) · Sauce: RR = 4.6 (p=0.009) ✅ Significant</div>
+      <div class="flow-arrow">↓ Steps 8-10</div>
+      <div class="flow-box gn">Control measures → Investigate matambre producer → Communicate findings → Surveillance (2 incubation periods)</div>
+    </div>
+    <div class="hl hl-b" style="margin-top:0.6rem;">
+      <strong>RR Calculation note:</strong> When 0 exposed persons got ill (or 0 in denominator) → adjust by changing 0 to 1 to get a numerical result (acceptable statistical approach)
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 7: MCQ REVIEW ==================== -->
+<div class="section" id="s7">
+<div class="container">
+  <div class="section-title">MCQ Review</div>
+  <div class="section-subtitle">Click a question to reveal choices. Click a choice to check your answer.</div>
+
+  <div id="mcq-container"></div>
+</div>
+</div>
+
+<!-- ==================== SECTION 8: BUZZWORDS ==================== -->
+<div class="section" id="s8">
+<div class="container">
+  <div class="section-title">Buzzwords Summary</div>
+  <div class="section-subtitle">Key terms and their one-liner definitions — great for last-minute review</div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--accent2);">📋 Research Management</div>
+    <div class="bw-grid">
+      <div class="bw"><span class="term">Effectiveness</span><span class="def">Degree to which objectives are achieved</span></div>
+      <div class="bw"><span class="term">Efficiency</span><span class="def">Getting things done through people; convergence of work</span></div>
+      <div class="bw"><span class="term">Economy</span><span class="def">Best use of resources at reasonable cost</span></div>
+      <div class="bw"><span class="term">Mgmt by Exception</span><span class="def">Filter only essential info; prioritize decisions</span></div>
+      <div class="bw"><span class="term">Departmentalization</span><span class="def">Group interrelated jobs into units/departments</span></div>
+      <div class="bw"><span class="term">Unity of Command</span><span class="def">Each person reports to ONE supervisor only</span></div>
+      <div class="bw"><span class="term">Span & Control</span><span class="def">Limit direct reports per supervisor to manageable number</span></div>
+      <div class="bw"><span class="term">Functional Dept.</span><span class="def">Grouped by office function type</span></div>
+      <div class="bw"><span class="term">Process Dept.</span><span class="def">Grouped by technical workflow steps</span></div>
+      <div class="bw"><span class="term">Autocratic</span><span class="def">"Do what I say" — for complex/strict/unskilled tasks</span></div>
+      <div class="bw"><span class="term">Democratic</span><span class="def">"Let's agree" — for creative/competent teams</span></div>
+      <div class="bw"><span class="term">4 Phases of Study</span><span class="def">Mobilization → Data Collection → Analysis → Presentation</span></div>
+      <div class="bw"><span class="term">Evaluation: TSMF</span><span class="def">Timely · Simple · Minimal · Flexible</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--accent4);">🔗 Causality</div>
+    <div class="bw-grid">
+      <div class="bw"><span class="term">Correlation</span><span class="def">Mutual relationship; ≠ causality</span></div>
+      <div class="bw"><span class="term">Causality</span><span class="def">Relationship with valid real-world explanation</span></div>
+      <div class="bw"><span class="term">Confounder</span><span class="def">Variable influencing BOTH cause and effect</span></div>
+      <div class="bw"><span class="term">Reverse Causality</span><span class="def">Unclear if X→Y or Y→X</span></div>
+      <div class="bw"><span class="term">Confirmation Bias</span><span class="def">Favoring info supporting existing beliefs</span></div>
+      <div class="bw"><span class="term">Association Causality</span><span class="def">Lowest rung; observes without mechanism</span></div>
+      <div class="bw"><span class="term">Interventional</span><span class="def">Middle rung; predicts effect of changing variable</span></div>
+      <div class="bw"><span class="term">Counterfactual</span><span class="def">Highest rung; hypothetical "what if" reasoning</span></div>
+      <div class="bw"><span class="term">Temporality ⭐</span><span class="def">CRUCIAL BH criterion — cause MUST precede effect</span></div>
+      <div class="bw"><span class="term">Specificity</span><span class="def">One exposure → one outcome; high attributable risk</span></div>
+      <div class="bw"><span class="term">Change in Risk Factor</span><span class="def">Remove exposure → decrease in outcome</span></div>
+      <div class="bw"><span class="term">Strong BH Cutoff</span><span class="def">≥0.60 positive; ≤-0.60 negative</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--accent3);">✍️ Research Writing</div>
+    <div class="bw-grid">
+      <div class="bw"><span class="term">IMRAD</span><span class="def">Introduction · Methods · Results · And Discussion</span></div>
+      <div class="bw"><span class="term">IMRAC</span><span class="def">Abstract format — Conclusion replaces Discussion</span></div>
+      <div class="bw"><span class="term">Write title LAST</span><span class="def">More natural after content is complete</span></div>
+      <div class="bw"><span class="term">Rapid Comm.</span><span class="def">Urgent preliminary findings; ≤3,000 words</span></div>
+      <div class="bw"><span class="term">CONSORT</span><span class="def">RCT reporting guideline</span></div>
+      <div class="bw"><span class="term">STROBE</span><span class="def">Observational study reporting guideline</span></div>
+      <div class="bw"><span class="term">PRISMA</span><span class="def">Systematic review / meta-analysis guideline</span></div>
+      <div class="bw"><span class="term">STARD</span><span class="def">Diagnostic study reporting guideline</span></div>
+      <div class="bw"><span class="term">Intro: 3 paragraphs</span><span class="def">Background → Importance → Rationale/Objective</span></div>
+      <div class="bw"><span class="term">Methods: past tense</span><span class="def">Change from protocol's future tense</span></div>
+      <div class="bw"><span class="term">Results: data only</span><span class="def">No interpretation; negative results matter too</span></div>
+      <div class="bw"><span class="term">Table label</span><span class="def">ABOVE the table</span></div>
+      <div class="bw"><span class="term">Figure label</span><span class="def">BELOW the figure</span></div>
+      <div class="bw"><span class="term">Acknowledgements</span><span class="def">Non-authors only; advisers = co-authors</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--accent5);">📊 Data Presentation</div>
+    <div class="bw-grid">
+      <div class="bw"><span class="term">Nominal</span><span class="def">No order; name/label only (blood type, gender)</span></div>
+      <div class="bw"><span class="term">Ordinal</span><span class="def">Ranked; interval unknown (Likert, pain scale)</span></div>
+      <div class="bw"><span class="term">Interval</span><span class="def">Equal spacing; NO absolute zero (°C, pH, SAT)</span></div>
+      <div class="bw"><span class="term">Ratio ⭐</span><span class="def">Equal spacing + ABSOLUTE ZERO; meaningful ratios (height, weight, BP)</span></div>
+      <div class="bw"><span class="term">Continuous</span><span class="def">Infinitely divisible (FBS, temperature, BMI)</span></div>
+      <div class="bw"><span class="term">Discrete</span><span class="def">Fixed whole numbers (patient count, likes)</span></div>
+      <div class="bw"><span class="term">Histogram</span><span class="def">Continuous quantitative data ONLY; adjacent rectangles; no gaps</span></div>
+      <div class="bw"><span class="term">Pie chart ⭐</span><span class="def">Most common; ≤2 distributions; use proportional bar for >2</span></div>
+      <div class="bw"><span class="term">Line diagram</span><span class="def">Changes OVER TIME; arithmetic=absolute; log=relative</span></div>
+      <div class="bw"><span class="term">Scatter diagram</span><span class="def">Relationship between 2 variables; dots cluster = linear</span></div>
+      <div class="bw"><span class="term">Frequency classes</span><span class="def">Ideally 8–15 rows in frequency table</span></div>
+      <div class="bw"><span class="term">Diagram title</span><span class="def">Goes BELOW the graph/diagram</span></div>
+      <div class="bw"><span class="term">Table 1</span><span class="def">Always = Baseline Characteristics</span></div>
+      <div class="bw"><span class="term">Dummy table</span><span class="def">Created BEFORE data collection; appended to protocol</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--accent2);">🎤 Paper Reporting</div>
+    <div class="bw-grid">
+      <div class="bw"><span class="term">BSCC</span><span class="def">Big · Simple · Clear · Consistent (slide design)</span></div>
+      <div class="bw"><span class="term">6ft rule</span><span class="def">Slides readable from 6 ft away (illustrations & text)</span></div>
+      <div class="bw"><span class="term">≤6 lines/slide</span><span class="def">Max text per slide; ≤7 words per line</span></div>
+      <div class="bw"><span class="term">100 words/min</span><span class="def">Scientific talk speaking rate</span></div>
+      <div class="bw"><span class="term">Q&A = golden opp</span><span class="def">Opportunity to connect; repeat question; be confident</span></div>
+      <div class="bw"><span class="term">Sans serif slides</span><span class="def">Helvetica, Arial, Calibri for slides</span></div>
+      <div class="bw"><span class="term">Serif poster text</span><span class="def">Times New Roman for poster body text</span></div>
+      <div class="bw"><span class="term">Poster = abstract</span><span class="def">Do NOT put an abstract IN the poster</span></div>
+      <div class="bw"><span class="term">Poster word count</span><span class="def">300–800 words total</span></div>
+      <div class="bw"><span class="term">Poster layout</span><span class="def">20% text · 40% graphics · 40% empty space</span></div>
+      <div class="bw"><span class="term">Title banner: 15-20ft</span><span class="def">Visible from at least 5 meters away</span></div>
+      <div class="bw"><span class="term">Contact info</span><span class="def">Last item on poster (mail, phone, email)</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--accent);">🦠 Epidemic Investigation</div>
+    <div class="bw-grid">
+      <div class="bw"><span class="term">Endemic</span><span class="def">Usual/habitual presence in geographic area</span></div>
+      <div class="bw"><span class="term">Epidemic</span><span class="def">Excess above normal expectancy</span></div>
+      <div class="bw"><span class="term">Outbreak</span><span class="def">Localized epidemic</span></div>
+      <div class="bw"><span class="term">Pandemic</span><span class="def">Worldwide epidemic</span></div>
+      <div class="bw"><span class="term">Hyperendemic</span><span class="def">Persistently high but NOT an epidemic</span></div>
+      <div class="bw"><span class="term">Point source ⭐</span><span class="def">Brief exposure; cases within ONE incubation period; steep-then-gradual curve</span></div>
+      <div class="bw"><span class="term">Continuous source</span><span class="def">Prolonged same-source exposure; flatter wider curve</span></div>
+      <div class="bw"><span class="term">Propagated</span><span class="def">Person-to-person; multiple peaks = multiple incubation periods</span></div>
+      <div class="bw"><span class="term">Case definition</span><span class="def">Person + Place + Time</span></div>
+      <div class="bw"><span class="term">Spot map</span><span class="def">Geographic distribution of cases; identifies clusters</span></div>
+      <div class="bw"><span class="term">Outbreak = over</span><span class="def">2 incubation periods with NO new cases</span></div>
+      <div class="bw"><span class="term">R₀</span><span class="def">Basic reproduction number; estimates herd immunity threshold</span></div>
+      <div class="bw"><span class="term">John Snow</span><span class="def">Father of Field Epidemiology; 1854 London cholera; Broad St. pump</span></div>
+      <div class="bw"><span class="term">Step 7: Cohort → RR</span><span class="def">Cohort study: compute Relative Risk</span></div>
+      <div class="bw"><span class="term">Step 7: Case-ctrl → OR</span><span class="def">Case-control study: compute Odds Ratio</span></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ---- NAVIGATION ----
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['s1','s2','s3','s4','s5','s6','s7','s8'].indexOf(id);
+  document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ---- MCQ DATA ----
+const mcqs = [
+  // Research Management
+  {
+    q: "Research management begins at which stage?",
+    choices: ["Protocol writing only", "Data collection phase only", "Conception of research idea up to publication and presentation", "Budget preparation"],
+    correct: 2,
+    exp: "Research management starts from conception of the research idea and covers everything through to publication and presentation."
+  },
+  {
+    q: "Which principle of organizing states that each person should report to ONLY one supervisor?",
+    choices: ["Span & Control", "Departmentalization", "Unity of Command", "Delegation of Authority"],
+    correct: 2,
+    exp: "Unity of Command: Each individual should be responsible to ONLY ONE supervisor and ultimately answerable to the head of the organization."
+  },
+  {
+    q: "A research team groups its members into: a pre-testing group, interview group, audit group, data processing group, and writing team. This best illustrates:",
+    choices: ["Functional Departmentalization", "Process Departmentalization", "Unity of Command", "Span & Control"],
+    correct: 1,
+    exp: "Process Departmentalization divides members along technical workflow/process lines — which is exactly what's described here (pre-test → interview → audit → analysis → writing)."
+  },
+  {
+    q: "A supervisor is assigned 15 team members and is unable to effectively coordinate them. Which principle is violated?",
+    choices: ["Unity of Command", "Division of Work", "Span & Control", "Delegation of Authority"],
+    correct: 2,
+    exp: "Span & Control states that the number of individuals reporting to a supervisor should not exceed what can be effectively coordinated and directed."
+  },
+  {
+    q: "During planning, a research team discovers their field workers are not skilled to conduct interviews. The appropriate response is:",
+    choices: ["Neither — accept the limitation", "Remove — train more workers", "Modify — hire different workers", "Modify — reduce interview scope"],
+    correct: 1,
+    exp: "When workers are unskilled, the answer is to REMOVE the obstacle by training more workers."
+  },
+  {
+    q: "Evaluation of a research study should be characterized by which 4 qualities?",
+    choices: ["Timely, Simple, Complete, Flexible", "Timely, Simple, Minimal, Flexible", "Thorough, Simple, Minimal, Frequent", "Timely, Complex, Minimal, Flexible"],
+    correct: 1,
+    exp: "The 4 key qualities of evaluation are: Timely · Simple · Minimal · Flexible (TSMF)."
+  },
+  // Causality
+  {
+    q: "A study finds that countries with more ice cream consumption have higher drowning rates. The MOST accurate conclusion is:",
+    choices: ["Ice cream consumption causes drowning", "Drowning causes ice cream consumption", "A third variable (e.g., hot weather) likely explains both", "The correlation coefficient must be very low"],
+    correct: 2,
+    exp: "Classic correlation ≠ causality example. Hot weather causes both increased ice cream sales AND more swimming (→ more drowning). There is no causal link between ice cream and drowning."
+  },
+  {
+    q: "A correlation coefficient of r = -0.75 indicates:",
+    choices: ["Very strong negative correlation", "Fairly strong negative correlation", "Moderate negative correlation", "Weak negative correlation"],
+    correct: 1,
+    exp: "r = -0.75 falls in the range -0.60 to -0.79 = Fairly Strong Negative correlation."
+  },
+  {
+    q: "Which Bradford-Hill criterion is considered the MOST crucial and is the only one that, if absent, rules out causality?",
+    choices: ["Strength", "Plausibility", "Temporality", "Consistency"],
+    correct: 2,
+    exp: "Temporality is the crucial criterion — the cause MUST precede the effect. If the exposure comes AFTER the disease, a causal relationship is impossible."
+  },
+  {
+    q: "Individuals who stopped smoking at age 30 significantly lowered their lung cancer risk. This supports which Bradford-Hill criterion?",
+    choices: ["Plausibility", "Specificity", "Temporality", "Change in Risk Factor"],
+    correct: 3,
+    exp: "Change in Risk Factor: If reducing/removing the exposure (smoking cessation) leads to decreased outcome (lung cancer risk), this supports causality."
+  },
+  {
+    q: "Which level of the Ladder of Causality allows researchers to make predictions about what happens when a variable is CHANGED?",
+    choices: ["Association causality", "Interventional causality", "Counterfactual causality", "Correlational causality"],
+    correct: 1,
+    exp: "Interventional causality (middle rung) involves actively implementing a change to observe its effect on cause-and-effect relationships."
+  },
+  {
+    q: "A confounder is best described as:",
+    choices: ["A variable that directly causes the outcome", "A variable that influences both the cause and the effect", "The main independent variable being studied", "A statistical error in data collection"],
+    correct: 1,
+    exp: "A confounder is a variable related to BOTH the independent variable (cause) and the dependent variable (effect), potentially distorting the apparent association."
+  },
+  // Research Writing
+  {
+    q: "A researcher has preliminary but critically important findings from an ongoing study on a rapidly fatal disease. Which publication type is MOST appropriate?",
+    choices: ["Original Research Paper", "Review Article", "Rapid Communication", "Perspective Commentary"],
+    correct: 2,
+    exp: "Rapid Communications (≤3,000 words) are designed for preliminary but urgent/time-sensitive findings requiring immediate dissemination."
+  },
+  {
+    q: "Which section of a research paper should be written LAST?",
+    choices: ["Discussion", "Abstract", "Title", "Introduction"],
+    correct: 2,
+    exp: "The Title should be written LAST — it's more natural to name the paper after the content is complete. The Introduction is also often written last (or near the end), but the TITLE is explicitly stated as the last to be written."
+  },
+  {
+    q: "The Methods section should be written primarily in which tense?",
+    choices: ["Future tense (as in the protocol)", "Present tense", "Past tense", "No specific tense requirement"],
+    correct: 2,
+    exp: "The Methods section in the final manuscript must be in PAST TENSE (you already did it). The protocol uses future tense (you plan to do it). This is a mandatory change."
+  },
+  {
+    q: "A researcher writes in the Results section: 'The significant improvement in outcomes suggests this treatment will revolutionize clinical practice.' What rule is violated?",
+    choices: ["Use of past tense", "All Methods variables must appear in Results", "Results must contain DATA only — no interpretation", "Results must cite tables and figures"],
+    correct: 2,
+    exp: "The Results section must contain DATA ONLY — no interpretation or assumptions. The phrase 'suggests this treatment will revolutionize...' is an interpretation belonging in the Discussion."
+  },
+  {
+    q: "The abstract of an original research paper follows the format:",
+    choices: ["IMRAD (Introduction, Methods, Results, And Discussion)", "IMRAC (Introduction, Methods, Results, And Conclusion)", "PICO (Population, Intervention, Comparison, Outcome)", "Same as the full paper structure"],
+    correct: 1,
+    exp: "The abstract follows IMRAC — there is NO Discussion section in an abstract. The Conclusion follows directly from the Results."
+  },
+  {
+    q: "The adviser who supervised the study and approved the manuscript should be listed as:",
+    choices: ["First Author", "Co-Author", "Acknowledged (Acknowledgements section)", "Not mentioned at all"],
+    correct: 1,
+    exp: "Advisers who supervise and contribute intellectually to the study qualify as CO-AUTHORS (per ICMJE criteria), NOT acknowledgements. The Acknowledgements section is for contributors who do NOT qualify as authors."
+  },
+  // Data Presentation
+  {
+    q: "A medical student measures her fasting blood sugar daily. What type of data is this?",
+    choices: ["Nominal qualitative", "Ordinal qualitative", "Continuous quantitative", "Discrete quantitative"],
+    correct: 2,
+    exp: "Fasting blood sugar can be infinitely divided and may fluctuate — this is CONTINUOUS QUANTITATIVE data."
+  },
+  {
+    q: "Which measurement scale has an absolute zero AND allows meaningful ratios?",
+    choices: ["Nominal", "Ordinal", "Interval", "Ratio"],
+    correct: 3,
+    exp: "Ratio scale = equal spacing + ABSOLUTE ZERO → meaningful ratios exist. Most biomedical variables (height, weight, BP). The only temperature ratio scale = Kelvin."
+  },
+  {
+    q: "Which graph type is used EXCLUSIVELY for showing frequency distribution of CONTINUOUS quantitative data?",
+    choices: ["Bar chart", "Pie chart", "Histogram", "Line diagram"],
+    correct: 2,
+    exp: "Histogram is used EXCLUSIVELY for continuous quantitative data (e.g., age, weight, blood pressure). It consists of adjacent rectangles with no gaps."
+  },
+  {
+    q: "A researcher wants to compare 5 causes of death across 3 different hospitals (15 data series total). Which is MOST appropriate?",
+    choices: ["Five pie charts (one per cause)", "One large pie chart", "Multiple bar diagram OR proportional bar diagram", "A single line diagram"],
+    correct: 2,
+    exp: "When there are MORE THAN 2 distributions, proportional/subdivided bar diagrams are more effective than pie charts. A multiple bar diagram also allows comparison across groups."
+  },
+  {
+    q: "According to principles of table design, where should the title of a TABLE be placed?",
+    choices: ["Below the table", "To the left of the table", "Above the table", "In the first row of data"],
+    correct: 2,
+    exp: "Table titles go ABOVE the table. Figure/graph labels go BELOW. This is a classic exam distinction."
+  },
+  {
+    q: "A dummy table in research is created:",
+    choices: ["After data collection to organize results", "During data analysis", "Before data collection tools are finalized, and appended to the protocol", "Only for randomized controlled trials"],
+    correct: 2,
+    exp: "Dummy tables are created BEFORE data collection is finalized and appended to the protocol. They guide what data needs to be collected and ensure alignment with objectives."
+  },
+  // Paper Reporting
+  {
+    q: "A presenter wants to check slide readability. What is the primary rule?",
+    choices: ["Font size must be ≥24 points", "Content must be readable from 6 feet away from the screen", "No more than 4 lines per slide", "Use sans serif fonts only"],
+    correct: 1,
+    exp: "The 6-foot rule: Anything on your slides should be readable from 6 feet away. There is no strict minimum font size — the 6-foot distance is the guide."
+  },
+  {
+    q: "During Q&A, you cannot answer a question. The BEST response is:",
+    choices: ["Apologize and move on", "Say so honestly, offer to research the answer, and/or suggest resources", "Redirect to another question immediately", "Make your best guess to avoid awkwardness"],
+    correct: 1,
+    exp: "If you can't answer: say so (don't apologize), offer to research and get back to them, suggest resources, or ask for suggestions from the audience."
+  },
+  {
+    q: "What is the correct speaking rate for a scientific research presentation?",
+    choices: ["50 words per minute", "75 words per minute", "100 words per minute", "150 words per minute"],
+    correct: 2,
+    exp: "Scientific talks should be delivered at approximately 100 words per minute, with 1–3 minutes per slide (minimum 30 seconds per slide)."
+  },
+  {
+    q: "A good research poster should contain how many words?",
+    choices: ["100–300 words", "300–800 words", "800–1,500 words", "1,500–2,000 words"],
+    correct: 1,
+    exp: "Research posters should contain 300–800 words total. Text should be minimized — phrases, bullets, and headlines preferred over full sentences."
+  },
+  // Epidemic Investigation
+  {
+    q: "A neighborhood reports 30 dengue cases consistently every month for the past 3 years. This is BEST classified as:",
+    choices: ["An epidemic", "An outbreak", "Endemic", "Hyperendemic"],
+    correct: 2,
+    exp: "Consistent monthly cases at the usual/habitual level = ENDEMIC (habitual presence in a geographic area). An epidemic requires cases IN EXCESS of normal expectancy."
+  },
+  {
+    q: "196 measles cases occurred in NCR from Jan 1-19 (normal = 20 cases). This is:",
+    choices: ["Endemic", "Hyperendemic", "Outbreak", "Pandemic"],
+    correct: 2,
+    exp: "This represents cases CLEARLY IN EXCESS of normal expectancy (196 vs. 20 expected), occurring in a limited geographic area = OUTBREAK (localized epidemic)."
+  },
+  {
+    q: "An epidemic curve shows a steep upslope followed by a gradual downslope, with all cases occurring within one incubation period. This pattern indicates:",
+    choices: ["Propagated epidemic", "Continuous source epidemic", "Point source epidemic", "Mixed epidemic"],
+    correct: 2,
+    exp: "Point source epidemic: all exposed to the SAME source during a BRIEF period → cases occur within ONE incubation period → steep upslope, gradual downslope curve."
+  },
+  {
+    q: "According to the 10 steps of epidemic investigation, what is the IMMEDIATE next step after establishing the existence of an outbreak (Step 2)?",
+    choices: ["Implement control measures", "Develop hypothesis", "Verify the diagnosis", "Search for cases actively"],
+    correct: 2,
+    exp: "Step 3 is to VERIFY THE DIAGNOSIS — check manifestations and perform laboratory tests. This ensures the diagnosis is correct before proceeding to case definitions and case-finding."
+  },
+  {
+    q: "An infectious disease outbreak can be officially declared 'over' when:",
+    choices: ["The last case recovers", "One week passes with no new cases", "Two incubation periods pass with no new cases", "The media stops reporting"],
+    correct: 2,
+    exp: "An outbreak is declared OVER after TWO incubation periods have passed with NO new cases."
+  },
+  {
+    q: "In the Argentina botulism case (1998), the retrospective cohort study found Matambre had RR = 8.1 (p = 0.0002) and Sauce had RR = 4.6 (p = 0.009). Which food is the most likely source?",
+    choices: ["Sauce, because more people ate it", "Matambre, because nobody who skipped it got sick AND the p-value is most significant", "Both equally likely", "Neither, because RR > 1 doesn't prove causality"],
+    correct: 1,
+    exp: "Matambre is most likely: RR = 8.1 (very high), p = 0.0002 (highly significant), AND CRITICALLY: zero unexposed persons became ill — nobody who didn't eat Matambre got botulism."
+  },
+  {
+    q: "A vaccination campaign against measles targets exhausting susceptibility in a community. This control measure falls under:",
+    choices: ["Eradication of disease agents at the source", "Interruption of transmission routes", "Exhaustion or protection of susceptibles", "Environmental sanitation"],
+    correct: 2,
+    exp: "Vaccination increases immunity of the host = Exhaustion/Protection of Susceptibles. Eradication = targeting the agent/source. Interruption = blocking routes of transmission."
+  },
+  {
+    q: "The R₀ of a new disease is 14. This value is primarily used to:",
+    choices: ["Determine the severity of symptoms", "Identify the incubation period", "Estimate the herd immunity threshold needed for vaccination goals", "Confirm the disease is vector-borne"],
+    correct: 2,
+    exp: "R₀ (basic reproduction number) is used to estimate the HERD IMMUNITY THRESHOLD — how much of the population needs to be immune to protect the community. Higher R₀ = higher threshold needed."
+  }
+];
+
+function buildMCQ() {
+  const container = document.getElementById('mcq-container');
+  mcqs.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'mcq-item';
+    div.innerHTML = `
+      <div class="mcq-q" onclick="toggleMCQ(${i})">
+        <span><strong>Q${i+1}.</strong> ${item.q}</span>
+        <span class="toggle-icon">▾</span>
+      </div>
+      <div class="mcq-choices">
+        ${item.choices.map((c, ci) => `<div class="mcq-choice" onclick="checkAnswer(${i}, ${ci})" id="mcq-${i}-${ci}">${String.fromCharCode(65+ci)}. ${c}</div>`).join('')}
+        <div class="mcq-explanation" id="exp-${i}"><strong>Explanation:</strong> ${item.exp}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleMCQ(i) {
+  const item = document.querySelectorAll('.mcq-item')[i];
+  item.classList.toggle('open');
+}
+
+function checkAnswer(qi, ci) {
+  const q = mcqs[qi];
+  // Mark all choices
+  q.choices.forEach((_, idx) => {
+    const el = document.getElementById(`mcq-${qi}-${idx}`);
+    el.classList.remove('correct', 'wrong');
+    if (idx === q.correct) el.classList.add('correct');
+    else if (idx === ci) el.classList.add('wrong');
+  });
+  document.getElementById(`exp-${qi}`).style.display = 'block';
+}
+
+buildMCQ();
+</script>
+</body>
+</html>
