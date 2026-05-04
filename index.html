@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCM Reviewer</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f5f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: block;
+    width: 260px;
+    margin: 10px auto;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #28a745;
+    color: white;
+    transition: 0.2s;
+  }
+
+  .btn:hover {
+    background: #1e7e34;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🩺 PCM Reviewer</h1>
+
+  <button class="btn" onclick="openPage('pcm1.html')">
+    PCM Module 1
+  </button>
+
+  <button class="btn" onclick="openPage('pcm2.html')">
+    PCM Module 2
+  </button>
+
+  <button class="btn" onclick="openPage('pcm3.html')">
+    PCM Module 3
+  </button>
+</div>
+
+<script>
+function openPage(page) {
+  window.location.href = page;
+}
+</script>
+
+</body>
+</html>
